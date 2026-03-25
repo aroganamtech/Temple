@@ -24,11 +24,6 @@ import Product from './pages/Product/Product';
 // import QuickBooking from './pages/QuickBooking/PriestBooking';
 import QuickBooking from './pages/QuickBooking/QuickBooking'
 import TempleSearch from './pages/Temple/TempleSearch';
-import ContactUs from './pages/Contact/ContactUs';
-import Dashboard from './pages/Admin/Dashboard';
-import DonationPage from './pages/Donate/DonationPage';
-// import Login from './pages/Auth/Login';
-import Login from "./pages/Auth/Login"
 
 function App() {
   return (

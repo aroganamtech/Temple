@@ -1,30 +1,35 @@
 import { useState } from "react";
 
-/* ─────────────────────────────────────────────
-   THEME — White & Gold, Warm Ivory
-───────────────────────────────────────────── */
 const T = {
-  bg:          "#FAF7F2",
-  bgAlt:       "#F5F0E8",
-  surface:     "#FFFFFF",
-  surfaceAlt:  "#FDF9F4",
-  border:      "#E8DFC8",
-  borderStrong:"#C9A84C",
-  gold:        "#B8860B",
-  goldMid:     "#D4AF37",
-  goldLight:   "#E6C76B",
-  goldPale:    "#FDF3D0",
+  bg: "#FAF7F2",
+  bgAlt: "#F5F0E8",
+  surface: "#FFFFFF",
+  surfaceAlt: "#FDF9F4",
+  border: "#E8DFC8",
+  gold: "#B8860B",
+  goldMid: "#D4AF37",
+  goldLight: "#E6C76B",
+  goldPale: "#FDF3D0",
   goldShimmer: "#F5C542",
-  text:        "#1A1208",
-  textSec:     "#6B5B3E",
-  textDis:     "#A8956E",
+  text: "#1A1208",
+  textSec: "#6B5B3E",
+  textDis: "#A8956E",
+  green: "#26A541",
+  fk: "#2874F0",
+};
+
+const FONTS = {
+  heading: "'Playfair Display', Georgia, serif",
+  sub: "'Poppins', Inter, sans-serif",
+  body: "'Inter', Roboto, sans-serif",
+  small: "'Roboto', Arial, sans-serif",
 };
 
 const GLOBAL = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&family=Inter:wght@300;400;500&family=Roboto:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #FAF7F2; }
-  input::placeholder { color: #A8956E; }
+  input::placeholder { color: #A8956E; font-family: 'Inter', sans-serif; font-size: 14px; }
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #FAF7F2; }
   ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
@@ -36,410 +41,909 @@ const GLOBAL = `
     0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
     50%      { box-shadow: 0 0 0 6px rgba(212,175,55,0.18); }
   }
+  @keyframes popIn {
+    0%   { transform: scale(0.82); opacity:0; }
+    65%  { transform: scale(1.06); }
+    100% { transform: scale(1);    opacity:1; }
+  }
 `;
 
-/* ─────────────────────────────────────────────
-   DATA
-───────────────────────────────────────────── */
 const CAROUSELS = [
   {
-    id: 1,
-    slides: [
-      { label:"Sacred Texts",    sub:"Ancient Wisdom",      emoji:"📖" },
-      { label:"Vedic Hymns",     sub:"Divine Chants",       emoji:"🕉️" },
-      { label:"Holy Scriptures", sub:"Timeless Knowledge",  emoji:"📿" },
-    ],
+    id: 1, slides: [
+      { label: "Sacred Texts", sub: "Ancient Wisdom", emoji: "📖" },
+      { label: "Vedic Hymns", sub: "Divine Chants", emoji: "🕉️" },
+      { label: "Holy Scriptures", sub: "Timeless Knowledge", emoji: "📿" },
+    ]
   },
   {
-    id: 2,
-    slides: [
-      { label:"Temple Prasadham", sub:"Blessed Offerings",  emoji:"🍯" },
-      { label:"Sacred Sweets",    sub:"Divine Taste",       emoji:"🪔" },
-      { label:"Holy Water",       sub:"Tirtha Prasad",      emoji:"🏺" },
-    ],
+    id: 2, slides: [
+      { label: "Temple Prasadham", sub: "Blessed Offerings", emoji: "🍯" },
+      { label: "Sacred Sweets", sub: "Divine Taste", emoji: "🪔" },
+      { label: "Holy Water", sub: "Tirtha Prasad", emoji: "🏺" },
+    ]
   },
   {
-    id: 3,
-    slides: [
-      { label:"Divine Idols",   sub:"Sacred Sculptures",  emoji:"🛕" },
-      { label:"Prayer Malas",   sub:"Sacred Beads",       emoji:"📿" },
-      { label:"Holy Portraits", sub:"Blessed Images",     emoji:"🖼️" },
-    ],
+    id: 3, slides: [
+      { label: "Divine Idols", sub: "Sacred Sculptures", emoji: "🛕" },
+      { label: "Prayer Malas", sub: "Sacred Beads", emoji: "📿" },
+      { label: "Holy Portraits", sub: "Blessed Images", emoji: "🖼️" },
+    ]
   },
 ];
 
 const CATEGORIES = [
   {
-    id:"books", icon:"📖", label:"Books", desc:"Sacred texts & Vedic literature",
-    items:[
-      { id:1, name:"Bhagavad Gita (English)",  price:"₹299",  desc:"18 chapters with commentary",   emoji:"📗" },
-      { id:2, name:"Ramayana — Full Edition",  price:"₹499",  desc:"Valmiki's original translation", emoji:"📘" },
-      { id:3, name:"Vishnu Sahasranama",        price:"₹199",  desc:"1000 names with meaning",        emoji:"📙" },
-      { id:4, name:"Shiva Purana",             price:"₹399",  desc:"Complete sacred narrative",       emoji:"📕" },
-      { id:5, name:"Devi Mahatmyam",           price:"₹249",  desc:"Durga Saptashati text",           emoji:"📒" },
-      { id:6, name:"Rigveda Hymns",            price:"₹599",  desc:"Ancient Sanskrit hymns",          emoji:"📔" },
+    id: "books", icon: "📖", label: "Books", desc: "Sacred texts & Vedic literature",
+    items: [
+      
+      {
+  id: 1,
+  name: "Bhagavad Gita (English)",
+  image: "https://m.media-amazon.com/images/I/81WcnNQ-TBL._SL1500_.jpg",
+  price: 299,
+  mrp: 450,
+  desc: "Sacred Bhagavad Gita with English translation.",
+  rating: 4.7,
+  reviews: 1520,
+},
+    
+  {
+    id: 1,
+    name: "Bhagavad Gita (English)",
+    image: "https://m.media-amazon.com/images/I/81WcnNQ-TBL._SL1500_.jpg",
+    price: 299,
+    mrp: 450,
+    desc: "Sacred Bhagavad Gita with English translation.",
+    rating: 4.7,
+    reviews: 1520,
+  },
+  {
+    id: 2,
+    name: "Ramayana — Full Edition",
+    image: "https://m.media-amazon.com/images/I/91zbi9M+mKL.jpg",
+    price: 499,
+    mrp: 750,
+    desc: "Complete Ramayana with all kandas.",
+    rating: 4.8,
+    reviews: 1892,
+  },
+  {
+    id: 3,
+    name: "Mahabharata (Complete Set)",
+    image: "https://i.pinimg.com/1200x/f5/2f/fe/f52ffe1e8f465b2ee8ea1e3aeeec7f24.jpg",
+    price: 899,
+    mrp: 1200,
+    desc: "Epic tale of Kurukshetra war.",
+    rating: 4.9,
+    reviews: 2400,
+  },
+  {
+    id: 4,
+    name: "Vishnu Sahasranama",
+    image: "https://i.pinimg.com/736x/48/7f/20/487f20c0ea18d2c8955f354325518383.jpg",
+    price: 199,
+    mrp: 299,
+    desc: "1000 names of Lord Vishnu.",
+    rating: 4.5,
+    reviews: 980,
+  },
+  {
+    id: 5,
+    name: "Shiva Purana",
+    image: "https://i.pinimg.com/736x/8e/00/0e/8e000ea31ff5a788b628e5a8ac011b0d.jpg",
+    price: 399,
+    mrp: 599,
+    desc: "Stories and teachings of Lord Shiva.",
+    rating: 4.6,
+    reviews: 1100,
+  },
+  {
+    id: 6,
+    name: "Devi Mahatmyam",
+    image: "https://m.media-amazon.com/images/I/81H7zM2zQBL.jpg",
+    price: 249,
+    mrp: 350,
+    desc: "700 verses of Goddess Durga.",
+    rating: 4.7,
+    reviews: 1250,
+  },
+  {
+    id: 7,
+    name: "Rigveda Hymns",
+    image: "https://i.pinimg.com/1200x/4b/72/55/4b72558950b86460f2bd175a39f7a110.jpg",
+    price: 599,
+    mrp: 899,
+    desc: "Ancient Vedic hymns collection.",
+    rating: 4.4,
+    reviews: 700,
+  },
+  {
+    id: 8,
+    name: "Yajurveda Samhita",
+    image: "https://m.media-amazon.com/images/I/71x7z4KX3BL.jpg",
+    price: 549,
+    mrp: 850,
+    desc: "Sacred rituals and mantras.",
+    rating: 4.3,
+    reviews: 650,
+  },
+  {
+    id: 9,
+    name: "Atharva Veda",
+    image: "https://m.media-amazon.com/images/I/71jK2y7X6FL.jpg",
+    price: 499,
+    mrp: 780,
+    desc: "Knowledge of daily rituals and healing.",
+    rating: 4.4,
+    reviews: 620,
+  },
+  {
+    id: 10,
+    name: "Upanishads Collection",
+    image: "https://m.media-amazon.com/images/I/81Upanishad.jpg",
+    price: 699,
+    mrp: 999,
+    desc: "Philosophical teachings of Hinduism.",
+    rating: 4.8,
+    reviews: 1400,
+  },
+  {
+    id: 11,
+    name: "Hanuman Chalisa Book",
+    image: "https://m.media-amazon.com/images/I/71Hanuman.jpg",
+    price: 99,
+    mrp: 150,
+    desc: "Devotional hymn for Lord Hanuman.",
+    rating: 4.9,
+    reviews: 3000,
+  },
+  {
+    id: 12,
+    name: "Sai Satcharitra",
+    image: "https://m.media-amazon.com/images/I/71Sai.jpg",
+    price: 299,
+    mrp: 450,
+    desc: "Life and miracles of Sai Baba.",
+    rating: 4.8,
+    reviews: 2100,
+  },
+  {
+    id: 13,
+    name: "Garuda Purana",
+    image: "https://m.media-amazon.com/images/I/71Garuda.jpg",
+    price: 349,
+    mrp: 500,
+    desc: "Afterlife and karma teachings.",
+    rating: 4.5,
+    reviews: 870,
+  },
+  {
+    id: 14,
+    name: "Bhagavata Purana",
+    image: "https://m.media-amazon.com/images/I/81Bhagavata.jpg",
+    price: 599,
+    mrp: 850,
+    desc: "Stories of Lord Krishna.",
+    rating: 4.9,
+    reviews: 1750,
+  },
+  {
+    id: 15,
+    name: "Skanda Purana",
+    image: "https://m.media-amazon.com/images/I/71Skanda.jpg",
+    price: 499,
+    mrp: 750,
+    desc: "Largest Purana with sacred legends.",
+    rating: 4.4,
+    reviews: 690,
+  },
+  {
+    id: 16,
+    name: "Narada Bhakti Sutra",
+    image: "https://m.media-amazon.com/images/I/71Narada.jpg",
+    price: 199,
+    mrp: 300,
+    desc: "Teachings on devotion (Bhakti).",
+    rating: 4.6,
+    reviews: 540,
+  },
+  {
+    id: 17,
+    name: "Yoga Vasistha",
+    image: "https://m.media-amazon.com/images/I/71Yoga.jpg",
+    price: 699,
+    mrp: 1000,
+    desc: "Spiritual wisdom and philosophy.",
+    rating: 4.7,
+    reviews: 880,
+  },
+  {
+    id: 18,
+    name: "Ashtavakra Gita",
+    image: "https://m.media-amazon.com/images/I/71Ashtavakra.jpg",
+    price: 249,
+    mrp: 400,
+    desc: "Advaita Vedanta teachings.",
+    rating: 4.6,
+    reviews: 720,
+  },
+  {
+    id: 19,
+    name: "Durga Chalisa",
+    image: "https://m.media-amazon.com/images/I/71Durga.jpg",
+    price: 120,
+    mrp: 180,
+    desc: "Devotional hymn for Goddess Durga.",
+    rating: 4.7,
+    reviews: 950,
+  },
+  {
+    id: 20,
+    name: "Lakshmi Sahasranama",
+    image: "https://m.media-amazon.com/images/I/71Lakshmi.jpg",
+    price: 220,
+    mrp: 350,
+    desc: "1000 names of Goddess Lakshmi.",
+    rating: 4.8,
+    reviews: 1100,
+  }
+]
+    
+  },
+  {
+    id: "prasadham", icon: "🍯", label: "Prasadham", desc: "Temple-blessed sacred offerings",
+    items: [
+      { id: 1, name: "Panchamrit Mix", price: 149, mrp: 220, desc: "Milk, honey, ghee, sugar, curd — the five sacred ingredients. Ritual-grade quality.", emoji: "🥛", rating: 4.5, reviews: 834, tag: "Pure" },
+      { id: 2, name: "Temple Modak", price: 199, mrp: 280, desc: "Ganesh's favourite sweet. Handmade using traditional jaggery-coconut filling.", emoji: "🍬", rating: 4.7, reviews: 2103, tag: "Bestseller" },
+      { id: 3, name: "Tirupati Laddu", price: 299, mrp: 399, desc: "Authentic besan laddu prepared using the original Tirumala TTD recipe.", emoji: "🍡", rating: 4.9, reviews: 5621, tag: "Top Rated" },
+      { id: 4, name: "Charnamrit", price: 99, mrp: 149, desc: "Holy water infused with tulsi, saffron and herbs. Delivered in sealed copper vessel.", emoji: "🏺", rating: 4.4, reviews: 445, tag: null },
+      { id: 5, name: "Satyanarayan Prasad", price: 179, mrp: 249, desc: "Semolina & jaggery mix. Prepared under strict ritual conditions.", emoji: "🍮", rating: 4.6, reviews: 672, tag: null },
+      { id: 6, name: "Pongal Prasad", price: 129, mrp: 180, desc: "Sacred rice offering prepared in pure ghee. Temple tradition from Tamil Nadu.", emoji: "🍚", rating: 4.3, reviews: 318, tag: null },
     ],
   },
   {
-    id:"prasadham", icon:"🍯", label:"Prasadham", desc:"Temple-blessed sacred offerings",
-    items:[
-      { id:1, name:"Panchamrit Mix",      price:"₹149", desc:"5 sacred ingredients blend", emoji:"🥛" },
-      { id:2, name:"Temple Modak",        price:"₹199", desc:"Ganesh's favourite sweet",   emoji:"🍬" },
-      { id:3, name:"Tirupati Laddu",      price:"₹299", desc:"Authentic besan laddu",      emoji:"🍡" },
-      { id:4, name:"Charnamrit",          price:"₹99",  desc:"Holy water with herbs",      emoji:"🏺" },
-      { id:5, name:"Satyanarayan Prasad", price:"₹179", desc:"Semolina & jaggery mix",     emoji:"🍮" },
-      { id:6, name:"Pongal Prasad",       price:"₹129", desc:"Sacred rice offering",       emoji:"🍚" },
+    id: "pooja", icon: "🪔", label: "Pooja Items", desc: "Ritual tools & sacred supplies",
+    items: [
+      { id: 1, name: "Brass Diya Set (12pc)", price: 649, mrp: 999, desc: "Hand-crafted temple lamps in traditional lotus design. BIS-certified brass.", emoji: "🪔", rating: 4.7, reviews: 1876, tag: "Bestseller" },
+      { id: 2, name: "Camphor Tablets (100pc)", price: 89, mrp: 130, desc: "Pure white camphor. Smokeless, long-burning. Individually sealed.", emoji: "⬜", rating: 4.5, reviews: 932, tag: null },
+      { id: 3, name: "Sandalwood Incense", price: 129, mrp: 200, desc: "Premium agarbatti sticks with 6-hour burn time. Pure sandalwood, no filler.", emoji: "🌿", rating: 4.6, reviews: 1243, tag: null },
+      { id: 4, name: "Brass Kalash", price: 899, mrp: 1399, desc: "Sacred water vessel with mango leaf & coconut top. Hand-engraved.", emoji: "🏺", rating: 4.8, reviews: 543, tag: "Premium" },
+      { id: 5, name: "Kumkum & Turmeric Set", price: 149, mrp: 199, desc: "Auspicious ritual powders in 6 decorated containers with silver-plated tray.", emoji: "🔴", rating: 4.4, reviews: 678, tag: null },
+      { id: 6, name: "Copper Puja Plate", price: 549, mrp: 850, desc: "Engraved thali with 6 small bowls, spoon and bell. Temple-grade copper.", emoji: "🥃", rating: 4.7, reviews: 891, tag: null },
     ],
   },
   {
-    id:"pooja", icon:"🪔", label:"Pooja Items", desc:"Ritual tools & sacred supplies",
-    items:[
-      { id:1, name:"Brass Diya Set (12pc)",   price:"₹649", desc:"Hand-crafted temple lamps",  emoji:"🪔" },
-      { id:2, name:"Camphor Tablets (100pc)", price:"₹89",  desc:"Pure white camphor",          emoji:"⬜" },
-      { id:3, name:"Sandalwood Incense",      price:"₹129", desc:"Premium agarbatti sticks",    emoji:"🌿" },
-      { id:4, name:"Brass Kalash",            price:"₹899", desc:"Sacred water vessel",         emoji:"🏺" },
-      { id:5, name:"Kumkum & Turmeric Set",  price:"₹149", desc:"Auspicious ritual powders",   emoji:"🔴" },
-      { id:6, name:"Copper Puja Plate",       price:"₹549", desc:"Engraved thali with spoon",   emoji:"🥃" },
+    id: "statue", icon: "🛕", label: "Statues", desc: "Divine idols & sacred sculptures",
+    items: [
+      { id: 1, name: "Ganesha — Brass 6\"", price: 1299, mrp: 1999, desc: "Sitting Ganapati in blessing pose, antique gold finish. Hand-cast brass.", emoji: "🐘", rating: 4.8, reviews: 2341, tag: "Bestseller" },
+      { id: 2, name: "Lakshmi — Marble 8\"", price: 2499, mrp: 3499, desc: "White Statuario marble with 24K gold leaf detailing. Hand-carved in Jaipur.", emoji: "🌺", rating: 4.9, reviews: 1102, tag: "Top Rated" },
+      { id: 3, name: "Shiva Lingam — Crystal", price: 3999, mrp: 5500, desc: "Natural Sphatik crystal, hand-polished. Comes with copper abhishek vessel.", emoji: "🔮", rating: 4.7, reviews: 678, tag: "Natural" },
+      { id: 4, name: "Saraswati — Bronze 10\"", price: 4299, mrp: 6000, desc: "Goddess playing veena, lost-wax cast bronze. Intricate Chola-style work.", emoji: "🎵", rating: 4.8, reviews: 456, tag: "Handcrafted" },
+      { id: 5, name: "Hanuman — Brass 12\"", price: 2199, mrp: 3199, desc: "Standing Panchamukhi Hanuman with red flag. Temple-blessed in Varanasi.", emoji: "🙏", rating: 4.9, reviews: 1893, tag: "Bestseller" },
+      { id: 6, name: "Nataraja — Panchaloga", price: 5999, mrp: 8500, desc: "Dancing Shiva in the five sacred metals — traditional Swamimalai casting.", emoji: "💃", rating: 4.9, reviews: 334, tag: "Rare" },
     ],
   },
   {
-    id:"statue", icon:"🛕", label:"Statues", desc:"Divine idols & sacred sculptures",
-    items:[
-      { id:1, name:"Ganesha — Brass 6\"",    price:"₹1,299", desc:"Sitting pose, antique finish", emoji:"🐘" },
-      { id:2, name:"Lakshmi — Marble 8\"",   price:"₹2,499", desc:"White marble, gold detailing", emoji:"🌺" },
-      { id:3, name:"Shiva Lingam — Crystal", price:"₹3,999", desc:"Sphatik crystal, natural",     emoji:"🔮" },
-      { id:4, name:"Saraswati — Bronze 10\"",price:"₹4,299", desc:"Playing veena, intricate work",emoji:"🎵" },
-      { id:5, name:"Hanuman — Brass 12\"",   price:"₹2,199", desc:"Standing pose, red flag",      emoji:"🙏" },
-      { id:6, name:"Nataraja — Panchaloga",  price:"₹5,999", desc:"Dancing Shiva, five metals",   emoji:"💃" },
+    id: "images", icon: "🖼️", label: "Images", desc: "Blessed portraits & holy prints",
+    items: [
+      { id: 1, name: "Tirupati Balaji Print", price: 299, mrp: 499, desc: "12×16\", UV coated on archival paper, ready-to-hang teak wood frame.", emoji: "🌟", rating: 4.7, reviews: 3412, tag: "Bestseller" },
+      { id: 2, name: "Goddess Durga Canvas", price: 499, mrp: 799, desc: "18×24\", gallery-wrapped premium canvas. Vibrant pigment print, 100yr archival.", emoji: "⚡", rating: 4.8, reviews: 1234, tag: null },
+      { id: 3, name: "Om Namah Shivaya Scroll", price: 199, mrp: 299, desc: "Gold leaf embossed on handmade paper, 36\" scroll. Suitable for altar.", emoji: "🕉️", rating: 4.5, reviews: 765, tag: null },
+      { id: 4, name: "Radha Krishna Painting", price: 649, mrp: 999, desc: "Hand-painted in Tanjore style with 24K gold leaf. Certificate of authenticity.", emoji: "💛", rating: 4.9, reviews: 892, tag: "Handpainted" },
+      { id: 5, name: "Saibaba Photo Frame", price: 349, mrp: 550, desc: "Teak wood frame, 10×12\", double mat. Original Shirdi photograph.", emoji: "🪬", rating: 4.6, reviews: 2103, tag: null },
+      { id: 6, name: "Ashtavinayak Set", price: 799, mrp: 1199, desc: "All 8 Ganesh temple photographs, matching silver frames, ready to hang.", emoji: "🐘", rating: 4.7, reviews: 567, tag: null },
     ],
   },
   {
-    id:"images", icon:"🖼️", label:"Images", desc:"Blessed portraits & holy prints",
-    items:[
-      { id:1, name:"Tirupati Balaji Print",   price:"₹299", desc:"12×16\", UV coated, framed",  emoji:"🌟" },
-      { id:2, name:"Goddess Durga Canvas",    price:"₹499", desc:"18×24\", premium canvas",      emoji:"⚡" },
-      { id:3, name:"Om Namah Shivaya Scroll", price:"₹199", desc:"Gold leaf embossed, 36\"",     emoji:"🕉️" },
-      { id:4, name:"Radha Krishna Painting",  price:"₹649", desc:"Hand-painted, 16×20\"",        emoji:"💛" },
-      { id:5, name:"Saibaba Photo Frame",     price:"₹349", desc:"Teak wood frame, 10×12\"",     emoji:"🪬" },
-      { id:6, name:"Ashtavinayak Set",        price:"₹799", desc:"8 Ganesh photos, framed set",  emoji:"🐘" },
-    ],
-  },
-  {
-    id:"mala", icon:"📿", label:"Mala", desc:"Sacred prayer beads & garlands",
-    items:[
-      { id:1, name:"Rudraksha Mala — 108", price:"₹999",   desc:"Original 5-mukhi beads",   emoji:"📿" },
-      { id:2, name:"Tulsi Mala — 108",     price:"₹299",   desc:"Holy basil, handstrung",    emoji:"🌿" },
-      { id:3, name:"Sphatik Mala — 108",   price:"₹1,499", desc:"Crystal quartz beads",      emoji:"🔮" },
-      { id:4, name:"Sandal Wood Mala",     price:"₹799",   desc:"Fragrant, 10mm beads",      emoji:"🪵" },
-      { id:5, name:"Gold Plated Mala",     price:"₹2,199", desc:"Temple-grade brass beads",  emoji:"✨" },
-      { id:6, name:"Lotus Seed Mala",      price:"₹449",   desc:"Kamal gatta, 108 beads",    emoji:"🪷" },
+    id: "mala", icon: "📿", label: "Mala", desc: "Sacred prayer beads & garlands",
+    items: [
+      { id: 1, name: "Rudraksha Mala — 108", price: 999, mrp: 1499, desc: "Original 5-mukhi Nepal Rudraksha, handstrung on silk. Certificate of authenticity.", emoji: "📿", rating: 4.8, reviews: 3201, tag: "Certified" },
+      { id: 2, name: "Tulsi Mala — 108", price: 299, mrp: 450, desc: "Holy Vrindavan tulsi wood. Machine-rounded 8mm beads, handstrung.", emoji: "🌿", rating: 4.6, reviews: 1892, tag: null },
+      { id: 3, name: "Sphatik Mala — 108", price: 1499, mrp: 2199, desc: "Natural crystal quartz, round 10mm beads. Used for Devi & Shiva worship.", emoji: "🔮", rating: 4.7, reviews: 876, tag: "Natural" },
+      { id: 4, name: "Sandal Wood Mala", price: 799, mrp: 1199, desc: "Fragrant Mysore sandalwood, 10mm beads. Retains scent for years.", emoji: "🪵", rating: 4.8, reviews: 654, tag: null },
+      { id: 5, name: "Gold Plated Mala", price: 2199, mrp: 3199, desc: "Temple-grade brass beads with 22K gold plating. For pooja use.", emoji: "✨", rating: 4.5, reviews: 412, tag: "Premium" },
+      { id: 6, name: "Lotus Seed Mala", price: 449, mrp: 699, desc: "Kamal gatta 108 beads. Auspicious for Lakshmi worship & prosperity.", emoji: "🪷", rating: 4.6, reviews: 789, tag: null },
     ],
   },
 ];
 
-/* ─────────────────────────────────────────────
-   HOOK
-───────────────────────────────────────────── */
 function useHover() {
   const [h, set] = useState(false);
-  return [h, { onMouseEnter:()=>set(true), onMouseLeave:()=>set(false) }];
+  return [h, { onMouseEnter: () => set(true), onMouseLeave: () => set(false) }];
 }
 
-/* ─────────────────────────────────────────────
-   ORNAMENT DIVIDER
-───────────────────────────────────────────── */
-function GoldDivider({ style={} }) {
+function GoldDivider({ style = {} }) {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:10, ...style }}>
-      <div style={{ flex:1, height:1, background:`linear-gradient(90deg,transparent,${T.goldMid}55)` }}/>
-      <span style={{ color:T.goldMid, fontSize:11, opacity:0.75 }}>✦</span>
-      <div style={{ flex:1, height:1, background:`linear-gradient(90deg,${T.goldMid}55,transparent)` }}/>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, ...style }}>
+      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,${T.goldMid}55)` }} />
+      <span style={{ color: T.goldMid, fontSize: 11, opacity: 0.75 }}>✦</span>
+      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,${T.goldMid}55,transparent)` }} />
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   CAROUSEL
-───────────────────────────────────────────── */
-function Carousel({ data, animDelay }) {
-  const [cur, setCur] = useState(0);
-  const len = data.slides.length;
-  const prev = () => setCur(c=>(c-1+len)%len);
-  const next = () => setCur(c=>(c+1)%len);
+/* ── Star rating display ── */
+function Stars({ rating }) {
+  const pct = (rating / 5) * 100;
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+      <div style={{ position: "relative", fontSize: 14, letterSpacing: 1, lineHeight: 1 }}>
+        <span style={{ color: "#ddd" }}>★★★★★</span>
+        <span style={{ position: "absolute", left: 0, top: 0, overflow: "hidden", width: `${pct}%`, color: "#FF9800" }}>★★★★★</span>
+      </div>
+      <span style={{ fontFamily: FONTS.small, fontSize: 12, fontWeight: 600, color: "#FF9800" }}>{rating}</span>
+    </div>
+  );
+}
 
+/* ── Qty stepper — Flipkart style ── */
+function QtyStepper({ qty, onInc, onDec }) {
+  const isOne = qty === 1;
   return (
     <div style={{
-      background:T.surface,
-      borderRadius:16,
-      overflow:"hidden",
-      border:`1px solid ${T.border}`,
-      boxShadow:"0 2px 14px rgba(184,134,11,0.07)",
-      animation:`fadeUp 0.5s ease ${animDelay}s both`,
+      display: "inline-flex", alignItems: "stretch",
+      border: `1.5px solid ${T.goldMid}`,
+      borderRadius: 5, overflow: "hidden", height: 36,
+      animation: "popIn 0.22s ease both",
+      boxShadow: "0 2px 8px rgba(184,134,11,0.15)",
     }}>
-      <div style={{ overflow:"hidden", position:"relative" }}>
-        <div style={{ display:"flex", transform:`translateX(-${cur*100}%)`, transition:"transform 0.5s cubic-bezier(0.4,0,0.2,1)" }}>
-          {data.slides.map((s,i)=>(
-            <div key={i} style={{
-              minWidth:"100%",
-              background:`linear-gradient(160deg, ${T.goldPale} 0%, ${T.bgAlt} 100%)`,
-              padding:"38px 24px 30px",
-              display:"flex", flexDirection:"column", alignItems:"center", gap:10,
-              position:"relative",
-            }}>
-              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${T.goldMid},transparent)` }}/>
-              <div style={{
-                width:64, height:64, borderRadius:"50%",
-                background:"rgba(212,175,55,0.1)",
-                border:`1.5px solid ${T.goldLight}`,
-                display:"flex", alignItems:"center", justifyContent:"center", fontSize:28,
-              }}>{s.emoji}</div>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:15, fontWeight:600, color:T.gold, letterSpacing:2, textAlign:"center" }}>{s.label}</div>
-              <div style={{ fontSize:10, color:T.textDis, letterSpacing:3, textTransform:"uppercase" }}>{s.sub}</div>
-            </div>
-          ))}
-        </div>
-        {[{s:"‹",fn:prev,p:{left:10}},{s:"›",fn:next,p:{right:10}}].map((a,i)=>(
-          <SlideArrow key={i} sym={a.s} fn={a.fn} pos={a.p}/>
-        ))}
-      </div>
-      <div style={{ display:"flex", justifyContent:"center", gap:6, padding:"11px 0 13px", background:T.surfaceAlt, borderTop:`1px solid ${T.border}` }}>
-        {data.slides.map((_,i)=>(
-          <button key={i} onClick={()=>setCur(i)} style={{
-            width:i===cur?20:6, height:6,
-            borderRadius:i===cur?3:"50%",
-            background:i===cur?T.goldMid:T.border,
-            border:"none", cursor:"pointer", padding:0, transition:"all 0.3s",
-          }}/>
-        ))}
-      </div>
-    </div>
-  );
-}
+      <button onClick={onDec} style={{
+        width: 38, border: "none", cursor: "pointer",
+        background: isOne ? "#fff2f2" : "#fffbf0",
+        color: isOne ? "#e53935" : T.gold,
+        fontSize: isOne ? 15 : 20, fontWeight: 700,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        transition: "background 0.15s",
+        fontFamily: FONTS.body,
+      }}>{isOne ? "🗑" : "−"}</button>
 
-function SlideArrow({ sym, fn, pos }) {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} onClick={fn} style={{
-      position:"absolute", top:"50%", transform:"translateY(-50%)", ...pos,
-      width:30, height:30, borderRadius:"50%",
-      background:h?T.goldMid:"rgba(255,255,255,0.9)",
-      border:`1px solid ${h?T.goldMid:T.border}`,
-      color:h?"#fff":T.gold, fontSize:18, cursor:"pointer",
-      display:"flex", alignItems:"center", justifyContent:"center",
-      transition:"all 0.2s", zIndex:2,
-      boxShadow:"0 2px 8px rgba(0,0,0,0.08)",
-    }}>{sym}</button>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   CATEGORY CARD
-───────────────────────────────────────────── */
-function CategoryCard({ cat, onClick, animDelay }) {
-  const [h,hp] = useHover();
-  return (
-    <div {...hp} onClick={()=>onClick(cat)} style={{
-      background:h?T.goldPale:T.surface,
-      borderRadius:14,
-      padding:"28px 16px 22px",
-      border:`1.5px solid ${h?T.goldMid:T.border}`,
-      cursor:"pointer",
-      display:"flex", flexDirection:"column", alignItems:"center", gap:10, textAlign:"center",
-      transform:h?"translateY(-5px)":"translateY(0)",
-      boxShadow:h?"0 14px 36px rgba(184,134,11,0.14), 0 2px 8px rgba(0,0,0,0.05)":"0 1px 4px rgba(0,0,0,0.04)",
-      transition:"all 0.28s",
-      animation:`fadeUp 0.5s ease ${animDelay}s both`,
-      position:"relative", overflow:"hidden",
-    }}>
       <div style={{
-        position:"absolute", top:0, left:0, right:0, height:2,
-        background:h?`linear-gradient(90deg,transparent,${T.goldMid},transparent)`:"transparent",
-        transition:"background 0.3s",
-      }}/>
-      <div style={{
-        width:58, height:58, borderRadius:"50%",
-        background:h?"rgba(212,175,55,0.16)":"rgba(212,175,55,0.06)",
-        border:`1.5px solid ${h?T.goldMid:T.border}`,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        fontSize:24, transition:"all 0.3s",
-        animation:h?"goldPulse 2s ease infinite":"none",
-      }}>{cat.icon}</div>
-      <div style={{ fontFamily:"'Cinzel',serif", fontSize:13, fontWeight:600, color:h?T.gold:T.text, letterSpacing:1.5, transition:"color 0.3s" }}>
-        {cat.label}
-      </div>
-      <div style={{ fontSize:11, color:T.textDis, lineHeight:1.6 }}>{cat.desc}</div>
-      <div style={{ fontSize:10, letterSpacing:2, textTransform:"uppercase", color:h?T.goldMid:T.textDis, display:"flex", alignItems:"center", gap:3, transition:"color 0.3s", marginTop:2 }}>
-        Explore <span style={{fontSize:13}}>›</span>
-      </div>
+        minWidth: 40, display: "flex", alignItems: "center", justifyContent: "center",
+        background: "#fff",
+        fontFamily: FONTS.sub, fontSize: 14, fontWeight: 700, color: T.text,
+        borderLeft: `1px solid ${T.border}`, borderRight: `1px solid ${T.border}`,
+      }}>{qty}</div>
+
+      <button onClick={onInc} style={{
+        width: 38, border: "none", cursor: "pointer",
+        background: "#fffbf0", color: T.gold,
+        fontSize: 20, fontWeight: 700,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        transition: "background 0.15s",
+        fontFamily: FONTS.body,
+      }}>+</button>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   PRODUCT LIST
-───────────────────────────────────────────── */
-function ProductList({ cat, cart, onAdd, onBack }) {
-  return (
-    <div style={{ animation:"fadeUp 0.4s ease both" }}>
-      <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:18 }}>
-        <BackBtn onClick={onBack}/>
-        <div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:20, fontWeight:600, color:T.gold, letterSpacing:1 }}>
-            {cat.icon} {cat.label}
-          </div>
-          <div style={{ fontSize:12, color:T.textDis, marginTop:2 }}>{cat.desc}</div>
-        </div>
-      </div>
-      <GoldDivider style={{ marginBottom:28 }}/>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))", gap:16 }}>
-        {cat.items.map((item,i)=>(
-          <ProductCard key={item.id} item={item} catId={cat.id} cart={cart} onAdd={onAdd} delay={i*0.05}/>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ProductCard({ item, catId, cart, onAdd, delay }) {
-  const [h,hp] = useHover();
-  const [added, setAdded] = useState(false);
+/* ────────────────────────────────────────────
+   FLIPKART-STYLE PRODUCT CARD
+──────────────────────────────────────────── */
+function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
+  const [h, hp] = useHover();
+  const [wish, setWish] = useState(false);
   const key = `${catId}-${item.id}`;
-  const qty = cart[key]||0;
+  const qty = cart[key] || 0;
+  const discount = Math.round(((item.mrp - item.price) / item.mrp) * 100);
 
-  const handleAdd = () => {
-    onAdd(key);
-    setAdded(true);
-    setTimeout(()=>setAdded(false), 950);
+  const tagColor = {
+    "Bestseller": "#2874F0", "Top Rated": "#26A541",
+    "Limited": "#e53935", "Pure": "#00897B",
+    "Premium": "#7B1FA2", "Natural": "#558B2F",
+    "Certified": "#1565C0", "Handpainted": "#E65100",
+    "Handcrafted": "#AD1457", "Rare": "#6A1B9A",
   };
 
   return (
     <div {...hp} style={{
-      background:T.surface,
-      borderRadius:12,
-      border:`1px solid ${h?T.goldMid:T.border}`,
-      padding:"16px",
-      display:"flex", alignItems:"flex-start", gap:14,
-      transform:h?"translateY(-3px)":"none",
-      boxShadow:h?"0 10px 28px rgba(184,134,11,0.12)":"0 1px 4px rgba(0,0,0,0.04)",
-      transition:"all 0.25s",
-      animation:`fadeUp 0.4s ease ${delay}s both`,
+      background: T.surface,
+      borderRadius: 10,
+      border: `1px solid ${h ? T.goldMid : T.border}`,
+      display: "flex",
+      overflow: "hidden",
+      boxShadow: h
+        ? "0 8px 32px rgba(184,134,11,0.14), 0 2px 8px rgba(0,0,0,0.06)"
+        : "0 1px 6px rgba(0,0,0,0.05)",
+      transition: "all 0.25s",
+      animation: `fadeUp 0.4s ease ${delay}s both`,
+      position: "relative",
     }}>
+
+      {/* ── LEFT: image panel ── */}
       <div style={{
-        width:50, height:50, borderRadius:10, flexShrink:0,
-        background:h?T.goldPale:T.bgAlt,
-        border:`1px solid ${h?T.goldLight:T.border}`,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        fontSize:22, transition:"all 0.3s",
-        transform:h?"scale(1.08)":"scale(1)",
-      }}>{item.emoji}</div>
-      <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontFamily:"'Cinzel',serif", fontSize:13, fontWeight:500, color:T.text, marginBottom:3, lineHeight:1.4 }}>{item.name}</div>
-        <div style={{ fontSize:11, color:T.textDis, marginBottom:10 }}>{item.desc}</div>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:16, fontWeight:600, color:T.gold }}>{item.price}</div>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            {qty>0 && (
-              <span style={{ fontSize:11, color:T.gold, background:T.goldPale, border:`1px solid ${T.goldLight}`, padding:"1px 8px", borderRadius:20 }}>×{qty}</span>
-            )}
-            <AddBtn added={added} onClick={handleAdd}/>
+        width: 180, minWidth: 180,
+        background: `linear-gradient(165deg, ${T.goldPale} 0%, ${T.bgAlt} 100%)`,
+        display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center",
+        gap: 8, padding: "20px 12px",
+        borderRight: `1px solid ${T.border}`,
+        position: "relative",
+      }}>
+        {/* Tag */}
+        {item.tag && (
+          <div style={{
+            position: "absolute", top: 12, left: 0,
+            background: tagColor[item.tag] || T.gold,
+            color: "#fff",
+            fontFamily: FONTS.small, fontSize: 10, fontWeight: 700,
+            padding: "3px 9px 3px 7px",
+            borderRadius: "0 10px 10px 0",
+            letterSpacing: 0.4,
+            boxShadow: "0 2px 6px rgba(0,0,0,0.18)",
+          }}>{item.tag}</div>
+        )}
+
+        {/* Wishlist heart */}
+        <button onClick={() => setWish(w => !w)} style={{
+          position: "absolute", top: 10, right: 10,
+          background: "rgba(255,255,255,0.8)", border: "none",
+          borderRadius: "50%", width: 28, height: 28,
+          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 15,
+          color: wish ? "#e53935" : "#bbb",
+          transition: "transform 0.2s, color 0.2s",
+          transform: wish ? "scale(1.2)" : "scale(1)",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
+        }}>{wish ? "♥" : "♡"}</button>
+
+        {/* Product emoji or image */}
+        {item.image ? (
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{
+              width: "100%",
+              height: 120,
+              objectFit: "contain",
+            }}
+          />
+        ) : (
+          <div style={{
+            width: "100%",
+            height: 120,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 48,
+          }}>
+            {item.emoji}
           </div>
+        )}
+
+       
+      </div>
+
+      {/* ── RIGHT: details panel ── */}
+      <div style={{ flex: 1, padding: "18px 22px", display: "flex", flexDirection: "column", gap: 7, minWidth: 0 }}>
+
+        {/* Product name */}
+       <div style={{
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center"
+}}>
+  <div style={{
+    fontFamily: FONTS.sub,
+    fontSize: 16,
+    fontWeight: 600,
+    color: T.text,
+  }}>
+    {item.name}
+  </div>
+
+  <Stars rating={item.rating || 0} />
+</div>
+
+        {/* Stars */}
+        <Stars rating={item.rating || 0} />
+
+        {/* Description */}
+        <div style={{
+          fontFamily: FONTS.body, fontSize: 13, color: "#888",
+          lineHeight: 1.6,
+          display: "-webkit-box", WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical", overflow: "hidden",
+        }}>{item.desc}</div>
+
+        {/* Divider */}
+        <div style={{ height: 1, background: T.border, margin: "2px 0" }} />
+
+        {/* Price row */}
+        <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+          <span style={{
+            fontFamily: FONTS.heading, fontSize: 22, fontWeight: 700, color: "#D4AF37",
+          }}>₹{item.price.toLocaleString()}</span>
+          <span style={{
+            fontFamily: FONTS.small, fontSize: 14, color: "#AAAAAA",
+            textDecoration: "line-through",
+          }}>₹{item.mrp.toLocaleString()}</span>
+          {discount > 0 && (
+            <span style={{
+              fontFamily: FONTS.small, fontSize: 14, fontWeight: 700, color: T.green,
+            }}>{discount}% off</span>
+          )}
+        </div>
+
+        {/* Savings pill */}
+        {discount > 0 && (
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 5,
+            background: "#EAF7ED", borderRadius: 4, padding: "4px 10px",
+            fontFamily: FONTS.small, fontSize: 12, fontWeight: 500, color: T.green,
+            alignSelf: "flex-start",
+          }}>
+            🎉 You save ₹{(item.mrp - item.price).toLocaleString()}
+          </div>
+        )}
+
+        {/* Delivery */}
+        <div style={{
+          fontFamily: FONTS.small, fontSize: 12, color: T.green,
+          display: "flex", alignItems: "center", gap: 5,
+        }}>
+          <span>🚚</span>
+          <span style={{ fontWeight: 500 }}>Free Delivery</span>
+          <span style={{ color: "#AAAAAA" }}>· Usually ships in 2–3 days</span>
+        </div>
+
+        {/* CTA */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 4, flexWrap: "wrap" }}>
+          {qty === 0 ? (
+            <>
+              <button
+                onClick={() => onAdd(key)}
+                style={{
+                  height: 40, padding: "0 24px",
+                  background: `linear-gradient(135deg, ${T.goldMid}, ${T.gold})`,
+                  border: "none", borderRadius: 5,
+                  fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600,
+                  color: "#fff", letterSpacing: 0.4, cursor: "pointer",
+                  boxShadow: "0 3px 10px rgba(184,134,11,0.28)",
+                  display: "flex", alignItems: "center", gap: 7,
+                  transition: "all 0.2s",
+                }}
+              >
+                🛒 Add to Cart
+              </button>
+              <button style={{
+                height: 40, padding: "0 20px",
+                background: "#fff",
+                border: `1.5px solid ${T.goldMid}`,
+                borderRadius: 5,
+                fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600,
+                color: T.gold, cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 7,
+              }}>
+                ⚡ Buy Now
+              </button>
+            </>
+          ) : (
+            <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+              <QtyStepper qty={qty} onInc={() => onAdd(key)} onDec={() => onRemove(key)} />
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{
+                  fontFamily: FONTS.small, fontSize: 12, color: T.green, fontWeight: 600,
+                }}>✓ Added to Cart</span>
+                <span style={{
+                  fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA",
+                }}>Subtotal: ₹{(item.price * qty).toLocaleString()}</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-function AddBtn({ added, onClick }) {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} onClick={onClick} style={{
-      height:30, padding:"0 13px", borderRadius:20,
-      background:added?"#4a9e5c":h?T.gold:T.goldMid,
-      border:"none", color:"#fff",
-      fontSize:11, fontWeight:500, letterSpacing:0.5,
-      cursor:"pointer", transition:"all 0.2s",
-      display:"flex", alignItems:"center", gap:4,
-      boxShadow:h&&!added?"0 3px 10px rgba(212,175,55,0.3)":"none",
-    }}>{added?"✓ Added":"+ Cart"}</button>
-  );
-}
+/* ────────────────────────────────────────────
+   PRODUCT LIST PAGE
+──────────────────────────────────────────── */
+function ProductList({ cat, cart, onAdd, onRemove, onBack }) {
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("default");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
-function BackBtn({ onClick }) {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} onClick={onClick} style={{
-      width:36, height:36, borderRadius:"50%",
-      background:h?T.goldPale:T.surface,
-      border:`1.5px solid ${h?T.goldMid:T.border}`,
-      color:T.gold, fontSize:18, cursor:"pointer",
-      display:"flex", alignItems:"center", justifyContent:"center",
-      transition:"all 0.2s", flexShrink:0,
-      boxShadow:h?"0 3px 10px rgba(184,134,11,0.15)":"none",
-    }}>‹</button>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   CART DRAWER
-───────────────────────────────────────────── */
-function CartDrawer({ cart, onClose }) {
-  const allItems = CATEGORIES.flatMap(c=>c.items.map(i=>({...i,catId:c.id,catLabel:c.label})));
-  const entries = Object.entries(cart).filter(([,q])=>q>0).map(([key,qty])=>{
-    const [catId,id]=key.split("-");
-    const item=allItems.find(i=>i.catId===catId&&String(i.id)===id);
-    return {...item,qty,key};
+  let items = cat.items.filter(item => {
+    const q = search.toLowerCase();
+    const matchText = item.name.toLowerCase().includes(q) || (item.desc || "").toLowerCase().includes(q);
+    const matchMin = minPrice === "" || item.price >= Number(minPrice);
+    const matchMax = maxPrice === "" || item.price <= Number(maxPrice);
+    return matchText && matchMin && matchMax;
   });
-  const total = entries.reduce((s,e)=>s+e.qty*parseInt(e.price.replace(/[₹,]/g,"")),0);
+
+  if (sortBy === "price_asc") items = [...items].sort((a, b) => a.price - b.price);
+  if (sortBy === "price_desc") items = [...items].sort((a, b) => b.price - a.price);
+  if (sortBy === "rating") items = [...items].sort((a, b) => b.rating - a.rating);
+  if (sortBy === "popular") items = [...items].sort((a, b) => b.reviews - a.reviews);
+
+  const inCartCount = items.filter(i => (cart[`${cat.id}-${i.id}`] || 0) > 0).length;
 
   return (
-    <div style={{ position:"fixed", inset:0, zIndex:300, display:"flex", justifyContent:"flex-end" }}>
-      <div onClick={onClose} style={{ position:"absolute", inset:0, background:"rgba(26,18,8,0.3)", backdropFilter:"blur(3px)" }}/>
-      <div style={{
-        position:"relative", width:370, height:"100%",
-        background:T.surface,
-        borderLeft:`1px solid ${T.border}`,
-        display:"flex", flexDirection:"column",
-        boxShadow:"-8px 0 40px rgba(184,134,11,0.1)",
-        overflowY:"auto",
-        animation:"fadeUp 0.3s ease both",
-      }}>
-        <div style={{ padding:"18px 24px 16px", borderBottom:`1px solid ${T.border}`, display:"flex", alignItems:"center", justifyContent:"space-between", background:T.surfaceAlt }}>
-          <div>
-            <div style={{ fontFamily:"'Cinzel',serif", fontSize:15, fontWeight:600, color:T.gold, letterSpacing:1 }}>Your Cart</div>
-            <div style={{ fontSize:11, color:T.textDis, marginTop:1 }}>{entries.length} item(s)</div>
+    <div style={{ animation: "fadeUp 0.4s ease both" }}>
+
+      {/* Page header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+        <BackBtn onClick={onBack} />
+        <div>
+          <div style={{ fontFamily: FONTS.sub, fontSize: 22, fontWeight: 600, color: "#C9A227", lineHeight: 1.3 }}>
+            {cat.icon} {cat.label}
           </div>
-          <button onClick={onClose} style={{ background:"none", border:"none", color:T.textDis, fontSize:20, cursor:"pointer" }}>✕</button>
+          <div style={{ fontFamily: FONTS.small, fontSize: 13, color: "#AAAAAA" }}>{cat.desc}</div>
+        </div>
+        {inCartCount > 0 && (
+          <div style={{
+            marginLeft: "auto",
+            background: T.goldPale, border: `1px solid ${T.goldMid}`,
+            borderRadius: 20, padding: "5px 14px",
+            fontFamily: FONTS.small, fontSize: 12, fontWeight: 600, color: T.gold,
+          }}>
+            🛒 {inCartCount} item{inCartCount > 1 ? "s" : ""} in cart
+          </div>
+        )}
+      </div>
+
+      <GoldDivider style={{ marginBottom: 16 }} />
+
+      {/* ── Filter / Sort bar ── */}
+      <div style={{
+        background: T.surface,
+        border: `1px solid ${T.border}`,
+        borderRadius: 10, padding: "14px 18px",
+        marginBottom: 20,
+        boxShadow: "0 2px 10px rgba(184,134,11,0.06)",
+      }}>
+        {/* Row 1: Search + Sort */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
+          <div style={{ position: "relative", flex: 1, minWidth: 200 }}>
+            <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: T.goldMid, fontSize: 14 }}>🔍</span>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search in this category…"
+              style={{
+                width: "100%", padding: "9px 14px 9px 36px",
+                border: `1.5px solid ${T.border}`, borderRadius: 6,
+                fontFamily: FONTS.body, fontSize: 14, color: T.text,
+                background: T.bgAlt, outline: "none", transition: "border 0.2s",
+              }}
+              onFocus={e => e.target.style.borderColor = T.goldMid}
+              onBlur={e => e.target.style.borderColor = T.border}
+            />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <span style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA" }}>Price (₹):</span>
+            <input
+              value={minPrice} onChange={e => setMinPrice(e.target.value)}
+              placeholder="Min" type="number"
+              style={{
+                width: 70, padding: "8px 10px",
+                border: `1.5px solid ${T.border}`, borderRadius: 6,
+                fontFamily: FONTS.body, fontSize: 13, color: T.text,
+                background: T.bgAlt, outline: "none",
+              }}
+            />
+            <span style={{ color: "#AAAAAA" }}>–</span>
+            <input
+              value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+              placeholder="Max" type="number"
+              style={{
+                width: 70, padding: "8px 10px",
+                border: `1.5px solid ${T.border}`, borderRadius: 6,
+                fontFamily: FONTS.body, fontSize: 13, color: T.text,
+                background: T.bgAlt, outline: "none",
+              }}
+            />
+          </div>
+          <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginLeft: "auto" }}>
+            {items.length} result{items.length !== 1 ? "s" : ""}
+          </div>
         </div>
 
-        <div style={{ flex:1, padding:"16px 20px", display:"flex", flexDirection:"column", gap:10 }}>
-          {entries.length===0?(
-            <div style={{ textAlign:"center", color:T.textDis, fontSize:13, marginTop:48 }}>
-              <div style={{ fontSize:40, marginBottom:12 }}>🪔</div>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:14, color:T.textSec }}>Cart is empty</div>
-              <div style={{ fontSize:12, marginTop:6 }}>Add sacred items to begin</div>
+        {/* Row 2: Sort pills */}
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginRight: 2 }}>Sort by:</span>
+          {[
+            { v: "default", l: "Relevance" },
+            { v: "popular", l: "🔥 Popularity" },
+            { v: "rating", l: "⭐ Rating" },
+            { v: "price_asc", l: "Price: Low to High" },
+            { v: "price_desc", l: "Price: High to Low" },
+          ].map(opt => (
+            <button key={opt.v} onClick={() => setSortBy(opt.v)} style={{
+              padding: "5px 13px", borderRadius: 20,
+              border: `1.5px solid ${sortBy === opt.v ? T.goldMid : T.border}`,
+              background: sortBy === opt.v ? T.goldPale : "#fff",
+              fontFamily: FONTS.small, fontSize: 12,
+              fontWeight: sortBy === opt.v ? 600 : 400,
+              color: sortBy === opt.v ? T.gold : T.textSec,
+              cursor: "pointer", transition: "all 0.18s",
+            }}>{opt.l}</button>
+          ))}
+          {(search || minPrice || maxPrice) && (
+            <button onClick={() => { setSearch(""); setMinPrice(""); setMaxPrice(""); }} style={{
+              marginLeft: "auto", padding: "5px 13px", borderRadius: 20,
+              border: `1px solid #e53935`, background: "#fff2f2",
+              fontFamily: FONTS.small, fontSize: 12, color: "#e53935",
+              cursor: "pointer",
+            }}>✕ Clear filters</button>
+          )}
+        </div>
+      </div>
+
+      {/* Product cards */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        {items.length > 0 ? (
+          items.map((item, i) => (
+            <ProductCard
+              key={item.id}
+              item={item}
+              catId={cat.id}
+              cart={cart}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              delay={i * 0.04}
+            />
+          ))
+        ) : (
+          <div style={{
+            textAlign: "center", padding: "64px 20px",
+            background: T.surface, borderRadius: 12, border: `1px dashed ${T.border}`,
+          }}>
+            <div style={{ fontSize: 44, marginBottom: 14 }}>🔍</div>
+            <div style={{ fontFamily: FONTS.sub, fontSize: 16, fontWeight: 600, color: "#C9A227", marginBottom: 6 }}>
+              No items found
             </div>
-          ):entries.map(e=>(
-            <div key={e.key} style={{ display:"flex", gap:12, alignItems:"center", padding:"12px 14px", background:T.bgAlt, borderRadius:10, border:`1px solid ${T.border}` }}>
-              <span style={{ fontSize:22 }}>{e.emoji}</span>
-              <div style={{ flex:1 }}>
-                <div style={{ fontSize:12, color:T.text, fontFamily:"'Cinzel',serif", lineHeight:1.3 }}>{e.name}</div>
-                <div style={{ fontSize:11, color:T.textDis }}>{e.catLabel}</div>
-              </div>
-              <div style={{ textAlign:"right" }}>
-                <div style={{ fontSize:13, color:T.gold, fontFamily:"'Cinzel',serif" }}>{e.price}</div>
-                <div style={{ fontSize:11, color:T.textDis }}>×{e.qty}</div>
+            <div style={{ fontFamily: FONTS.body, fontSize: 14, color: "#AAAAAA" }}>
+              Try adjusting your search or filters
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────
+   CAROUSEL
+──────────────────────────────────────────── */
+function Carousel({ data, animDelay }) {
+  const [cur, setCur] = useState(0);
+  const len = data.slides.length;
+  return (
+    <div style={{ background: T.surface, borderRadius: 16, overflow: "hidden", border: `1px solid ${T.border}`, boxShadow: "0 2px 14px rgba(184,134,11,0.07)", animation: `fadeUp 0.5s ease ${animDelay}s both` }}>
+      <div style={{ overflow: "hidden", position: "relative" }}>
+        <div style={{ display: "flex", transform: `translateX(-${cur * 100}%)`, transition: "transform 0.5s cubic-bezier(0.4,0,0.2,1)" }}>
+          {data.slides.map((s, i) => (
+            <div key={i} style={{ minWidth: "100%", background: `linear-gradient(160deg,${T.goldPale} 0%,${T.bgAlt} 100%)`, padding: "38px 24px 30px", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent,${T.goldMid},transparent)` }} />
+              <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(212,175,55,0.1)", border: `1.5px solid ${T.goldLight}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>{s.emoji}</div>
+              <div style={{ fontFamily: FONTS.sub, fontSize: 15, fontWeight: 600, color: "#C9A227", letterSpacing: 1.5, textAlign: "center" }}>{s.label}</div>
+              <div style={{ fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA", letterSpacing: 3, textTransform: "uppercase" }}>{s.sub}</div>
+            </div>
+          ))}
+        </div>
+        {[{ s: "‹", fn: () => setCur(c => (c - 1 + len) % len), p: { left: 10 } }, { s: "›", fn: () => setCur(c => (c + 1) % len), p: { right: 10 } }].map((a, i) => (
+          <button key={i} onClick={a.fn} style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", ...a.p, width: 30, height: 30, borderRadius: "50%", background: "rgba(255,255,255,0.9)", border: `1px solid ${T.border}`, color: T.gold, fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>{a.s}</button>
+        ))}
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, padding: "11px 0 13px", background: T.surfaceAlt, borderTop: `1px solid ${T.border}` }}>
+        {data.slides.map((_, i) => (<button key={i} onClick={() => setCur(i)} style={{ width: i === cur ? 20 : 6, height: 6, borderRadius: i === cur ? 3 : "50%", background: i === cur ? T.goldMid : T.border, border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s" }} />))}
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────
+   CATEGORY CARD
+──────────────────────────────────────────── */
+function CategoryCard({ cat, onClick, animDelay }) {
+  const [h, hp] = useHover();
+  return (
+    <div {...hp} onClick={() => onClick(cat)} style={{ background: h ? T.goldPale : T.surface, borderRadius: 14, padding: "28px 16px 22px", border: `1.5px solid ${h ? T.goldMid : T.border}`, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textAlign: "center", transform: h ? "translateY(-5px)" : "translateY(0)", boxShadow: h ? "0 14px 36px rgba(184,134,11,0.14)" : "0 1px 4px rgba(0,0,0,0.04)", transition: "all 0.28s", animation: `fadeUp 0.5s ease ${animDelay}s both`, position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: h ? `linear-gradient(90deg,transparent,${T.goldMid},transparent)` : "transparent", transition: "background 0.3s" }} />
+      <div style={{ width: 58, height: 58, borderRadius: "50%", background: h ? "rgba(212,175,55,0.16)" : "rgba(212,175,55,0.06)", border: `1.5px solid ${h ? T.goldMid : T.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, transition: "all 0.3s", animation: h ? "goldPulse 2s ease infinite" : "none" }}>{cat.icon}</div>
+      <div style={{ fontFamily: FONTS.sub, fontSize: 14, fontWeight: 600, color: h ? "#C9A227" : T.text, letterSpacing: 1, transition: "color 0.3s" }}>{cat.label}</div>
+      <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", lineHeight: 1.6 }}>{cat.desc}</div>
+      <div style={{ fontFamily: FONTS.small, fontSize: 11, fontWeight: 500, letterSpacing: 2, textTransform: "uppercase", color: h ? "#C9A227" : "#AAAAAA", display: "flex", alignItems: "center", gap: 3, transition: "color 0.3s" }}>
+        Explore <span style={{ fontSize: 13 }}>›</span>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────
+   BACK BUTTON
+──────────────────────────────────────────── */
+function BackBtn({ onClick }) {
+  const [h, hp] = useHover();
+  return (
+    <button {...hp} onClick={onClick} style={{ width: 36, height: 36, borderRadius: "50%", background: h ? T.goldPale : T.surface, border: `1.5px solid ${h ? T.goldMid : T.border}`, color: T.gold, fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s", flexShrink: 0 }}>‹</button>
+  );
+}
+
+/* ────────────────────────────────────────────
+   CART DRAWER
+──────────────────────────────────────────── */
+function CartDrawer({ cart, onAdd, onRemove, onClose }) {
+  const allItems = CATEGORIES.flatMap(c => c.items.map(i => ({ ...i, catId: c.id, catLabel: c.label })));
+  const entries = Object.entries(cart).filter(([, q]) => q > 0).map(([key, qty]) => {
+    const [catId, id] = key.split("-");
+    const item = allItems.find(i => i.catId === catId && String(i.id) === id);
+    return { ...item, qty, key };
+  });
+  const total = entries.reduce((s, e) => s + e.qty * e.price, 0);
+  const savings = entries.reduce((s, e) => s + e.qty * (e.mrp - e.price), 0);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 300, display: "flex", justifyContent: "flex-end" }}>
+      <div onClick={onClose} style={{ position: "absolute", inset: 0, background: "rgba(26,18,8,0.3)", backdropFilter: "blur(3px)" }} />
+      <div style={{ position: "relative", width: 410, height: "100%", background: T.surface, borderLeft: `1px solid ${T.border}`, display: "flex", flexDirection: "column", boxShadow: "-8px 0 40px rgba(184,134,11,0.1)", overflowY: "auto", animation: "fadeUp 0.3s ease both" }}>
+
+        {/* Header */}
+        <div style={{ padding: "16px 22px", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", background: T.surfaceAlt }}>
+          <div>
+            <div style={{ fontFamily: FONTS.heading, fontSize: 18, fontWeight: 700, color: "#D4AF37" }}>Your Cart</div>
+            <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginTop: 1 }}>{entries.length} item type{entries.length !== 1 ? "s" : ""}</div>
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: T.textDis, fontSize: 20, cursor: "pointer" }}>✕</button>
+        </div>
+
+        {/* Items */}
+        <div style={{ flex: 1, padding: "14px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
+          {entries.length === 0 ? (
+            <div style={{ textAlign: "center", marginTop: 56 }}>
+              <div style={{ fontSize: 44, marginBottom: 12 }}>🪔</div>
+              <div style={{ fontFamily: FONTS.sub, fontSize: 15, fontWeight: 600, color: "#C9A227" }}>Cart is empty</div>
+              <div style={{ fontFamily: FONTS.body, fontSize: 13, color: "#AAAAAA", marginTop: 6 }}>Add sacred items to begin</div>
+            </div>
+          ) : entries.map(e => (
+            <div key={e.key} style={{ background: T.bgAlt, borderRadius: 10, border: `1px solid ${T.border}`, padding: "12px 14px" }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 30, flexShrink: 0 }}>{e.emoji}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: T.text, lineHeight: 1.35, marginBottom: 2 }}>{e.name}</div>
+                  <div style={{ fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA", marginBottom: 10 }}>{e.catLabel}</div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+                    <QtyStepper qty={e.qty} onInc={() => onAdd(e.key)} onDec={() => onRemove(e.key)} />
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontFamily: FONTS.heading, fontSize: 15, fontWeight: 700, color: "#D4AF37" }}>₹{(e.price * e.qty).toLocaleString()}</div>
+                      <div style={{ fontFamily: FONTS.small, fontSize: 11, color: T.green }}>Save ₹{((e.mrp - e.price) * e.qty).toLocaleString()}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {entries.length>0&&(
-          <div style={{ padding:"16px 20px 24px", borderTop:`1px solid ${T.border}`, background:T.surfaceAlt }}>
-            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:14, alignItems:"center" }}>
-              <span style={{ color:T.textSec, fontSize:13 }}>Total Amount</span>
-              <span style={{ fontFamily:"'Cinzel',serif", fontSize:20, color:T.gold }}>₹{total.toLocaleString()}</span>
+        {/* Summary */}
+        {entries.length > 0 && (
+          <div style={{ padding: "16px 20px 24px", borderTop: `1px solid ${T.border}`, background: T.surfaceAlt }}>
+            <div style={{ fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: T.textSec, marginBottom: 10 }}>Price Details</div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+              <span style={{ fontFamily: FONTS.body, fontSize: 13, color: T.textSec }}>MRP Total</span>
+              <span style={{ fontFamily: FONTS.body, fontSize: 13, color: T.textSec }}>₹{entries.reduce((s, e) => s + e.qty * e.mrp, 0).toLocaleString()}</span>
             </div>
-            <CheckoutBtn/>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+              <span style={{ fontFamily: FONTS.body, fontSize: 13, color: T.green }}>Discount</span>
+              <span style={{ fontFamily: FONTS.body, fontSize: 13, color: T.green }}>− ₹{savings.toLocaleString()}</span>
+            </div>
+            <GoldDivider style={{ marginBottom: 10 }} />
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14, alignItems: "baseline" }}>
+              <span style={{ fontFamily: FONTS.sub, fontSize: 14, fontWeight: 600, color: T.text }}>Total</span>
+              <span style={{ fontFamily: FONTS.heading, fontSize: 22, fontWeight: 700, color: "#D4AF37" }}>₹{total.toLocaleString()}</span>
+            </div>
+            {savings > 0 && (
+              <div style={{ textAlign: "center", fontFamily: FONTS.small, fontSize: 12, color: T.green, marginBottom: 12 }}>
+                🎉 You save ₹{savings.toLocaleString()} on this order!
+              </div>
+            )}
+            <button style={{ width: "100%", padding: "13px", background: `linear-gradient(135deg,${T.goldMid},${T.gold})`, border: "none", borderRadius: 6, fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: "#fff", letterSpacing: 1.5, textTransform: "uppercase", cursor: "pointer", boxShadow: "0 3px 14px rgba(184,134,11,0.3)" }}>
+              Place Order
+            </button>
           </div>
         )}
       </div>
@@ -447,228 +951,83 @@ function CartDrawer({ cart, onClose }) {
   );
 }
 
-function CheckoutBtn() {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} style={{
-      width:"100%", padding:"13px",
-      background:h?`linear-gradient(135deg,${T.gold},${T.goldShimmer})`:`linear-gradient(135deg,${T.goldMid},${T.gold})`,
-      border:"none", borderRadius:8,
-      fontFamily:"'Cinzel',serif", fontSize:13, fontWeight:600,
-      color:"#fff", letterSpacing:1.5, textTransform:"uppercase",
-      cursor:"pointer", transition:"all 0.2s",
-      boxShadow:h?"0 6px 20px rgba(184,134,11,0.35)":"0 2px 8px rgba(184,134,11,0.2)",
-    }}>Proceed to Checkout</button>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   SEARCH BAR
-───────────────────────────────────────────── */
-function SearchBar() {
-  const [query, setQuery] = useState("");
-  const [focused, setFocused] = useState(false);
-  const [h,hp] = useHover();
-
-  return (
-    <div style={{
-      background:T.surface,
-      borderRadius:18,
-      padding:"40px 48px",
-      border:`1px solid ${T.border}`,
-      boxShadow:"0 4px 24px rgba(184,134,11,0.07)",
-      position:"relative", overflow:"hidden",
-      animation:"fadeUp 0.5s ease 0.35s both",
-    }}>
-      <div style={{ position:"absolute", top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,transparent 10%,${T.goldMid} 50%,transparent 90%)` }}/>
-
-      <div style={{ textAlign:"center", marginBottom:26 }}>
-        <div style={{ fontFamily:"'Cinzel',serif", fontSize:26, fontWeight:600, color:T.text, marginBottom:8, letterSpacing:1 }}>
-          Find Sacred Items
-        </div>
-        <GoldDivider style={{ maxWidth:200, margin:"0 auto 10px" }}/>
-        <div style={{ fontSize:13, color:T.textDis }}>Search across our entire divine collection</div>
-      </div>
-
-      <div style={{ position:"relative", maxWidth:600, margin:"0 auto" }}>
-        <span style={{ position:"absolute", left:18, top:"50%", transform:"translateY(-50%)", color:T.goldMid, fontSize:15, pointerEvents:"none" }}>🔍</span>
-        <input
-          value={query}
-          onChange={e=>setQuery(e.target.value)}
-          onFocus={()=>setFocused(true)}
-          onBlur={()=>setFocused(false)}
-          onKeyDown={e=>e.key==="Enter"&&query.trim()&&alert(`Searching: "${query}"`)}
-          placeholder="Search books, malas, statues, prasadham…"
-          style={{
-            width:"100%",
-            background:focused?"#fff":T.bgAlt,
-            border:`1.5px solid ${focused?T.goldMid:T.border}`,
-            borderRadius:50,
-            padding:"14px 130px 14px 48px",
-            color:T.text, fontFamily:"'DM Sans',sans-serif",
-            fontSize:14, outline:"none",
-            boxShadow:focused?"0 0 0 3px rgba(212,175,55,0.12),0 4px 12px rgba(0,0,0,0.05)":"none",
-            transition:"all 0.3s",
-          }}
-        />
-        <button {...hp}
-          onClick={()=>query.trim()&&alert(`Searching: "${query}"`)}
-          style={{
-            position:"absolute", right:5, top:"50%", transform:"translateY(-50%)",
-            background:h?`linear-gradient(135deg,${T.gold},${T.goldShimmer})`:`linear-gradient(135deg,${T.goldMid},${T.gold})`,
-            border:"none", borderRadius:50,
-            padding:"9px 22px",
-            color:"#fff", fontFamily:"'Cinzel',serif",
-            fontSize:12, fontWeight:600, letterSpacing:1,
-            cursor:"pointer", transition:"all 0.2s",
-            boxShadow:h?"0 4px 14px rgba(184,134,11,0.35)":"0 2px 6px rgba(184,134,11,0.2)",
-          }}
-        >Search</button>
-      </div>
-
-      <div style={{ display:"flex", gap:8, justifyContent:"center", flexWrap:"wrap", marginTop:18 }}>
-        <span style={{ fontSize:11, color:T.textDis, alignSelf:"center", letterSpacing:1 }}>Trending:</span>
-        {["Rudraksha Mala","Bhagavad Gita","Brass Diya","Tirupati Laddu","Ganesha Idol"].map(tag=>(
-          <QuickTag key={tag} onClick={()=>setQuery(tag)}>{tag}</QuickTag>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function QuickTag({ children, onClick }) {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} onClick={onClick} style={{
-      background:h?T.goldPale:T.bgAlt,
-      border:`1px solid ${h?T.goldMid:T.border}`,
-      borderRadius:50, padding:"5px 14px",
-      fontSize:12, color:h?T.gold:T.textSec,
-      cursor:"pointer", transition:"all 0.2s",
-      fontFamily:"'DM Sans',sans-serif",
-    }}>{children}</button>
-  );
-}
-
-/* ─────────────────────────────────────────────
+/* ────────────────────────────────────────────
    SECTION HEADING
-───────────────────────────────────────────── */
+──────────────────────────────────────────── */
 function SectionHeading({ children, sub }) {
   return (
-    <div style={{ marginBottom:28, animation:"fadeUp 0.5s ease both" }}>
-      <div style={{ fontFamily:"'Cinzel',serif", fontSize:26, fontWeight:600, color:T.text, letterSpacing:1 }}>{children}</div>
-      {sub && <div style={{ fontSize:13, color:T.textDis, marginTop:5 }}>{sub}</div>}
-      <div style={{ height:2, width:56, background:`linear-gradient(90deg,${T.goldMid},transparent)`, borderRadius:2, marginTop:10 }}/>
+    <div style={{ marginBottom: 24, animation: "fadeUp 0.5s ease both" }}>
+      <div style={{ fontFamily: FONTS.heading, fontSize: 38, fontWeight: 700, color: "#D4AF37", lineHeight: 1.2 }}>{children}</div>
+      {sub && <div style={{ fontFamily: FONTS.body, fontSize: 15, color: T.textSec, lineHeight: 1.6, marginTop: 5 }}>{sub}</div>}
+      <div style={{ height: 2, width: 50, background: `linear-gradient(90deg,${T.goldMid},transparent)`, borderRadius: 2, marginTop: 10 }} />
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
+/* ────────────────────────────────────────────
    HEADER
-───────────────────────────────────────────── */
+──────────────────────────────────────────── */
 function Header({ cartCount, onCartOpen }) {
   return (
-    <header style={{
-      position:"sticky", top:0, zIndex:200,
-      background:"rgba(250,247,242,0.97)",
-      backdropFilter:"blur(16px)",
-      borderBottom:`1px solid ${T.border}`,
-      padding:"0 40px",
-      display:"flex", alignItems:"center", justifyContent:"space-between",
-      height:62,
-      boxShadow:"0 1px 12px rgba(184,134,11,0.07)",
-    }}>
-      
-
-      {/* Ornament */}
-      <div style={{ flex:1, display:"flex", justifyContent:"center", alignItems:"center", gap:10 }}>
-        <div style={{ width:48, height:1, background:`linear-gradient(90deg,transparent,${T.goldMid}45)` }}/>
-        <span style={{ color:`${T.goldMid}60`, fontSize:13 }}>✦</span>
-        <div style={{ width:48, height:1, background:`linear-gradient(90deg,${T.goldMid}45,transparent)` }}/>
+    <header style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(250,247,242,0.97)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${T.border}`, padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 62, boxShadow: "0 1px 12px rgba(184,134,11,0.07)" }}>
+      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+        <div style={{ width: 48, height: 1, background: `linear-gradient(90deg,transparent,${T.goldMid}45)` }} />
+        <span style={{ color: `${T.goldMid}60`, fontSize: 13 }}>✦</span>
+        <div style={{ width: 48, height: 1, background: `linear-gradient(90deg,${T.goldMid}45,transparent)` }} />
       </div>
-
-      {/* Cart only */}
-      <CartIconBtn count={cartCount} onClick={onCartOpen}/>
+      <button onClick={onCartOpen} style={{ position: "relative", width: 42, height: 42, borderRadius: "50%", background: T.surface, border: `1.5px solid ${T.border}`, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, transition: "all 0.2s" }}>
+        🛒
+        {cartCount > 0 && (
+          <span style={{ position: "absolute", top: -4, right: -4, width: 19, height: 19, borderRadius: "50%", background: T.gold, color: "#fff", fontFamily: FONTS.small, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(184,134,11,0.4)" }}>{cartCount}</span>
+        )}
+      </button>
     </header>
   );
 }
 
-function CartIconBtn({ count, onClick }) {
-  const [h,hp] = useHover();
-  return (
-    <button {...hp} onClick={onClick} style={{
-      position:"relative",
-      width:42, height:42, borderRadius:"50%",
-      background:h?T.goldPale:T.surface,
-      border:`1.5px solid ${h?T.goldMid:T.border}`,
-      cursor:"pointer",
-      display:"flex", alignItems:"center", justifyContent:"center",
-      fontSize:18, transition:"all 0.2s",
-      boxShadow:h?"0 4px 14px rgba(184,134,11,0.18)":"0 1px 4px rgba(0,0,0,0.06)",
-    }}>
-      🛒
-      {count>0&&(
-        <span style={{
-          position:"absolute", top:-4, right:-4,
-          width:19, height:19, borderRadius:"50%",
-          background:T.gold, color:"#fff",
-          fontSize:10, fontWeight:700,
-          display:"flex", alignItems:"center", justifyContent:"center",
-          boxShadow:"0 2px 6px rgba(184,134,11,0.4)",
-        }}>{count}</span>
-      )}
-    </button>
-  );
-}
-
-/* ─────────────────────────────────────────────
+/* ────────────────────────────────────────────
    ROOT
-───────────────────────────────────────────── */
+──────────────────────────────────────────── */
 export default function TempleStore() {
   const [selectedCat, setSelectedCat] = useState(null);
-  const [cart, setCart]               = useState({});
-  const [cartOpen, setCartOpen]       = useState(false);
+  const [cart, setCart] = useState({});
+  const [cartOpen, setCartOpen] = useState(false);
 
-  const cartCount = Object.values(cart).reduce((s,q)=>s+q, 0);
-  const addToCart = key => setCart(prev=>({...prev,[key]:(prev[key]||0)+1}));
+  const cartCount = Object.values(cart).reduce((s, q) => s + q, 0);
+  const addToCart = key => setCart(prev => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
+  const removeFromCart = key => setCart(prev => {
+    const qty = (prev[key] || 0) - 1;
+    if (qty <= 0) { const n = { ...prev }; delete n[key]; return n; }
+    return { ...prev, [key]: qty };
+  });
 
   return (
-    <div style={{ background:T.bg, color:T.text, minHeight:"100vh", fontFamily:"'DM Sans',sans-serif", fontSize:14 }}>
+    <div style={{ background: T.bg, color: T.text, minHeight: "100vh", fontFamily: FONTS.body, fontSize: 16, lineHeight: 1.6 }}>
       <style>{GLOBAL}</style>
+      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, background: "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%)" }} />
 
-      {/* Warm ambient glow */}
-      <div style={{
-        position:"fixed", inset:0, pointerEvents:"none", zIndex:0,
-        background:"radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%)",
-      }}/>
+      <Header cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
+      {cartOpen && <CartDrawer cart={cart} onAdd={addToCart} onRemove={removeFromCart} onClose={() => setCartOpen(false)} />}
 
-      <Header cartCount={cartCount} onCartOpen={()=>setCartOpen(true)}/>
-      {cartOpen && <CartDrawer cart={cart} onClose={()=>setCartOpen(false)}/>}
+      <main style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "40px 32px 80px" }}>
 
-      <main style={{ position:"relative", zIndex:1, maxWidth:1280, margin:"0 auto", padding:"44px 36px 80px" }}>
-
-        {/* CAROUSELS */}
         <SectionHeading sub="Curated divine collections for every occasion">Featured Collections</SectionHeading>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:18, marginBottom:64 }}>
-          {CAROUSELS.map((c,i)=><Carousel key={c.id} data={c} animDelay={i*0.1}/>)}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 18, marginBottom: 56 }}>
+          {CAROUSELS.map((c, i) => <Carousel key={c.id} data={c} animDelay={i * 0.1} />)}
         </div>
 
-        {/* CATEGORIES / PRODUCT LIST */}
         {selectedCat ? (
-          <ProductList cat={selectedCat} cart={cart} onAdd={addToCart} onBack={()=>setSelectedCat(null)}/>
+          <ProductList cat={selectedCat} cart={cart} onAdd={addToCart} onRemove={removeFromCart} onBack={() => setSelectedCat(null)} />
         ) : (
           <>
             <SectionHeading sub="Browse our sacred product categories">Our Collections</SectionHeading>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(185px,1fr))", gap:16, marginBottom:64 }}>
-              {CATEGORIES.map((cat,i)=>(
-                <CategoryCard key={cat.id} cat={cat} onClick={setSelectedCat} animDelay={i*0.07}/>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(185px,1fr))", gap: 16 }}>
+              {CATEGORIES.map((cat, i) => (
+                <CategoryCard key={cat.id} cat={cat} onClick={setSelectedCat} animDelay={i * 0.07} />
               ))}
             </div>
           </>
         )}
-
-        {/* SEARCH */}
-        <SearchBar/>
       </main>
     </div>
   );
