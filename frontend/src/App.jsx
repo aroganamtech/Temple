@@ -16,6 +16,7 @@ import TempleSearch from './pages/Temple/TempleSearch';
 import ContactUs from './pages/Contact/ContactUs';
 import Dashboard from './pages/Admin/Dashboard';
 import DonationPage from './pages/Donate/DonationPage';
+
 import Login from "./pages/Auth/Login";
 
 // --- Dropdown Pages for Temple Module ---
@@ -24,6 +25,11 @@ import Gods from './pages/Temple/Gods';
 import Dosham from './pages/Temple/Dosham';
 import DecayingTemples from './pages/Temple/DecayingTemples';
 import Adiyargal from './pages/Temple/Adiyargal';
+
+
+// import Login from './pages/Auth/Login';
+import Login from "./pages/Auth/Login"
+import DivineChatbot from "./pages/DivineChatbot";
 
 function App() {
   return (
@@ -41,6 +47,7 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/quickbooking" element={<QuickBooking />} />
           <Route path="/temple" element={<TempleSearch />} />
+
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/donate" element={<DonationPage />} />
@@ -52,7 +59,19 @@ function App() {
           <Route path="/temple/dosham" element={<Dosham />} />
           <Route path="/temple/decaying" element={<DecayingTemples />} />
           <Route path="/temple/adiyargal" element={<Adiyargal />} />
+
+         
+          {/* <Route path="/contact" element={<ContactUs />} /> */}
+          {/* <Route path="/admin" element={<Dashboard />} /> */}
+          {/* <Route path="/donate" element={<DonationPage />} /> */}
+          {/* <Route path="/login" element={<Login />} /> */}
+
         </Routes>
+          <>
+      {/* Your Routes / Pages */}
+      
+      <DivineChatbot /> {/* 🔥 This makes it global */}
+    </>
       </Router>
     </ThemeProvider>
   );
