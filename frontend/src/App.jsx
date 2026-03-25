@@ -18,7 +18,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import DonationPage from './pages/Donate/DonationPage';
 
 import Login from "./pages/Auth/Login";
-
+import YatraBooking from './pages/QuickBooking/YatraBooking';
 // --- Dropdown Pages for Temple Module ---
 // Ensure these files exist in your 'pages/Temple/' folder
 import Gods from './pages/Temple/Gods';
@@ -52,6 +52,7 @@ function App() {
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/donate" element={<DonationPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/booking/yatra" element={<YatraBooking />} />
 
           {/* --- TEMPLE DROPDOWN ROUTES --- */}
           {/* These paths MUST match your Navbar links exactly */}
