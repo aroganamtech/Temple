@@ -28,7 +28,10 @@ const FONTS = {
 const GLOBAL = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&family=Inter:wght@300;400;500&family=Roboto:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #FAF7F2; }
+  body { background: #FAF7F2; cursor: default !important; }
+  * { cursor: default !important; }
+  button, a, [role="button"] { cursor: pointer !important; }
+  input, textarea, select { cursor: text !important; }
   input::placeholder { color: #A8956E; font-family: 'Inter', sans-serif; font-size: 14px; }
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #FAF7F2; }
@@ -45,6 +48,11 @@ const GLOBAL = `
     0%   { transform: scale(0.82); opacity:0; }
     65%  { transform: scale(1.06); }
     100% { transform: scale(1);    opacity:1; }
+  }
+  @keyframes cartBounce {
+    0%,100% { transform: translateY(0); }
+    30%     { transform: translateY(-6px); }
+    60%     { transform: translateY(-3px); }
   }
 `;
 
@@ -76,275 +84,531 @@ const CATEGORIES = [
   {
     id: "books", icon: "📖", label: "Books", desc: "Sacred texts & Vedic literature",
     items: [
-      
+
       {
-  id: 1,
-  name: "Bhagavad Gita (English)",
-  image: "https://m.media-amazon.com/images/I/81WcnNQ-TBL._SL1500_.jpg",
-  price: 299,
-  mrp: 450,
-  desc: "Sacred Bhagavad Gita with English translation.",
-  rating: 4.7,
-  reviews: 1520,
-},
-    
-  {
-    id: 1,
-    name: "Bhagavad Gita (English)",
-    image: "https://m.media-amazon.com/images/I/81WcnNQ-TBL._SL1500_.jpg",
-    price: 299,
-    mrp: 450,
-    desc: "Sacred Bhagavad Gita with English translation.",
-    rating: 4.7,
-    reviews: 1520,
-  },
-  {
-    id: 2,
-    name: "Ramayana — Full Edition",
-    image: "https://m.media-amazon.com/images/I/91zbi9M+mKL.jpg",
-    price: 499,
-    mrp: 750,
-    desc: "Complete Ramayana with all kandas.",
-    rating: 4.8,
-    reviews: 1892,
-  },
-  {
-    id: 3,
-    name: "Mahabharata (Complete Set)",
-    image: "https://i.pinimg.com/1200x/f5/2f/fe/f52ffe1e8f465b2ee8ea1e3aeeec7f24.jpg",
-    price: 899,
-    mrp: 1200,
-    desc: "Epic tale of Kurukshetra war.",
-    rating: 4.9,
-    reviews: 2400,
-  },
-  {
-    id: 4,
-    name: "Vishnu Sahasranama",
-    image: "https://i.pinimg.com/736x/48/7f/20/487f20c0ea18d2c8955f354325518383.jpg",
-    price: 199,
-    mrp: 299,
-    desc: "1000 names of Lord Vishnu.",
-    rating: 4.5,
-    reviews: 980,
-  },
-  {
-    id: 5,
-    name: "Shiva Purana",
-    image: "https://i.pinimg.com/736x/8e/00/0e/8e000ea31ff5a788b628e5a8ac011b0d.jpg",
-    price: 399,
-    mrp: 599,
-    desc: "Stories and teachings of Lord Shiva.",
-    rating: 4.6,
-    reviews: 1100,
-  },
-  {
-    id: 6,
-    name: "Devi Mahatmyam",
-    image: "https://m.media-amazon.com/images/I/81H7zM2zQBL.jpg",
-    price: 249,
-    mrp: 350,
-    desc: "700 verses of Goddess Durga.",
-    rating: 4.7,
-    reviews: 1250,
-  },
-  {
-    id: 7,
-    name: "Rigveda Hymns",
-    image: "https://i.pinimg.com/1200x/4b/72/55/4b72558950b86460f2bd175a39f7a110.jpg",
-    price: 599,
-    mrp: 899,
-    desc: "Ancient Vedic hymns collection.",
-    rating: 4.4,
-    reviews: 700,
-  },
-  {
-    id: 8,
-    name: "Yajurveda Samhita",
-    image: "https://m.media-amazon.com/images/I/71x7z4KX3BL.jpg",
-    price: 549,
-    mrp: 850,
-    desc: "Sacred rituals and mantras.",
-    rating: 4.3,
-    reviews: 650,
-  },
-  {
-    id: 9,
-    name: "Atharva Veda",
-    image: "https://i.pinimg.com/736x/1c/2f/14/1c2f148855f891968eb6a3ff622c5414.jpg",
-    price: 499,
-    mrp: 780,
-    desc: "Knowledge of daily rituals and healing.",
-    rating: 4.4,
-    reviews: 620,
-  },
-  {
-    id: 10,
-    name: "Upanishads Collection",
-    image: "https://i.pinimg.com/736x/8e/c2/d9/8ec2d9df684b7ef34fe99392ab8ce1f3.jpg",
-    price: 699,
-    mrp: 999,
-    desc: "Philosophical teachings of Hinduism.",
-    rating: 4.8,
-    reviews: 1400,
-  },
-  {
-    id: 11,
-    name: "Hanuman Chalisa Book",
-    image: "https://i.pinimg.com/736x/b9/25/c6/b925c6efe7fad542007763425ffdbc34.jpg",
-    price: 99,
-    mrp: 150,
-    desc: "Devotional hymn for Lord Hanuman.",
-    rating: 4.9,
-    reviews: 3000,
-  },
-  {
-    id: 12,
-    name: "Sai Satcharitra",
-    image: "https://i.pinimg.com/1200x/3f/48/7c/3f487c1736d47b7f7ab7546fbb2ff2bb.jpg",
-    price: 299,
-    mrp: 450,
-    desc: "Life and miracles of Sai Baba.",
-    rating: 4.8,
-    reviews: 2100,
-  },
-  {
-    id: 13,
-    name: "Garuda Purana",
-    image: "https://i.pinimg.com/736x/0d/42/7b/0d427b795729559cd3e63963a6c24102.jpg",
-    price: 349,
-    mrp: 500,
-    desc: "Afterlife and karma teachings.",
-    rating: 4.5,
-    reviews: 870,
-  },
-  {
-    id: 14,
-    name: "Bhagavata Purana",
-    image: "https://i.pinimg.com/1200x/0a/a5/a3/0aa5a31b11011d3270190d01ea862c99.jpg",
-    price: 599,
-    mrp: 850,
-    desc: "Stories of Lord Krishna.",
-    rating: 4.9,
-    reviews: 1750,
-  },
-  {
-    id: 15,
-    name: "Skanda Purana",
-    image: "https://m.media-amazon.com/images/I/71Skanda.jpg",
-    price: 499,
-    mrp: 750,
-    desc: "Largest Purana with sacred legends.",
-    rating: 4.4,
-    reviews: 690,
-  },
-  {
-    id: 16,
-    name: "Narada Bhakti Sutra",
-    image: "https://m.media-amazon.com/images/I/71Narada.jpg",
-    price: 199,
-    mrp: 300,
-    desc: "Teachings on devotion (Bhakti).",
-    rating: 4.6,
-    reviews: 540,
-  },
-  {
-    id: 17,
-    name: "Yoga Vasistha",
-    image: "https://m.media-amazon.com/images/I/71Yoga.jpg",
-    price: 699,
-    mrp: 1000,
-    desc: "Spiritual wisdom and philosophy.",
-    rating: 4.7,
-    reviews: 880,
-  },
-  {
-    id: 18,
-    name: "Ashtavakra Gita",
-    image: "https://m.media-amazon.com/images/I/71Ashtavakra.jpg",
-    price: 249,
-    mrp: 400,
-    desc: "Advaita Vedanta teachings.",
-    rating: 4.6,
-    reviews: 720,
-  },
-  {
-    id: 19,
-    name: "Durga Chalisa",
-    image: "https://m.media-amazon.com/images/I/71Durga.jpg",
-    price: 120,
-    mrp: 180,
-    desc: "Devotional hymn for Goddess Durga.",
-    rating: 4.7,
-    reviews: 950,
-  },
-  {
-    id: 20,
-    name: "Lakshmi Sahasranama",
-    image: "https://m.media-amazon.com/images/I/71Lakshmi.jpg",
-    price: 220,
-    mrp: 350,
-    desc: "1000 names of Goddess Lakshmi.",
-    rating: 4.8,
-    reviews: 1100,
-  }
-]
-    
+        id: 1,
+        name: "Bhagavad Gita (English)",
+        image: "https://m.media-amazon.com/images/I/81WcnNQ-TBL._SL1500_.jpg",
+        price: 299,
+        mrp: 450,
+        desc: "Sacred Bhagavad Gita with English translation.",
+        rating: 4.7,
+        reviews: 1520,
+      },
+
+
+      {
+        id: 2,
+        name: "Ramayana — Full Edition",
+        image: "https://i.pinimg.com/1200x/44/0d/6d/440d6d15d0274d70e09814fb97229733.jpg",
+        price: 499,
+        mrp: 750,
+        desc: "Complete Ramayana with all kandas.",
+        rating: 4.8,
+        reviews: 1892,
+      },
+      {
+        id: 3,
+        name: "Mahabharata (Complete Set)",
+        image: "https://i.pinimg.com/1200x/f5/2f/fe/f52ffe1e8f465b2ee8ea1e3aeeec7f24.jpg",
+        price: 899,
+        mrp: 1200,
+        desc: "Epic tale of Kurukshetra war.",
+        rating: 4.9,
+        reviews: 2400,
+      },
+      {
+        id: 4,
+        name: "Vishnu Sahasranama",
+        image: "https://i.pinimg.com/736x/48/7f/20/487f20c0ea18d2c8955f354325518383.jpg",
+        price: 199,
+        mrp: 299,
+        desc: "1000 names of Lord Vishnu.",
+        rating: 4.5,
+        reviews: 980,
+      },
+      {
+        id: 5,
+        name: "Shiva Purana",
+        image: "https://i.pinimg.com/736x/8e/00/0e/8e000ea31ff5a788b628e5a8ac011b0d.jpg",
+        price: 399,
+        mrp: 599,
+        desc: "Stories and teachings of Lord Shiva.",
+        rating: 4.6,
+        reviews: 1100,
+      },
+      {
+        id: 6,
+        name: "Mahabharata ",
+        image: "https://i.pinimg.com/736x/ab/b8/5b/abb85b3a6254d837e54eb16bcd07dd86.jpg",
+        price: 899,
+        mrp: 1200,
+        desc: "Great Indian epic including the Kurukshetra war and Bhagavad Gita.",
+        rating: 4.9,
+        reviews: 22000,
+      },
+      {
+        id: 7,
+        name: "Rigveda Hymns",
+        image: "https://i.pinimg.com/1200x/4b/72/55/4b72558950b86460f2bd175a39f7a110.jpg",
+        price: 599,
+        mrp: 899,
+        desc: "Ancient Vedic hymns collection.",
+        rating: 4.4,
+        reviews: 700,
+      },
+      {
+        id: 40,
+        name: "Vishnu Sahasranama",
+        image: "https://i.pinimg.com/736x/48/7f/20/487f20c0ea18d2c8955f354325518383.jpg",
+        price: 199,
+        mrp: 299,
+        desc: "Sacred hymn of 1000 names of Lord Vishnu for daily chanting.",
+        rating: 4.9,
+        reviews: 15000,
+
+      },
+      {
+        id: 9,
+        name: "Atharva Veda",
+        image: "https://i.pinimg.com/736x/1c/2f/14/1c2f148855f891968eb6a3ff622c5414.jpg",
+        price: 499,
+        mrp: 780,
+        desc: "Knowledge of daily rituals and healing.",
+        rating: 4.4,
+        reviews: 620,
+      },
+      {
+        id: 10,
+        name: "Upanishads Collection",
+        image: "https://i.pinimg.com/736x/8e/c2/d9/8ec2d9df684b7ef34fe99392ab8ce1f3.jpg",
+        price: 699,
+        mrp: 999,
+        desc: "Philosophical teachings of Hinduism.",
+        rating: 4.8,
+        reviews: 1400,
+      },
+      {
+        id: 11,
+        name: "Hanuman Chalisa Book",
+        image: "https://i.pinimg.com/736x/b9/25/c6/b925c6efe7fad542007763425ffdbc34.jpg",
+        price: 99,
+        mrp: 150,
+        desc: "Devotional hymn for Lord Hanuman.",
+        rating: 4.9,
+        reviews: 3000,
+      },
+      {
+        id: 12,
+        name: "Sai Satcharitra",
+        image: "https://i.pinimg.com/1200x/3f/48/7c/3f487c1736d47b7f7ab7546fbb2ff2bb.jpg",
+        price: 299,
+        mrp: 450,
+        desc: "Life and miracles of Sai Baba.",
+        rating: 4.8,
+        reviews: 2100,
+      },
+      {
+        id: 13,
+        name: "Garuda Purana",
+        image: "https://i.pinimg.com/736x/0d/42/7b/0d427b795729559cd3e63963a6c24102.jpg",
+        price: 349,
+        mrp: 500,
+        desc: "Afterlife and karma teachings.",
+        rating: 4.5,
+        reviews: 870,
+      },
+      {
+        id: 14,
+        name: "Bhagavata Purana",
+        image: "https://i.pinimg.com/1200x/0a/a5/a3/0aa5a31b11011d3270190d01ea862c99.jpg",
+        price: 599,
+        mrp: 850,
+        desc: "Stories of Lord Krishna.",
+        rating: 4.9,
+        reviews: 1750,
+      },
+      {
+        id: 15,
+        name: "Skanda Purana",
+        image: "https://i.pinimg.com/736x/cf/87/29/cf8729cd4dd0e179c7311c0154180492.jpg",
+        price: 499,
+        mrp: 750,
+        desc: "Largest Purana with sacred legends.",
+        rating: 4.4,
+        reviews: 690,
+      },
+      {
+        id: 16,
+        name: "Narada Bhakti Sutra",
+        image: "https://i.pinimg.com/736x/a6/30/b3/a630b3eef0d7e817b9cc17582cfce23e.jpg",
+        price: 199,
+        mrp: 300,
+        desc: "Teachings on devotion (Bhakti).",
+        rating: 4.6,
+        reviews: 540,
+      },
+      {
+        id: 17,
+        name: "Yoga Vasistha",
+        image: "https://i.pinimg.com/736x/7f/47/64/7f47640f6b07803988a0fab1fe0de5db.jpg",
+        price: 699,
+        mrp: 1000,
+        desc: "Spiritual wisdom and philosophy.",
+        rating: 4.7,
+        reviews: 880,
+      },
+      {
+        id: 18,
+        name: "Ashtavakra Gita",
+        image: "https://i.pinimg.com/736x/5e/df/6e/5edf6ee4b2b1a41a2508f2158b1550be.jpg",
+        price: 249,
+        mrp: 400,
+        desc: "Advaita Vedanta teachings.",
+        rating: 4.6,
+        reviews: 720,
+      },
+      {
+        id: 19,
+        name: "Durga Chalisa",
+        image: "https://i.pinimg.com/736x/93/f5/d6/93f5d63d5146ab01f8af8628d0fa13b0.jpg",
+        price: 120,
+        mrp: 180,
+        desc: "Devotional hymn for Goddess Durga.",
+        rating: 4.7,
+        reviews: 950,
+      },
+      {
+        id: 20,
+        name: "Lakshmi Sahasranama",
+        image: "https://i.pinimg.com/1200x/33/3e/4e/333e4e5bf8d643ea440f49aa4ab6a6d8.jpg",
+        price: 220,
+        mrp: 350,
+        desc: "1000 names of Goddess Lakshmi.",
+        rating: 4.8,
+        reviews: 1100,
+      },
+      {
+        id: 21,
+        name: "Sri Ramakrishna",
+        image: "https://i.pinimg.com/1200x/4f/62/84/4f628450a83f62813101e7e5e3072485.jpg",
+        price: 399,
+        mrp: 599,
+        desc: "Teachings and conversations of Sri Ramakrishna, a key figure in modern Hindu spirituality.",
+        rating: 4.9,
+        reviews: 2100,
+      }
+    ]
+
   },
   {
     id: "prasadham", icon: "🍯", label: "Prasadham", desc: "Temple-blessed sacred offerings",
     items: [
-      { id: 1, name: "Panchamrit Mix", price: 149, mrp: 220, desc: "Milk, honey, ghee, sugar, curd — the five sacred ingredients. Ritual-grade quality.", emoji: "🥛", rating: 4.5, reviews: 834, tag: "Pure" },
-      { id: 2, name: "Temple Modak", price: 199, mrp: 280, desc: "Ganesh's favourite sweet. Handmade using traditional jaggery-coconut filling.", emoji: "🍬", rating: 4.7, reviews: 2103, tag: "Bestseller" },
-      { id: 3, name: "Tirupati Laddu", price: 299, mrp: 399, desc: "Authentic besan laddu prepared using the original Tirumala TTD recipe.", emoji: "🍡", rating: 4.9, reviews: 5621, tag: "Top Rated" },
-      { id: 4, name: "Charnamrit", price: 99, mrp: 149, desc: "Holy water infused with tulsi, saffron and herbs. Delivered in sealed copper vessel.", emoji: "🏺", rating: 4.4, reviews: 445, tag: null },
-      { id: 5, name: "Satyanarayan Prasad", price: 179, mrp: 249, desc: "Semolina & jaggery mix. Prepared under strict ritual conditions.", emoji: "🍮", rating: 4.6, reviews: 672, tag: null },
-      { id: 6, name: "Pongal Prasad", price: 129, mrp: 180, desc: "Sacred rice offering prepared in pure ghee. Temple tradition from Tamil Nadu.", emoji: "🍚", rating: 4.3, reviews: 318, tag: null },
+      
+        {
+          id: 1,
+          name: "Panchamrit Mix",
+          image: "https://i.pinimg.com/736x/46/3d/f9/463df931b591de2b4e4df931ca9889db.jpg",
+          price: 149,
+          mrp: 220,
+          desc: "Milk, honey, ghee, sugar, curd — the five sacred ingredients.",
+          rating: 4.5,
+          reviews: 834,
+        },
+        {
+          id: 2,
+          name: "Temple Modak",
+          image: "https://i.pinimg.com/736x/b1/75/d5/b175d5b58cffe142aec93bb1a937aafa.jpg",
+          price: 199,
+          mrp: 280,
+          desc: "Ganesh's favourite sweet with jaggery-coconut filling.",
+          rating: 4.7,
+          reviews: 2103,
+        },
+        {
+          id: 3,
+          name: "Tirupati Laddu",
+          image: "https://i.pinimg.com/736x/18/e7/6c/18e76c187470e1b0bcf0653e4d8801e1.jpg",
+          price: 299,
+          mrp: 399,
+          desc: "Famous temple laddu prepared in traditional style.",
+          rating: 4.9,
+          reviews: 5621,
+        },
+        {
+          id: 4,
+          name: "Charnamrit",
+          image: "https://i.pinimg.com/736x/fe/10/87/fe10870fde52e64eb5a06c85bf757f0b.jpg",
+          price: 99,
+          mrp: 149,
+          desc: "Holy water infused with tulsi and saffron.",
+          rating: 4.4,
+          reviews: 445,
+        },
+        {
+          id: 5,
+          name: "Satyanarayan Prasad",
+          image: "https://i.pinimg.com/736x/86/43/0b/86430b04f6c330ab07f44398b5335930.jpg",
+          price: 179,
+          mrp: 249,
+          desc: "Semolina & jaggery mix used in pooja rituals.",
+          rating: 4.6,
+          reviews: 672,
+        },
+        {
+          id: 6,
+          name: "Sweet Pongal",
+          image: "https://i.pinimg.com/736x/48/c2/bb/48c2bbee945453923a1825d71948ac6f.jpg",
+          price: 129,
+          mrp: 180,
+          desc: "Sweet rice offering made with ghee and jaggery.",
+          rating: 4.3,
+          reviews: 318,
+        },
+        {
+          id: 7,
+          name: "Puliyodarai",
+          image: "https://i.pinimg.com/736x/64/60/ab/6460ab4b04639425917f85668bbd39e3.jpg",
+          price: 149,
+          mrp: 220,
+          desc: "Traditional tamarind rice temple offering.",
+          rating: 4.6,
+          reviews: 980,
+        },
+        {
+          id: 8,
+          name: "Kesari",
+          image: "https://i.pinimg.com/736x/41/61/d3/4161d38605df4477574a4792dcf2432c.jpg",
+          price: 139,
+          mrp: 200,
+          desc: "Sweet semolina dessert with saffron.",
+          rating: 4.7,
+          reviews: 1100,
+        },
+        {
+          id: 9,
+          name: "Curd Rice",
+          image: "https://i.pinimg.com/736x/e6/95/e7/e695e7930a0ff530a48a0e5e652eb2fb.jpg",
+          price: 99,
+          mrp: 150,
+          desc: "Cooling sacred rice offering.",
+          rating: 4.5,
+          reviews: 620,
+        },
+        {
+          id: 10,
+          name: "Dry Fruit Mix",
+          image: "https://i.pinimg.com/736x/ed/4c/36/ed4c3699ad6ef4cfae87598c298bf0a2.jpg",
+          price: 249,
+          mrp: 350,
+          desc: "Premium dry fruits used as prasad.",
+          rating: 4.8,
+          reviews: 1250,
+        },
+        {
+          id: 11,
+          name: "Honey Bottle",
+          image: "https://i.pinimg.com/736x/0b/8a/5d/0b8a5d29571298e5e507a70d4d31bb20.jpg",
+          price: 159,
+          mrp: 240,
+          desc: "Pure honey for rituals and prasad.",
+          rating: 4.7,
+          reviews: 900,
+        },
+        {
+          id: 12,
+          name: "Boondi Prasad",
+          image: "https://i.pinimg.com/736x/88/a3/8b/88a38b672120345743f8ca760e27787f.jpg",
+          price: 129,
+          mrp: 190,
+          desc: "Sweet boondi offering loved by devotees.",
+          rating: 4.6,
+          reviews: 780,
+        },
+        {
+          id: 13,
+          name: "Aval (Poha)",
+          image: "https://i.pinimg.com/736x/16/af/66/16af66c13e7da7f920ac0dd32cd9d8b7.jpg",
+          price: 99,
+          mrp: 150,
+          desc: "Flattened rice offering for Lord Krishna.",
+          rating: 4.5,
+          reviews: 640,
+        },
+        {
+          id: 14,
+          name: "Butter Prasad",
+          image: "https://i.pinimg.com/736x/26/96/63/269663ef121d68d40e41d0b44359668d.jpg",
+          price: 119,
+          mrp: 170,
+          desc: "Fresh butter offering to Krishna.",
+          rating: 4.7,
+          reviews: 890,
+        },
+        {
+          id: 15,
+          name: "Kalkandu Pongal",
+          image: "https://i.pinimg.com/736x/f9/1d/64/f91d64d47b69f94dc27a2d87590e7036.jpg",
+          price: 89,
+          mrp: 130,
+          desc: "Rock sugar offered as sacred prasad.",
+          rating: 4.4,
+          reviews: 520,
+        },
+        {
+          id: 16,
+          name: "Ghee",
+          image: "https://i.pinimg.com/736x/c0/f1/90/c0f190a693025d92bc53ff665760bf44.jpg",
+          price: 199,
+          mrp: 280,
+          desc: "Pure cow ghee used in rituals.",
+          rating: 4.8,
+          reviews: 1100,
+        },
+        {
+          id: 17,
+          name: "Jaggery",
+          image: "https://i.pinimg.com/1200x/a8/e1/d2/a8e1d206788b560fcadc3ae6a10c7864.jpg",
+          price: 99,
+          mrp: 150,
+          desc: "Natural jaggery offering.",
+          rating: 4.5,
+          reviews: 600,
+        },
+        {
+          id: 18,
+          name: "Fruit Basket",
+          image: "https://i.pinimg.com/1200x/db/fc/44/dbfc44cf2050af39de32c6cfd79d63aa.jpg",
+          price: 299,
+          mrp: 450,
+          desc: "Mixed fruits for temple offering.",
+          rating: 4.7,
+          reviews: 950,
+        },
+        {
+          id: 19,
+          name: "Tulsi Leaves",
+          image: "https://i.pinimg.com/736x/82/ae/af/82aeafa85154526df19e233de555e557.jpg",
+          price: 79,
+          mrp: 120,
+          desc: "Holy leaves used in pooja.",
+          rating: 4.6,
+          reviews: 720,
+        },
+        {
+          id: 20,
+          name: "Dry Coconut",
+          image: "https://i.pinimg.com/1200x/27/6d/d4/276dd49787cf64a61a64d808ee76d974.jpg",
+          price: 109,
+          mrp: 160,
+          desc: "Dried coconut pieces for offerings.",
+          rating: 4.4,
+          reviews: 480,
+        }
+      
     ],
   },
   {
     id: "pooja", icon: "🪔", label: "Pooja Items", desc: "Ritual tools & sacred supplies",
     items: [
-      { id: 1, name: "Brass Diya Set (12pc)", price: 649, mrp: 999, desc: "Hand-crafted temple lamps in traditional lotus design. BIS-certified brass.", emoji: "🪔", rating: 4.7, reviews: 1876, tag: "Bestseller" },
-      { id: 2, name: "Camphor Tablets (100pc)", price: 89, mrp: 130, desc: "Pure white camphor. Smokeless, long-burning. Individually sealed.", emoji: "⬜", rating: 4.5, reviews: 932, tag: null },
-      { id: 3, name: "Sandalwood Incense", price: 129, mrp: 200, desc: "Premium agarbatti sticks with 6-hour burn time. Pure sandalwood, no filler.", emoji: "🌿", rating: 4.6, reviews: 1243, tag: null },
-      { id: 4, name: "Brass Kalash", price: 899, mrp: 1399, desc: "Sacred water vessel with mango leaf & coconut top. Hand-engraved.", emoji: "🏺", rating: 4.8, reviews: 543, tag: "Premium" },
-      { id: 5, name: "Kumkum & Turmeric Set", price: 149, mrp: 199, desc: "Auspicious ritual powders in 6 decorated containers with silver-plated tray.", emoji: "🔴", rating: 4.4, reviews: 678, tag: null },
-      { id: 6, name: "Copper Puja Plate", price: 549, mrp: 850, desc: "Engraved thali with 6 small bowls, spoon and bell. Temple-grade copper.", emoji: "🥃", rating: 4.7, reviews: 891, tag: null },
-    ],
+{ id: 1, name: "Brass Diya", image: "https://i.pinimg.com/736x/1b/e6/f8/1be6f8cf2fa47fae8baf38649d7118c6.jpg", price: 199, mrp: 350, desc: "Traditional brass diya.", rating: 4.7, reviews: 1400 },
+{ id: 2, name: "Agarbatti Pack", image: "https://i.pinimg.com/736x/97/10/82/97108274fcbf0fa88b463b022893b100.jpg", price: 99, mrp: 150, desc: "Sandal incense sticks.", rating: 4.6, reviews: 1200 },
+{ id: 3, name: "Camphor Pack", image: "https://i.pinimg.com/736x/camphor.jpg", price: 89, mrp: 130, desc: "Pure camphor tablets.", rating: 4.5, reviews: 900 },
+{ id: 4, name: "Pooja Bell", image: "https://i.pinimg.com/736x/bell.jpg", price: 249, mrp: 400, desc: "Temple bell.", rating: 4.7, reviews: 1000 },
+{ id: 5, name: "Copper Kalash", image: "https://i.pinimg.com/736x/kalash.jpg", price: 499, mrp: 800, desc: "Sacred kalash for rituals.", rating: 4.8, reviews: 850 },
+{ id: 6, name: "Kumkum Box", image: "https://i.pinimg.com/736x/kumkum.jpg", price: 79, mrp: 120, desc: "Auspicious kumkum powder.", rating: 4.6, reviews: 700 },
+{ id: 7, name: "Turmeric Powder", image: "https://i.pinimg.com/736x/turmeric.jpg", price: 69, mrp: 110, desc: "Pure turmeric for pooja.", rating: 4.5, reviews: 650 },
+{ id: 8, name: "Pooja Plate", image: "https://i.pinimg.com/736x/plate.jpg", price: 349, mrp: 600, desc: "Decorated pooja thali.", rating: 4.7, reviews: 900 },
+{ id: 9, name: "Sandal Paste", image: "https://i.pinimg.com/736x/sandal.jpg", price: 129, mrp: 200, desc: "Fragrant sandal paste.", rating: 4.6, reviews: 780 },
+{ id: 10, name: "Ghee Lamp Set", image: "https://i.pinimg.com/736x/ghee-lamp.jpg", price: 299, mrp: 500, desc: "Set of ghee diyas.", rating: 4.8, reviews: 820 },
+{ id: 11, name: "Incense Holder", image: "https://i.pinimg.com/736x/incense-holder.jpg", price: 149, mrp: 250, desc: "Holder for incense sticks.", rating: 4.5, reviews: 600 },
+{ id: 12, name: "Cotton Wicks Pack", image: "https://i.pinimg.com/736x/wicks.jpg", price: 59, mrp: 100, desc: "Cotton wicks for diya.", rating: 4.6, reviews: 500 },
+{ id: 13, name: "Panchapatra Set", image: "https://i.pinimg.com/736x/panchapatra.jpg", price: 399, mrp: 650, desc: "Traditional water vessel set.", rating: 4.7, reviews: 720 },
+{ id: 14, name: "Conch Shell", image: "https://i.pinimg.com/736x/conch.jpg", price: 699, mrp: 1000, desc: "Sacred shankh for rituals.", rating: 4.8, reviews: 650 },
+{ id: 15, name: "Pooja Mat", image: "https://i.pinimg.com/736x/mat.jpg", price: 199, mrp: 300, desc: "Comfortable pooja mat.", rating: 4.5, reviews: 580 },
+{ id: 16, name: "Flower Garland", image: "https://i.pinimg.com/736x/garland.jpg", price: 149, mrp: 220, desc: "Artificial flower mala.", rating: 4.6, reviews: 620 },
+{ id: 17, name: "Brass Spoon Set", image: "https://i.pinimg.com/736x/spoon.jpg", price: 179, mrp: 300, desc: "Spoons for pooja rituals.", rating: 4.5, reviews: 540 },
+{ id: 18, name: "Holy Water Bottle", image: "https://i.pinimg.com/736x/water.jpg", price: 129, mrp: 200, desc: "Bottle for storing holy water.", rating: 4.6, reviews: 480 },
+{ id: 19, name: "Pooja Cloth", image: "https://i.pinimg.com/736x/cloth.jpg", price: 99, mrp: 160, desc: "Sacred cloth for rituals.", rating: 4.5, reviews: 430 },
+{ id: 20, name: "Aarti Stand", image: "https://i.pinimg.com/736x/aarti.jpg", price: 349, mrp: 550, desc: "Stand for performing aarti.", rating: 4.7, reviews: 710 }
+]
   },
   {
     id: "statue", icon: "🛕", label: "Statues", desc: "Divine idols & sacred sculptures",
     items: [
-      { id: 1, name: "Ganesha — Brass 6\"", price: 1299, mrp: 1999, desc: "Sitting Ganapati in blessing pose, antique gold finish. Hand-cast brass.", emoji: "🐘", rating: 4.8, reviews: 2341, tag: "Bestseller" },
-      { id: 2, name: "Lakshmi — Marble 8\"", price: 2499, mrp: 3499, desc: "White Statuario marble with 24K gold leaf detailing. Hand-carved in Jaipur.", emoji: "🌺", rating: 4.9, reviews: 1102, tag: "Top Rated" },
-      { id: 3, name: "Shiva Lingam — Crystal", price: 3999, mrp: 5500, desc: "Natural Sphatik crystal, hand-polished. Comes with copper abhishek vessel.", emoji: "🔮", rating: 4.7, reviews: 678, tag: "Natural" },
-      { id: 4, name: "Saraswati — Bronze 10\"", price: 4299, mrp: 6000, desc: "Goddess playing veena, lost-wax cast bronze. Intricate Chola-style work.", emoji: "🎵", rating: 4.8, reviews: 456, tag: "Handcrafted" },
-      { id: 5, name: "Hanuman — Brass 12\"", price: 2199, mrp: 3199, desc: "Standing Panchamukhi Hanuman with red flag. Temple-blessed in Varanasi.", emoji: "🙏", rating: 4.9, reviews: 1893, tag: "Bestseller" },
-      { id: 6, name: "Nataraja — Panchaloga", price: 5999, mrp: 8500, desc: "Dancing Shiva in the five sacred metals — traditional Swamimalai casting.", emoji: "💃", rating: 4.9, reviews: 334, tag: "Rare" },
+      
+{ id: 1, name: "Ganesha Brass Idol", image: "https://i.pinimg.com/1200x/62/89/44/62894469f6ceb190cdf6c830723cc1f5.jpg", price: 1299, mrp: 1999, desc: "Lord Ganesha idol in brass finish.", rating: 4.8, reviews: 2100 },
+{ id: 2, name: "Lakshmi Idol", image: "https://i.pinimg.com/736x/66/63/8a/66638ace2306ce173217745bd4bcdbbc.jpg", price: 1499, mrp: 2200, desc: "Goddess Lakshmi for wealth and prosperity.", rating: 4.9, reviews: 1800 },
+{ id: 3, name: "Shiva Lingam", image: "https://i.pinimg.com/736x/28/06/8d/28068dce14f2bb8f706b92eeaec15ee1.jpg", price: 999, mrp: 1500, desc: "Sacred Shiva Lingam for pooja.", rating: 4.7, reviews: 1600 },
+{ id: 4, name: "Hanuman Idol", image: "https://i.pinimg.com/1200x/d4/0d/02/d40d0295d74fec4f32ecf79c14dc192d.jpg", price: 899, mrp: 1400, desc: "Powerful Hanuman statue.", rating: 4.8, reviews: 2000 },
+{ id: 5, name: "Krishna Idol", image: "https://i.pinimg.com/736x/10/93/8c/10938c2fe97620aac5abceb3d1b6fa08.jpg", price: 1199, mrp: 1800, desc: "Lord Krishna playing flute.", rating: 4.9, reviews: 2200 },
+{ id: 6, name: "Durga Idol", image: "https://i.pinimg.com/736x/66/55/27/66552739db1b40e39b280ffc957467c7.jpg", price: 1399, mrp: 2100, desc: "Goddess Durga statue.", rating: 4.8, reviews: 1500 },
+{ id: 7, name: "Sai Baba Idol", image: "https://i.pinimg.com/1200x/25/fd/d3/25fdd34047273783e06e128fd04711ba.jpg", price: 799, mrp: 1200, desc: "Shirdi Sai Baba statue.", rating: 4.7, reviews: 1300 },
+{ id: 8, name: "Murugan Idol", image: "https://i.pinimg.com/1200x/2d/6f/88/2d6f881350d1ef81242b404354591431.jpg", price: 999, mrp: 1500, desc: "Lord Murugan statue.", rating: 4.8, reviews: 1400 },
+{ id: 9, name: "Rama Idol", image: "https://i.pinimg.com/736x/27/34/1c/27341c3c4bb1ba512d969f8018eed785.jpg", price: 1099, mrp: 1700, desc: "Lord Rama statue.", rating: 4.7, reviews: 1200 },
+{ id: 10, name: "Radha Krishna Idol", image:"https://i.pinimg.com/1200x/40/01/16/400116f3b321d2de9bf94958064e7c4d.jpg", price: 1599, mrp: 2500, desc: "Radha Krishna divine pair.", rating: 4.9, reviews: 2100 },
+{ id: 11, name: "Saraswati Idol", image: "https://i.pinimg.com/736x/8c/7a/61/8c7a615dd3e0813fe4673e1d739cd3fc.jpg", price: 1299, mrp: 2000, desc: "Goddess of knowledge.", rating: 4.8, reviews: 1100 },
+{ id: 12, name: "Ayyappa Idol", image: "https://i.pinimg.com/736x/30/df/35/30df35e07ffd9ed548db6f018718afee.jpg", price: 999, mrp: 1500, desc: "Lord Ayyappa statue.", rating: 4.7, reviews: 1000 },
+{ id: 13, name: "Nataraja Idol", image: "https://i.pinimg.com/1200x/ed/3b/3c/ed3b3c607e1726b99362e30b68e7bdd4.jpg", price: 1899, mrp: 2800, desc: "Dancing Shiva statue.", rating: 4.9, reviews: 900 },
+{ id: 14, name: "Balaji Idol", image: "https://i.pinimg.com/474x/7f/33/af/7f33afb7835d4fb148321b50721c293f.jpg", price: 1799, mrp: 2600, desc: "Tirupati Balaji statue.", rating: 4.9, reviews: 2300 },
+{ id: 15, name: "Parvati Idol", image: "https://i.pinimg.com/736x/66/55/27/66552739db1b40e39b280ffc957467c7.jpg", price: 1199, mrp: 1800, desc: "Goddess Parvati statue.", rating: 4.7, reviews: 900 },
+{ id: 16, name: "Shiva Parvati Idol", image: "https://i.pinimg.com/736x/2b/f2/93/2bf2939a101a0c20760f6e08fae65bb3.jpg", price: 1999, mrp: 3000, desc: "Divine couple statue.", rating: 4.9, reviews: 1500 },
+{ id: 17, name: "Ganesha Sitting Idol", image: "https://i.pinimg.com/736x/00/b8/c6/00b8c6040988d666538d3e3bb4b265c6.jpg", price: 899, mrp: 1400, desc: "Compact Ganesha idol.", rating: 4.8, reviews: 1400 },
+{ id: 18, name: "Krishna Baby Idol", image: "https://i.pinimg.com/1200x/03/61/c4/0361c4f0d8d189416a898da07aedbd47.jpg", price: 799, mrp: 1200, desc: "Bal Krishna statue.", rating: 4.7, reviews: 1100 },
+{ id: 19, name: "Lakshmi Ganesha Set", image: "https://i.pinimg.com/1200x/05/5b/91/055b919d7e342ff87f7d1fc7cde935e0.jpg", price: 1499, mrp: 2300, desc: "Lakshmi & Ganesha combo.", rating: 4.9, reviews: 1700 },
+{ id: 20, name: "Navagraha Set", image: "https://i.pinimg.com/736x/21/cb/2b/21cb2b4de5783cdb72f53c401cbaad99.jpg", price: 2999, mrp: 4500, desc: "9 planet deity idols.", rating: 4.8, reviews: 800 }
+
     ],
   },
   {
     id: "images", icon: "🖼️", label: "Images", desc: "Blessed portraits & holy prints",
     items: [
-      { id: 1, name: "Tirupati Balaji Print", price: 299, mrp: 499, desc: "12×16\", UV coated on archival paper, ready-to-hang teak wood frame.", emoji: "🌟", rating: 4.7, reviews: 3412, tag: "Bestseller" },
-      { id: 2, name: "Goddess Durga Canvas", price: 499, mrp: 799, desc: "18×24\", gallery-wrapped premium canvas. Vibrant pigment print, 100yr archival.", emoji: "⚡", rating: 4.8, reviews: 1234, tag: null },
-      { id: 3, name: "Om Namah Shivaya Scroll", price: 199, mrp: 299, desc: "Gold leaf embossed on handmade paper, 36\" scroll. Suitable for altar.", emoji: "🕉️", rating: 4.5, reviews: 765, tag: null },
-      { id: 4, name: "Radha Krishna Painting", price: 649, mrp: 999, desc: "Hand-painted in Tanjore style with 24K gold leaf. Certificate of authenticity.", emoji: "💛", rating: 4.9, reviews: 892, tag: "Handpainted" },
-      { id: 5, name: "Saibaba Photo Frame", price: 349, mrp: 550, desc: "Teak wood frame, 10×12\", double mat. Original Shirdi photograph.", emoji: "🪬", rating: 4.6, reviews: 2103, tag: null },
-      { id: 6, name: "Ashtavinayak Set", price: 799, mrp: 1199, desc: "All 8 Ganesh temple photographs, matching silver frames, ready to hang.", emoji: "🐘", rating: 4.7, reviews: 567, tag: null },
-    ],
+{ id: 1, name: "Tirupati Balaji Photo", image: "https://i.pinimg.com/736x/4e/31/14/4e31149a604f9bbcffa2ce66c5615af3.jpg", price: 299, mrp: 499, desc: "Sacred image of Lord Venkateswara.", rating: 4.8, reviews: 2100 },
+{ id: 2, name: "Ganesha Frame", image: "https://i.pinimg.com/1200x/25/92/2a/25922ab1f35710ea64e474ad6cfdc430.jpg", price: 249, mrp: 400, desc: "Blessed Ganesha photo frame.", rating: 4.7, reviews: 1800 },
+{ id: 3, name: "Lakshmi Devi Photo", image: "https://i.pinimg.com/736x/aa/e0/fc/aae0fc2887970ecd74e1175c638f4a42.jpg", price: 279, mrp: 450, desc: "Goddess Lakshmi for wealth and prosperity.", rating: 4.9, reviews: 2300 },
+{ id: 4, name: "Shiva Parvati Frame", image: "https://i.pinimg.com/1200x/7f/70/9f/7f709f768c962cb783e75d4ecfc8b49c.jpg", price: 349, mrp: 550, desc: "Divine couple Shiva and Parvati.", rating: 4.8, reviews: 1700 },
+{ id: 5, name: "Krishna Radha Photo", image: "https://i.pinimg.com/736x/b2/2d/d5/b22dd5c247e3d81f6bc4d02a1f4818f1.jpg", price: 399, mrp: 600, desc: "Beautiful Radha Krishna artwork.", rating: 4.9, reviews: 2500 },
+{ id: 6, name: "Sai Baba Frame", image: "https://i.pinimg.com/1200x/d1/aa/6c/d1aa6ce63b62a00d895aa29a5b743dc0.jpg", price: 299, mrp: 480, desc: "Shirdi Sai Baba divine photo.", rating: 4.8, reviews: 2000 },
+{ id: 7, name: "Durga Devi Photo", image: "https://i.pinimg.com/736x/07/6b/f6/076bf6f6786fe8ca0ad27d64f54a8bf7.jpg", price: 279, mrp: 420, desc: "Goddess Durga powerful image.", rating: 4.7, reviews: 1600 },
+{ id: 8, name: "Hanuman Photo", image: "https://i.pinimg.com/736x/97/7e/21/977e2188b79f061bbebf2d6f56326c9b.jpg", price: 199, mrp: 350, desc: "Lord Hanuman devotional photo.", rating: 4.9, reviews: 3000 },
+{ id: 9, name: "Murugan Photo", image: "https://i.pinimg.com/736x/e2/3e/8d/e23e8d84ab5259e4824edfb0b5ae7e92.jpg", price: 299, mrp: 450, desc: "Lord Murugan with Vel.", rating: 4.8, reviews: 1900 },
+{ id: 10, name: "Rama Sita Frame", image: "https://i.pinimg.com/1200x/9f/9d/8e/9f9d8e1b825dc73ff46dee096cda6eea.jpg", price: 349, mrp: 550, desc: "Lord Rama with Sita and Lakshmana.", rating: 4.8, reviews: 1700 },
+{ id: 11, name: "Navagraha Photo", image: "https://i.pinimg.com/1200x/28/3e/01/283e017262ea2c29265d353612ae0f24.jpg", price: 399, mrp: 650, desc: "Nine planetary deities image.", rating: 4.7, reviews: 1400 },
+{ id: 12, name: "Ayyappa Swamy Frame", image: "https://i.pinimg.com/1200x/d4/cb/cf/d4cbcf223024b4c521fb8c1710321ae2.jpg", price: 299, mrp: 480, desc: "Lord Ayyappa devotional frame.", rating: 4.8, reviews: 1500 },
+{ id: 13, name: "Saraswati Photo", image: "https://i.pinimg.com/736x/48/31/09/483109f2d0a2dc0bcfe92e2aef626ce8.jpg", price: 249, mrp: 400, desc: "Goddess of knowledge Saraswati.", rating: 4.7, reviews: 1200 },
+{ id: 14, name: "Kali Devi Frame", image: "https://i.pinimg.com/736x/8e/7b/a5/8e7ba5ae552af6b627064b64477ca7f1.jpg", price: 279, mrp: 450, desc: "Powerful Kali Maa image.", rating: 4.6, reviews: 1100 },
+{ id: 15, name: "Balaji Gold Frame", image: "https://i.pinimg.com/1200x/58/d2/ba/58d2bae1ac70748edb8c41f480046a17.jpg", price: 499, mrp: 750, desc: "Premium gold framed Balaji image.", rating: 4.9, reviews: 1300 },
+{ id: 16, name: "Om Symbol Frame", image: "https://i.pinimg.com/736x/40/63/26/4063266d5dfa68ea16a350efbbd9ac90.jpg", price: 199, mrp: 320, desc: "Sacred Om symbol artwork.", rating: 4.6, reviews: 900 },
+{ id: 17, name: "Shiva Lingam Photo", image: "https://i.pinimg.com/1200x/ca/0a/91/ca0a91aa9074807117cc1bb7a7f3c5c1.jpg", price: 229, mrp: 380, desc: "Holy Shiva Lingam image.", rating: 4.7, reviews: 1000 },
+{ id: 18, name: "Iskcon Krishna Frame", image: "https://i.pinimg.com/1200x/cc/73/ad/cc73ad57e35e0a384a83512ba2c6c6ab.jpg", price: 349, mrp: 550, desc: "ISKCON style Krishna image.", rating: 4.8, reviews: 1200 },
+{ id: 19, name: "Vishnu Photo", image: "https://i.pinimg.com/1200x/ca/0a/91/ca0a91aa9074807117cc1bb7a7f3c5c1.jpg", price: 299, mrp: 480, desc: "Lord Vishnu divine image.", rating: 4.7, reviews: 1100 },
+
+]
   },
   {
     id: "mala", icon: "📿", label: "Mala", desc: "Sacred prayer beads & garlands",
-    items: [
-      { id: 1, name: "Rudraksha Mala — 108", price: 999, mrp: 1499, desc: "Original 5-mukhi Nepal Rudraksha, handstrung on silk. Certificate of authenticity.", emoji: "📿", rating: 4.8, reviews: 3201, tag: "Certified" },
-      { id: 2, name: "Tulsi Mala — 108", price: 299, mrp: 450, desc: "Holy Vrindavan tulsi wood. Machine-rounded 8mm beads, handstrung.", emoji: "🌿", rating: 4.6, reviews: 1892, tag: null },
-      { id: 3, name: "Sphatik Mala — 108", price: 1499, mrp: 2199, desc: "Natural crystal quartz, round 10mm beads. Used for Devi & Shiva worship.", emoji: "🔮", rating: 4.7, reviews: 876, tag: "Natural" },
-      { id: 4, name: "Sandal Wood Mala", price: 799, mrp: 1199, desc: "Fragrant Mysore sandalwood, 10mm beads. Retains scent for years.", emoji: "🪵", rating: 4.8, reviews: 654, tag: null },
-      { id: 5, name: "Gold Plated Mala", price: 2199, mrp: 3199, desc: "Temple-grade brass beads with 22K gold plating. For pooja use.", emoji: "✨", rating: 4.5, reviews: 412, tag: "Premium" },
-      { id: 6, name: "Lotus Seed Mala", price: 449, mrp: 699, desc: "Kamal gatta 108 beads. Auspicious for Lakshmi worship & prosperity.", emoji: "🪷", rating: 4.6, reviews: 789, tag: null },
-    ],
+    items:[
+{ id: 1, name: "Rudraksha Mala (108 Beads)", image: "https://i.pinimg.com/736x/40/fa/c3/40fac3a08fc2b75d4c574957500f814b.jpg", price: 999, mrp: 1499, desc: "Original 5-mukhi Rudraksha mala for meditation.", rating: 4.8, reviews: 3200 },
+{ id: 2, name: "Tulsi Mala (108 Beads)", image: "https://i.pinimg.com/736x/8c/0e/af/8c0eaf2014e95aca468ef4bf953c1ef8.jpg", price: 299, mrp: 450, desc: "Holy Tulsi wood mala for chanting.", rating: 4.7, reviews: 2100 },
+{ id: 3, name: "Sphatik Mala", image: "https://i.pinimg.com/1200x/ea/5a/05/ea5a05c5ac56f2beae2ddf9aebe7be85.jpg", price: 1499, mrp: 2200, desc: "Crystal quartz mala for peace and clarity.", rating: 4.8, reviews: 1800 },
+{ id: 4, name: "Sandalwood Mala", image: "https://i.pinimg.com/736x/1b/73/57/1b735761a3be5aacf0f91e9861de8f26.jpg", price: 799, mrp: 1200, desc: "Fragrant sandalwood prayer beads.", rating: 4.7, reviews: 1500 },
+{ id: 5, name: "Lotus Seed Mala", image: "https://i.pinimg.com/1200x/93/30/88/933088eea7b663f86d92dc9fb39ddca9.jpg", price: 449, mrp: 700, desc: "Sacred lotus seed mala for Lakshmi worship.", rating: 4.6, reviews: 1200 },
+{ id: 6, name: "Navratna Mala", image: "https://i.pinimg.com/736x/cf/c9/7d/cfc97da57b2c02592816386702e563ab.jpg", price: 1999, mrp: 3000, desc: "Nine gemstone mala for planetary balance.", rating: 4.8, reviews: 900 },
+{ id: 7, name: "Rudraksha Bracelet Mala", image: "https://i.pinimg.com/1200x/40/fa/c3/40fac3a08fc2b75d4c574957500f814b.jpg", price: 399, mrp: 650, desc: "Compact Rudraksha mala bracelet.", rating: 4.6, reviews: 1000 },
+{ id: 8, name: "Tulsi Kanthi Mala", image: "https://i.pinimg.com/1200x/2a/7b/f5/2a7bf51d42298d449490d33d9c3418a3.jpg", price: 199, mrp: 350, desc: "Double-layer Tulsi kanthi mala.", rating: 4.7, reviews: 1300 },
+{ id: 9, name: "Black Onyx Mala", image: "https://i.pinimg.com/1200x/81/7b/c9/817bc9e8a5ac4295ce8958bf2a0f0677.jpg", price: 899, mrp: 1400, desc: "Onyx beads for protection and strength.", rating: 4.5, reviews: 800 },
+{ id: 10, name: "Chandan Mala", image: "https://i.pinimg.com/736x/1b/73/57/1b735761a3be5aacf0f91e9861de8f26.jpg", price: 699, mrp: 1100, desc: "Premium chandan wood mala.", rating: 4.7, reviews: 950 },
+{ id: 11, name: "Crystal Bead Mala", image: "https://i.pinimg.com/1200x/38/1c/6b/381c6b4aaf846938fc70393b5deda7b2.jpg", price: 1199, mrp: 1800, desc: "Transparent crystal mala for meditation.", rating: 4.8, reviews: 870 },
+{ id: 12, name: "Coral Mala", image: "https://i.pinimg.com/1200x/82/9b/34/829b34bcd4f6f98e6fc57b480f53a61a.jpg", price: 1499, mrp: 2300, desc: "Red coral mala for energy and vitality.", rating: 4.6, reviews: 720 },
+{ id: 13, name: "Turquoise Mala", image: "https://i.pinimg.com/1200x/77/f6/21/77f6215d52a7428c4ac26f1886587477.jpg", price: 1299, mrp: 2000, desc: "Turquoise beads for healing and peace.", rating: 4.6, reviews: 650 },
+{ id: 14, name: "Golden Bead Mala", image: "https://i.pinimg.com/1200x/3f/7d/4a/3f7d4a262ed6e271c158be738d47c136.jpg", price: 1799, mrp: 2600, desc: "Gold-plated beads for premium look.", rating: 4.7, reviews: 600 },
+{ id: 15, name: "Rudraksha + Sphatik Mala", image: "https://i.pinimg.com/736x/ca/ce/de/cacededd4b2619647e89c33dfd0caab6.jpg", price: 1399, mrp: 2100, desc: "Combination mala for spiritual balance.", rating: 4.8, reviews: 820 },
+{ id: 16, name: "Rosewood Mala", image: "https://i.pinimg.com/736x/6d/ca/20/6dca20201f420fc2e4c5db636bc48ba2.jpg", price: 599, mrp: 900, desc: "Rosewood beads for calmness.", rating: 4.5, reviews: 700 },
+{ id: 17, name: "Shiva Lingam Mala", image: "https://i.pinimg.com/736x/7c/6a/36/7c6a3655f976b278a02b793a0fa5d831.jpg", price: 899, mrp: 1400, desc: "Mala with Shiva Lingam pendant.", rating: 4.7, reviews: 680 },
+{ id: 18, name: "Ganesha Pendant Mala", image: "https://i.pinimg.com/736x/d0/86/3b/d0863b48ea2d37eafb8d155fe8356dc5.jpg", price: 799, mrp: 1200, desc: "Mala with Ganesha pendant.", rating: 4.6, reviews: 750 },
+{ id: 19, name: "Om Pendant Mala", image: "https://i.pinimg.com/1200x/87/50/bd/8750bd7ceab8709eedb42e82e2d8d901.jpg", price: 699, mrp: 1100, desc: "Mala with sacred Om symbol.", rating: 4.7, reviews: 820 },
+{ id: 20, name: "Temple Style Mala", image: "https://i.pinimg.com/1200x/6c/fa/8f/6cfa8f310427cd2f82124c70592455a4.jpg", price: 999, mrp: 1500, desc: "Traditional temple design mala.", rating: 4.8, reviews: 900 }
+],
   },
 ];
 
@@ -363,7 +627,6 @@ function GoldDivider({ style = {} }) {
   );
 }
 
-/* ── Star rating display ── */
 function Stars({ rating }) {
   const pct = (rating / 5) * 100;
   return (
@@ -377,7 +640,6 @@ function Stars({ rating }) {
   );
 }
 
-/* ── Qty stepper — Flipkart style ── */
 function QtyStepper({ qty, onInc, onDec }) {
   const isOne = qty === 1;
   return (
@@ -397,14 +659,12 @@ function QtyStepper({ qty, onInc, onDec }) {
         transition: "background 0.15s",
         fontFamily: FONTS.body,
       }}>{isOne ? "🗑" : "−"}</button>
-
       <div style={{
         minWidth: 40, display: "flex", alignItems: "center", justifyContent: "center",
         background: "#fff",
         fontFamily: FONTS.sub, fontSize: 14, fontWeight: 700, color: T.text,
         borderLeft: `1px solid ${T.border}`, borderRight: `1px solid ${T.border}`,
       }}>{qty}</div>
-
       <button onClick={onInc} style={{
         width: 38, border: "none", cursor: "pointer",
         background: "#fffbf0", color: T.gold,
@@ -417,23 +677,12 @@ function QtyStepper({ qty, onInc, onDec }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   FLIPKART-STYLE PRODUCT CARD
-──────────────────────────────────────────── */
 function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
   const [h, hp] = useHover();
   const [wish, setWish] = useState(false);
   const key = `${catId}-${item.id}`;
   const qty = cart[key] || 0;
   const discount = Math.round(((item.mrp - item.price) / item.mrp) * 100);
-
-  const tagColor = {
-    "Bestseller": "#2874F0", "Top Rated": "#26A541",
-    "Limited": "#e53935", "Pure": "#00897B",
-    "Premium": "#7B1FA2", "Natural": "#558B2F",
-    "Certified": "#1565C0", "Handpainted": "#E65100",
-    "Handcrafted": "#AD1457", "Rare": "#6A1B9A",
-  };
 
   return (
     <div {...hp} style={{
@@ -449,8 +698,6 @@ function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
       animation: `fadeUp 0.4s ease ${delay}s both`,
       position: "relative",
     }}>
-
-      {/* ── LEFT: image panel ── */}
       <div style={{
         width: 180, minWidth: 180,
         background: `linear-gradient(165deg, ${T.goldPale} 0%, ${T.bgAlt} 100%)`,
@@ -460,21 +707,6 @@ function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
         borderRight: `1px solid ${T.border}`,
         position: "relative",
       }}>
-        {/* Tag */}
-        {item.tag && (
-          <div style={{
-            position: "absolute", top: 12, left: 0,
-            background: tagColor[item.tag] || T.gold,
-            color: "#fff",
-            fontFamily: FONTS.small, fontSize: 10, fontWeight: 700,
-            padding: "3px 9px 3px 7px",
-            borderRadius: "0 10px 10px 0",
-            letterSpacing: 0.4,
-            boxShadow: "0 2px 6px rgba(0,0,0,0.18)",
-          }}>{item.tag}</div>
-        )}
-
-        {/* Wishlist heart */}
         <button onClick={() => setWish(w => !w)} style={{
           position: "absolute", top: 10, right: 10,
           background: "rgba(255,255,255,0.8)", border: "none",
@@ -486,135 +718,42 @@ function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
           transform: wish ? "scale(1.2)" : "scale(1)",
           boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
         }}>{wish ? "♥" : "♡"}</button>
-
-        {/* Product emoji or image */}
         {item.image ? (
-          <img
-            src={item.image}
-            alt={item.name}
-            style={{
-              width: "100%",
-              height: 120,
-              objectFit: "contain",
-            }}
-          />
+          <img src={item.image} alt={item.name} style={{ width: "100%", height: 170, objectFit: "contain" }} />
         ) : (
-          <div style={{
-            width: "100%",
-            height: 120,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 48,
-          }}>
-            {item.emoji}
-          </div>
+          <div style={{ width: "100%", height: 120, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48 }}>{item.emoji}</div>
         )}
-
-       
       </div>
 
-      {/* ── RIGHT: details panel ── */}
       <div style={{ flex: 1, padding: "18px 22px", display: "flex", flexDirection: "column", gap: 7, minWidth: 0 }}>
-
-        {/* Product name */}
-       <div style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center"
-}}>
-  <div style={{
-    fontFamily: FONTS.sub,
-    fontSize: 16,
-    fontWeight: 600,
-    color: T.text,
-  }}>
-    {item.name}
-  </div>
-
-  <Stars rating={item.rating || 0} />
-</div>
-
-        {/* Stars */}
-        <Stars rating={item.rating || 0} />
-
-        {/* Description */}
-        <div style={{
-          fontFamily: FONTS.body, fontSize: 13, color: "#888",
-          lineHeight: 1.6,
-          display: "-webkit-box", WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical", overflow: "hidden",
-        }}>{item.desc}</div>
-
-        {/* Divider */}
-        <div style={{ height: 1, background: T.border, margin: "2px 0" }} />
-
-        {/* Price row */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-          <span style={{
-            fontFamily: FONTS.heading, fontSize: 22, fontWeight: 700, color: "#D4AF37",
-          }}>₹{item.price.toLocaleString()}</span>
-          <span style={{
-            fontFamily: FONTS.small, fontSize: 14, color: "#AAAAAA",
-            textDecoration: "line-through",
-          }}>₹{item.mrp.toLocaleString()}</span>
-          {discount > 0 && (
-            <span style={{
-              fontFamily: FONTS.small, fontSize: 14, fontWeight: 700, color: T.green,
-            }}>{discount}% off</span>
-          )}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ fontFamily: FONTS.sub, fontSize: 16, fontWeight: 600, color: T.text }}>{item.name}</div>
+          <Stars rating={item.rating || 0} />
         </div>
-
-        {/* Savings pill */}
+        <div style={{ fontFamily: FONTS.body, fontSize: 13, color: "#888", lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{item.desc}</div>
+        <div style={{ height: 1, background: T.border, margin: "2px 0" }} />
+        <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+          <span style={{ fontFamily: FONTS.heading, fontSize: 22, fontWeight: 700, color: "#D4AF37" }}>₹{item.price?.toLocaleString() || 0}</span>
+          <span style={{ fontFamily: FONTS.small, fontSize: 14, color: "#AAAAAA", textDecoration: "line-through" }}>₹{item.mrp?.toLocaleString() || 0}</span>
+          {discount > 0 && <span style={{ fontFamily: FONTS.small, fontSize: 14, fontWeight: 700, color: T.green }}>{discount}% off</span>}
+        </div>
         {discount > 0 && (
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 5,
-            background: "#EAF7ED", borderRadius: 4, padding: "4px 10px",
-            fontFamily: FONTS.small, fontSize: 12, fontWeight: 500, color: T.green,
-            alignSelf: "flex-start",
-          }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#EAF7ED", borderRadius: 4, padding: "4px 10px", fontFamily: FONTS.small, fontSize: 12, fontWeight: 500, color: T.green, alignSelf: "flex-start" }}>
             🎉 You save ₹{(item.mrp - item.price).toLocaleString()}
           </div>
         )}
-
-        {/* Delivery */}
-        <div style={{
-          fontFamily: FONTS.small, fontSize: 12, color: T.green,
-          display: "flex", alignItems: "center", gap: 5,
-        }}>
+        <div style={{ fontFamily: FONTS.small, fontSize: 12, color: T.green, display: "flex", alignItems: "center", gap: 5 }}>
           <span>🚚</span>
           <span style={{ fontWeight: 500 }}>Free Delivery</span>
           <span style={{ color: "#AAAAAA" }}>· Usually ships in 2–3 days</span>
         </div>
-
-        {/* CTA */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 4, flexWrap: "wrap" }}>
           {qty === 0 ? (
             <>
-              <button
-                onClick={() => onAdd(key)}
-                style={{
-                  height: 40, padding: "0 24px",
-                  background: `linear-gradient(135deg, ${T.goldMid}, ${T.gold})`,
-                  border: "none", borderRadius: 5,
-                  fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600,
-                  color: "#fff", letterSpacing: 0.4, cursor: "pointer",
-                  boxShadow: "0 3px 10px rgba(184,134,11,0.28)",
-                  display: "flex", alignItems: "center", gap: 7,
-                  transition: "all 0.2s",
-                }}
-              >
+              <button onClick={() => onAdd(key)} style={{ height: 40, padding: "0 24px", background: `linear-gradient(135deg, ${T.goldMid}, ${T.gold})`, border: "none", borderRadius: 5, fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: "#fff", letterSpacing: 0.4, cursor: "pointer", boxShadow: "0 3px 10px rgba(184,134,11,0.28)", display: "flex", alignItems: "center", gap: 7, transition: "all 0.2s" }}>
                 🛒 Add to Cart
               </button>
-              <button style={{
-                height: 40, padding: "0 20px",
-                background: "#fff",
-                border: `1.5px solid ${T.goldMid}`,
-                borderRadius: 5,
-                fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600,
-                color: T.gold, cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 7,
-              }}>
+              <button style={{ height: 40, padding: "0 20px", background: "#fff", border: `1.5px solid ${T.goldMid}`, borderRadius: 5, fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: T.gold, cursor: "pointer", display: "flex", alignItems: "center", gap: 7 }}>
                 ⚡ Buy Now
               </button>
             </>
@@ -622,12 +761,8 @@ function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
             <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <QtyStepper qty={qty} onInc={() => onAdd(key)} onDec={() => onRemove(key)} />
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <span style={{
-                  fontFamily: FONTS.small, fontSize: 12, color: T.green, fontWeight: 600,
-                }}>✓ Added to Cart</span>
-                <span style={{
-                  fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA",
-                }}>Subtotal: ₹{(item.price * qty).toLocaleString()}</span>
+                <span style={{ fontFamily: FONTS.small, fontSize: 12, color: T.green, fontWeight: 600 }}>✓ Added to Cart</span>
+                <span style={{ fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA" }}>Subtotal: ₹{(item.price * qty).toLocaleString()}</span>
               </div>
             </div>
           )}
@@ -637,9 +772,6 @@ function ProductCard({ item, catId, cart, onAdd, onRemove, delay }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   PRODUCT LIST PAGE
-──────────────────────────────────────────── */
 function ProductList({ cat, cart, onAdd, onRemove, onBack }) {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("default");
@@ -647,8 +779,8 @@ function ProductList({ cat, cart, onAdd, onRemove, onBack }) {
   const [maxPrice, setMaxPrice] = useState("");
 
   let items = cat.items.filter(item => {
-    const q = search.toLowerCase();
-    const matchText = item.name.toLowerCase().includes(q) || (item.desc || "").toLowerCase().includes(q);
+    const q = (search || "").toLowerCase();
+    const matchText = (item.name || "").toLowerCase().includes(q) || (item.desc || "").toLowerCase().includes(q);
     const matchMin = minPrice === "" || item.price >= Number(minPrice);
     const matchMax = maxPrice === "" || item.price <= Number(maxPrice);
     return matchText && matchMin && matchMax;
@@ -663,142 +795,51 @@ function ProductList({ cat, cart, onAdd, onRemove, onBack }) {
 
   return (
     <div style={{ animation: "fadeUp 0.4s ease both" }}>
-
-      {/* Page header */}
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
         <BackBtn onClick={onBack} />
         <div>
-          <div style={{ fontFamily: FONTS.sub, fontSize: 22, fontWeight: 600, color: "#C9A227", lineHeight: 1.3 }}>
-            {cat.icon} {cat.label}
-          </div>
+          <div style={{ fontFamily: FONTS.sub, fontSize: 22, fontWeight: 600, color: "#C9A227", lineHeight: 1.3 }}>{cat.icon} {cat.label}</div>
           <div style={{ fontFamily: FONTS.small, fontSize: 13, color: "#AAAAAA" }}>{cat.desc}</div>
         </div>
         {inCartCount > 0 && (
-          <div style={{
-            marginLeft: "auto",
-            background: T.goldPale, border: `1px solid ${T.goldMid}`,
-            borderRadius: 20, padding: "5px 14px",
-            fontFamily: FONTS.small, fontSize: 12, fontWeight: 600, color: T.gold,
-          }}>
+          <div style={{ marginLeft: "auto", background: T.goldPale, border: `1px solid ${T.goldMid}`, borderRadius: 20, padding: "5px 14px", fontFamily: FONTS.small, fontSize: 12, fontWeight: 600, color: T.gold }}>
             🛒 {inCartCount} item{inCartCount > 1 ? "s" : ""} in cart
           </div>
         )}
       </div>
-
       <GoldDivider style={{ marginBottom: 16 }} />
-
-      {/* ── Filter / Sort bar ── */}
-      <div style={{
-        background: T.surface,
-        border: `1px solid ${T.border}`,
-        borderRadius: 10, padding: "14px 18px",
-        marginBottom: 20,
-        boxShadow: "0 2px 10px rgba(184,134,11,0.06)",
-      }}>
-        {/* Row 1: Search + Sort */}
+      <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "14px 18px", marginBottom: 20, boxShadow: "0 2px 10px rgba(184,134,11,0.06)" }}>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
           <div style={{ position: "relative", flex: 1, minWidth: 200 }}>
             <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: T.goldMid, fontSize: 14 }}>🔍</span>
-            <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search in this category…"
-              style={{
-                width: "100%", padding: "9px 14px 9px 36px",
-                border: `1.5px solid ${T.border}`, borderRadius: 6,
-                fontFamily: FONTS.body, fontSize: 14, color: T.text,
-                background: T.bgAlt, outline: "none", transition: "border 0.2s",
-              }}
-              onFocus={e => e.target.style.borderColor = T.goldMid}
-              onBlur={e => e.target.style.borderColor = T.border}
-            />
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search in this category…" style={{ width: "100%", padding: "9px 14px 9px 36px", border: `1.5px solid ${T.border}`, borderRadius: 6, fontFamily: FONTS.body, fontSize: 14, color: T.text, background: T.bgAlt, outline: "none", transition: "border 0.2s", cursor: "text" }} onFocus={e => e.target.style.borderColor = T.goldMid} onBlur={e => e.target.style.borderColor = T.border} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <span style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA" }}>Price (₹):</span>
-            <input
-              value={minPrice} onChange={e => setMinPrice(e.target.value)}
-              placeholder="Min" type="number"
-              style={{
-                width: 70, padding: "8px 10px",
-                border: `1.5px solid ${T.border}`, borderRadius: 6,
-                fontFamily: FONTS.body, fontSize: 13, color: T.text,
-                background: T.bgAlt, outline: "none",
-              }}
-            />
+            <input value={minPrice} onChange={e => setMinPrice(e.target.value)} placeholder="Min" type="number" style={{ width: 70, padding: "8px 10px", border: `1.5px solid ${T.border}`, borderRadius: 6, fontFamily: FONTS.body, fontSize: 13, color: T.text, background: T.bgAlt, outline: "none", cursor: "text" }} />
             <span style={{ color: "#AAAAAA" }}>–</span>
-            <input
-              value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-              placeholder="Max" type="number"
-              style={{
-                width: 70, padding: "8px 10px",
-                border: `1.5px solid ${T.border}`, borderRadius: 6,
-                fontFamily: FONTS.body, fontSize: 13, color: T.text,
-                background: T.bgAlt, outline: "none",
-              }}
-            />
+            <input value={maxPrice} onChange={e => setMaxPrice(e.target.value)} placeholder="Max" type="number" style={{ width: 70, padding: "8px 10px", border: `1.5px solid ${T.border}`, borderRadius: 6, fontFamily: FONTS.body, fontSize: 13, color: T.text, background: T.bgAlt, outline: "none", cursor: "text" }} />
           </div>
-          <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginLeft: "auto" }}>
-            {items.length} result{items.length !== 1 ? "s" : ""}
-          </div>
+          <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginLeft: "auto" }}>{items.length} result{items.length !== 1 ? "s" : ""}</div>
         </div>
-
-        {/* Row 2: Sort pills */}
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
           <span style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginRight: 2 }}>Sort by:</span>
-          {[
-            { v: "default", l: "Relevance" },
-            { v: "popular", l: "🔥 Popularity" },
-            { v: "rating", l: "⭐ Rating" },
-            { v: "price_asc", l: "Price: Low to High" },
-            { v: "price_desc", l: "Price: High to Low" },
-          ].map(opt => (
-            <button key={opt.v} onClick={() => setSortBy(opt.v)} style={{
-              padding: "5px 13px", borderRadius: 20,
-              border: `1.5px solid ${sortBy === opt.v ? T.goldMid : T.border}`,
-              background: sortBy === opt.v ? T.goldPale : "#fff",
-              fontFamily: FONTS.small, fontSize: 12,
-              fontWeight: sortBy === opt.v ? 600 : 400,
-              color: sortBy === opt.v ? T.gold : T.textSec,
-              cursor: "pointer", transition: "all 0.18s",
-            }}>{opt.l}</button>
+          {[{ v: "default", l: "Relevance" }, { v: "popular", l: "🔥 Popularity" }, { v: "rating", l: "⭐ Rating" }, { v: "price_asc", l: "Price: Low to High" }, { v: "price_desc", l: "Price: High to Low" }].map(opt => (
+            <button key={opt.v} onClick={() => setSortBy(opt.v)} style={{ padding: "5px 13px", borderRadius: 20, border: `1.5px solid ${sortBy === opt.v ? T.goldMid : T.border}`, background: sortBy === opt.v ? T.goldPale : "#fff", fontFamily: FONTS.small, fontSize: 12, fontWeight: sortBy === opt.v ? 600 : 400, color: sortBy === opt.v ? T.gold : T.textSec, cursor: "pointer", transition: "all 0.18s" }}>{opt.l}</button>
           ))}
           {(search || minPrice || maxPrice) && (
-            <button onClick={() => { setSearch(""); setMinPrice(""); setMaxPrice(""); }} style={{
-              marginLeft: "auto", padding: "5px 13px", borderRadius: 20,
-              border: `1px solid #e53935`, background: "#fff2f2",
-              fontFamily: FONTS.small, fontSize: 12, color: "#e53935",
-              cursor: "pointer",
-            }}>✕ Clear filters</button>
+            <button onClick={() => { setSearch(""); setMinPrice(""); setMaxPrice(""); }} style={{ marginLeft: "auto", padding: "5px 13px", borderRadius: 20, border: `1px solid #e53935`, background: "#fff2f2", fontFamily: FONTS.small, fontSize: 12, color: "#e53935", cursor: "pointer" }}>✕ Clear filters</button>
           )}
         </div>
       </div>
-
-      {/* Product cards */}
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {items.length > 0 ? (
-          items.map((item, i) => (
-            <ProductCard
-              key={item.id}
-              item={item}
-              catId={cat.id}
-              cart={cart}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              delay={i * 0.04}
-            />
-          ))
+          items.map((item, i) => <ProductCard key={item.id} item={item} catId={cat.id} cart={cart} onAdd={onAdd} onRemove={onRemove} delay={i * 0.04} />)
         ) : (
-          <div style={{
-            textAlign: "center", padding: "64px 20px",
-            background: T.surface, borderRadius: 12, border: `1px dashed ${T.border}`,
-          }}>
+          <div style={{ textAlign: "center", padding: "64px 20px", background: T.surface, borderRadius: 12, border: `1px dashed ${T.border}` }}>
             <div style={{ fontSize: 44, marginBottom: 14 }}>🔍</div>
-            <div style={{ fontFamily: FONTS.sub, fontSize: 16, fontWeight: 600, color: "#C9A227", marginBottom: 6 }}>
-              No items found
-            </div>
-            <div style={{ fontFamily: FONTS.body, fontSize: 14, color: "#AAAAAA" }}>
-              Try adjusting your search or filters
-            </div>
+            <div style={{ fontFamily: FONTS.sub, fontSize: 16, fontWeight: 600, color: "#C9A227", marginBottom: 6 }}>No items found</div>
+            <div style={{ fontFamily: FONTS.body, fontSize: 14, color: "#AAAAAA" }}>Try adjusting your search or filters</div>
           </div>
         )}
       </div>
@@ -806,9 +847,6 @@ function ProductList({ cat, cart, onAdd, onRemove, onBack }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   CAROUSEL
-──────────────────────────────────────────── */
 function Carousel({ data, animDelay }) {
   const [cur, setCur] = useState(0);
   const len = data.slides.length;
@@ -836,9 +874,6 @@ function Carousel({ data, animDelay }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   CATEGORY CARD
-──────────────────────────────────────────── */
 function CategoryCard({ cat, onClick, animDelay }) {
   const [h, hp] = useHover();
   return (
@@ -847,16 +882,11 @@ function CategoryCard({ cat, onClick, animDelay }) {
       <div style={{ width: 58, height: 58, borderRadius: "50%", background: h ? "rgba(212,175,55,0.16)" : "rgba(212,175,55,0.06)", border: `1.5px solid ${h ? T.goldMid : T.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, transition: "all 0.3s", animation: h ? "goldPulse 2s ease infinite" : "none" }}>{cat.icon}</div>
       <div style={{ fontFamily: FONTS.sub, fontSize: 14, fontWeight: 600, color: h ? "#C9A227" : T.text, letterSpacing: 1, transition: "color 0.3s" }}>{cat.label}</div>
       <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", lineHeight: 1.6 }}>{cat.desc}</div>
-      <div style={{ fontFamily: FONTS.small, fontSize: 11, fontWeight: 500, letterSpacing: 2, textTransform: "uppercase", color: h ? "#C9A227" : "#AAAAAA", display: "flex", alignItems: "center", gap: 3, transition: "color 0.3s" }}>
-        Explore <span style={{ fontSize: 13 }}>›</span>
-      </div>
+      <div style={{ fontFamily: FONTS.small, fontSize: 11, fontWeight: 500, letterSpacing: 2, textTransform: "uppercase", color: h ? "#C9A227" : "#AAAAAA", display: "flex", alignItems: "center", gap: 3, transition: "color 0.3s" }}>Explore <span style={{ fontSize: 13 }}>›</span></div>
     </div>
   );
 }
 
-/* ────────────────────────────────────────────
-   BACK BUTTON
-──────────────────────────────────────────── */
 function BackBtn({ onClick }) {
   const [h, hp] = useHover();
   return (
@@ -864,9 +894,6 @@ function BackBtn({ onClick }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   CART DRAWER
-──────────────────────────────────────────── */
 function CartDrawer({ cart, onAdd, onRemove, onClose }) {
   const allItems = CATEGORIES.flatMap(c => c.items.map(i => ({ ...i, catId: c.id, catLabel: c.label })));
   const entries = Object.entries(cart).filter(([, q]) => q > 0).map(([key, qty]) => {
@@ -880,10 +907,15 @@ function CartDrawer({ cart, onAdd, onRemove, onClose }) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 300, display: "flex", justifyContent: "flex-end" }}>
       <div onClick={onClose} style={{ position: "absolute", inset: 0, background: "rgba(26,18,8,0.3)", backdropFilter: "blur(3px)" }} />
-      <div style={{ position: "relative", width: 410, height: "100%", background: T.surface, borderLeft: `1px solid ${T.border}`, display: "flex", flexDirection: "column", boxShadow: "-8px 0 40px rgba(184,134,11,0.1)", overflowY: "auto", animation: "fadeUp 0.3s ease both" }}>
+      <div style={{ position: "relative", width: 410, height: "100%", background: T.surface, borderLeft: `1px solid ${T.border}`, display: "flex", flexDirection: "column", boxShadow: "-8px 0 40px rgba(184,134,11,0.1)", animation: "fadeUp 0.3s ease both" }}>
 
-        {/* Header */}
-        <div style={{ padding: "16px 22px", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", background: T.surfaceAlt }}>
+        {/* FIXED HEADER inside drawer */}
+        <div style={{
+          position: "sticky", top: 0, zIndex: 10,
+          padding: "16px 22px", borderBottom: `1px solid ${T.border}`,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: T.surfaceAlt, flexShrink: 0,
+        }}>
           <div>
             <div style={{ fontFamily: FONTS.heading, fontSize: 18, fontWeight: 700, color: "#D4AF37" }}>Your Cart</div>
             <div style={{ fontFamily: FONTS.small, fontSize: 12, color: "#AAAAAA", marginTop: 1 }}>{entries.length} item type{entries.length !== 1 ? "s" : ""}</div>
@@ -891,8 +923,8 @@ function CartDrawer({ cart, onAdd, onRemove, onClose }) {
           <button onClick={onClose} style={{ background: "none", border: "none", color: T.textDis, fontSize: 20, cursor: "pointer" }}>✕</button>
         </div>
 
-        {/* Items */}
-        <div style={{ flex: 1, padding: "14px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
+        {/* SCROLLABLE ITEMS */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "14px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
           {entries.length === 0 ? (
             <div style={{ textAlign: "center", marginTop: 56 }}>
               <div style={{ fontSize: 44, marginBottom: 12 }}>🪔</div>
@@ -902,7 +934,7 @@ function CartDrawer({ cart, onAdd, onRemove, onClose }) {
           ) : entries.map(e => (
             <div key={e.key} style={{ background: T.bgAlt, borderRadius: 10, border: `1px solid ${T.border}`, padding: "12px 14px" }}>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <span style={{ fontSize: 30, flexShrink: 0 }}>{e.emoji}</span>
+                <span style={{ fontSize: 30, flexShrink: 0 }}>{e.emoji || "🛕"}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: T.text, lineHeight: 1.35, marginBottom: 2 }}>{e.name}</div>
                   <div style={{ fontFamily: FONTS.small, fontSize: 11, color: "#AAAAAA", marginBottom: 10 }}>{e.catLabel}</div>
@@ -919,9 +951,13 @@ function CartDrawer({ cart, onAdd, onRemove, onClose }) {
           ))}
         </div>
 
-        {/* Summary */}
+        {/* FIXED FOOTER inside drawer */}
         {entries.length > 0 && (
-          <div style={{ padding: "16px 20px 24px", borderTop: `1px solid ${T.border}`, background: T.surfaceAlt }}>
+          <div style={{
+            position: "sticky", bottom: 0, zIndex: 10,
+            padding: "16px 20px 24px", borderTop: `1px solid ${T.border}`,
+            background: T.surfaceAlt, flexShrink: 0,
+          }}>
             <div style={{ fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600, color: T.textSec, marginBottom: 10 }}>Price Details</div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
               <span style={{ fontFamily: FONTS.body, fontSize: 13, color: T.textSec }}>MRP Total</span>
@@ -951,9 +987,6 @@ function CartDrawer({ cart, onAdd, onRemove, onClose }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   SECTION HEADING
-──────────────────────────────────────────── */
 function SectionHeading({ children, sub }) {
   return (
     <div style={{ marginBottom: 24, animation: "fadeUp 0.5s ease both" }}>
@@ -964,30 +997,83 @@ function SectionHeading({ children, sub }) {
   );
 }
 
-/* ────────────────────────────────────────────
-   HEADER
-──────────────────────────────────────────── */
-function Header({ cartCount, onCartOpen }) {
+/* ── Header — cart button REMOVED from here ── */
+function Header() {
   return (
-    <header style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(250,247,242,0.97)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${T.border}`, padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 62, boxShadow: "0 1px 12px rgba(184,134,11,0.07)" }}>
-      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-        <div style={{ width: 48, height: 1, background: `linear-gradient(90deg,transparent,${T.goldMid}45)` }} />
-        <span style={{ color: `${T.goldMid}60`, fontSize: 13 }}>✦</span>
-        <div style={{ width: 48, height: 1, background: `linear-gradient(90deg,${T.goldMid}45,transparent)` }} />
-      </div>
-      <button onClick={onCartOpen} style={{ position: "relative", width: 42, height: 42, borderRadius: "50%", background: T.surface, border: `1.5px solid ${T.border}`, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, transition: "all 0.2s" }}>
-        🛒
-        {cartCount > 0 && (
-          <span style={{ position: "absolute", top: -4, right: -4, width: 19, height: 19, borderRadius: "50%", background: T.gold, color: "#fff", fontFamily: FONTS.small, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(184,134,11,0.4)" }}>{cartCount}</span>
-        )}
-      </button>
+    <header style={{
+      position: "fixed",
+      top: 60, left: 0, right: 0,
+      zIndex: 200,
+      background: "rgba(250,247,242,0.97)",
+      backdropFilter: "blur(16px)",
+      borderBottom: `1px solid ${T.border}`,
+      padding: "0 40px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: 62,
+      boxShadow: "0 1px 12px rgba(184,134,11,0.07)",
+    }}>
+      
+  
     </header>
   );
 }
 
-/* ────────────────────────────────────────────
-   ROOT
-──────────────────────────────────────────── */
+/* ── Floating Bottom Cart Button ── */
+function BottomCartButton({ cartCount, onCartOpen }) {
+  const [h, hp] = useHover();
+  return (
+    <button
+      {...hp}
+      onClick={onCartOpen}
+      style={{
+        position: "fixed",
+        bottom: 28,
+        right: 28,
+        zIndex: 250,
+        display: "flex",
+        alignItems: "center",
+        gap: cartCount > 0 ? 10 : 0,
+        padding: cartCount > 0 ? "14px 22px 14px 18px" : "14px 18px",
+        background: `linear-gradient(135deg, ${T.goldMid}, ${T.gold})`,
+        border: "none",
+        borderRadius: 50,
+        boxShadow: h
+          ? "0 8px 32px rgba(184,134,11,0.45), 0 2px 12px rgba(0,0,0,0.12)"
+          : "0 4px 20px rgba(184,134,11,0.35), 0 2px 8px rgba(0,0,0,0.10)",
+        cursor: "pointer",
+        transition: "all 0.25s",
+        transform: h ? "translateY(-3px) scale(1.04)" : "translateY(0) scale(1)",
+        animation: cartCount > 0 ? "cartBounce 0.5s ease" : "none",
+      }}
+    >
+      <span style={{ fontSize: 22 }}>🛒</span>
+      {cartCount > 0 && (
+        <>
+          <span style={{
+            fontFamily: FONTS.sub, fontSize: 14, fontWeight: 700,
+            color: "#fff", letterSpacing: 0.3,
+          }}>
+            {cartCount} item{cartCount !== 1 ? "s" : ""}
+          </span>
+          <span style={{
+            width: 1, height: 16,
+            background: "rgba(255,255,255,0.35)",
+            display: "inline-block",
+          }} />
+          <span style={{
+            fontFamily: FONTS.sub, fontSize: 13, fontWeight: 600,
+            color: "rgba(255,255,255,0.9)",
+          }}>
+            View Cart
+          </span>
+        </>
+      )}
+    </button>
+  );
+}
+
 export default function TempleStore() {
   const [selectedCat, setSelectedCat] = useState(null);
   const [cart, setCart] = useState({});
@@ -1006,11 +1092,11 @@ export default function TempleStore() {
       <style>{GLOBAL}</style>
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, background: "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%)" }} />
 
-      <Header cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
+      
+      <BottomCartButton cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
       {cartOpen && <CartDrawer cart={cart} onAdd={addToCart} onRemove={removeFromCart} onClose={() => setCartOpen(false)} />}
 
-      <main style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "40px 32px 80px" }}>
-
+      <main style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "40px 32px 120px", paddingTop: "102px" }}>
         <SectionHeading sub="Curated divine collections for every occasion">Featured Collections</SectionHeading>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 18, marginBottom: 56 }}>
           {CAROUSELS.map((c, i) => <Carousel key={c.id} data={c} animDelay={i * 0.1} />)}
