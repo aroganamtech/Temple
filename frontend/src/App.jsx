@@ -46,7 +46,7 @@ function App() {
           {/* <Route path="/contact" element={<ContactUs />} /> */}
           {/* <Route path="/admin" element={<Dashboard />} /> */}
           {/* <Route path="/donate" element={<DonationPage />} /> */}
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </ThemeProvider>
