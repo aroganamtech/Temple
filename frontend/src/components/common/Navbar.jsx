@@ -6,7 +6,7 @@ import {
   Stack, 
 //   Box, 
   Container, 
-//   Typography 
+  Typography 
 } from '@mui/material';
 // import { Link, useLocation } from 'react-router-dom';
 import { Link, useLocation } from "react-router-dom";
@@ -14,6 +14,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 const Navbar = () => {
   const location = useLocation();
+  
 
   // Navigation links mapping exactly to your App.jsx routes [cite: 16, 44]
   const navLinks = [
