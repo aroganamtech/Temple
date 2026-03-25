@@ -1,0 +1,108 @@
+/* VendorPage.scss */
+$cream-light: #FDF6E3;
+$gold-muted: #D4AF37;
+$text-coffee: #5D4E3A;
+
+.pavilion-container {
+  background: radial-gradient(circle at center, #FFFDF5 0%, #F8F1E8 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  overflow-x: hidden;
+}
+
+.petal-card-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.innovative-petal-card {
+  width: 320px;
+  height: 420px;
+  background: white;
+  // The "Petal" Shape: Rounded top and pointed bottom like a lotus leaf/arch
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(240,232,210,0.5) 100%);
+    z-index: 1;
+  }
+
+  // Soft Inner Border
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+  }
+
+  &:hover {
+    transform: translateY(-15px) rotateY(10deg);
+    box-shadow: 20px 20px 60px rgba(139, 115, 85, 0.1);
+    
+    .icon-container {
+      transform: scale(1.2) translateY(-5px);
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+    }
+  }
+}
+
+.icon-container {
+  background: #FFF8E7;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: $gold-muted;
+  transition: 0.5s ease;
+  border: 1px dashed $gold-muted;
+}
+
+.view-btn {
+  margin-top: 20px !important;
+  background: transparent !important;
+  border: 1px solid $gold-muted !important;
+  color: $gold-muted !important;
+  border-radius: 0 !important; // Sharp minimalist look
+  padding: 8px 25px !important;
+  letter-spacing: 2px !important;
+  font-size: 0.75rem !important;
+  
+  &:hover {
+    background: $gold-muted !important;
+    color: white !important;
+  }
+}
+
+// --- Mobile Responsiveness ---
+@media (max-width: 480px) {
+  .innovative-petal-card {
+    width: 280px;
+    height: 380px;
+  }
+}

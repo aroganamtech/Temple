@@ -7,6 +7,7 @@ import theme from './pages/theme';
 
 // Layout & Components
 import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
 
 // Pages - Direct mapping to your new folder structure
 // import Home from './pages/Home/Home';
@@ -29,6 +30,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import DonationPage from './pages/Donate/DonationPage';
 // import Login from './pages/Auth/Login';
 import Login from "./pages/Auth/Login"
+import Ventor from './pages/ventor/Ventor';
 
 function App() {
   return (
@@ -47,7 +49,11 @@ function App() {
           {/* <Route path="/admin" element={<Dashboard />} /> */}
           {/* <Route path="/donate" element={<DonationPage />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
+
+          {/* ventor */}
+          <Route path='/ventor' element={<Ventor />} />
         </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );

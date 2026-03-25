@@ -43,6 +43,15 @@ const Navbar = () => {
           
           {/* Main Navigation Links Section */}
           <Stack direction="row" spacing={0.5}>
+
+            {/* <h1 className="headerNav__logo">
+            <img
+              className="headerNav__imgDiv"
+              style={{ width: "240px", height: "80px", marginLeft: "20px" }}
+              src={temple}
+              alt="Temple Logo"
+            />
+          </h1> */}
             {navLinks.map((link) => (
               <Button
                 key={link.label}
