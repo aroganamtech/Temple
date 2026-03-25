@@ -28,7 +28,6 @@ import Adiyargal from './pages/Temple/Adiyargal';
 
 
 // import Login from './pages/Auth/Login';
-import Login from "./pages/Auth/Login"
 import DivineChatbot from "./pages/DivineChatbot";
 
 function App() {
