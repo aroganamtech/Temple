@@ -15,6 +15,9 @@ export default function ContactUs() {
   return (
     <div style={styles.page}>
 
+      {/* GOOGLE FONTS */}
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@600&family=Inter:wght@400&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+
       {/* HERO */}
       <div style={styles.hero}>
         <h1 style={styles.title} className="fade-in">Contact Us</h1>
@@ -60,8 +63,8 @@ export default function ContactUs() {
         }
 
         input:hover, textarea:hover {
-          border-color: #c9a646;
-          box-shadow: 0 0 10px rgba(201,166,70,0.3);
+          border-color: #c9a227;
+          box-shadow: 0 0 10px rgba(201,162,39,0.3);
         }
 
         button:hover {
@@ -70,6 +73,14 @@ export default function ContactUs() {
         }
 
         @media (max-width: 768px) {
+          h1 {
+            font-size: 30px !important;
+          }
+
+          p {
+            font-size: 14px !important;
+          }
+
           form {
             width: 95% !important;
           }
@@ -80,28 +91,32 @@ export default function ContactUs() {
   );
 }
 
-/* 🎨 NEW LIGHT PREMIUM THEME */
+/* 🎨 CREAM THEME STYLES */
 const styles = {
   page: {
-    fontFamily: "Poppins, sans-serif",
-    background: "#f8f5ef", // light cream
+    fontFamily: "Inter, sans-serif",
+    background: "#F8F5EC", // cream background
     minHeight: "100vh",
+    color: "#4B3F2F",
   },
 
   hero: {
     textAlign: "center",
-    padding: "60px 20px 30px",
+    padding: "70px 20px 40px",
   },
 
   title: {
-    fontSize: "42px",
-    color: "#2c2c2c",
-    fontWeight: "600",
-    letterSpacing: "1px",
+    fontFamily: "Playfair Display, serif",
+    fontSize: "44px",
+    fontWeight: "700",
+    color: "#8B6B2E", // soft gold brown
   },
 
   subtitle: {
-    color: "#9c8b6b",
+    fontFamily: "Poppins, sans-serif",
+    fontSize: "18px",
+    fontWeight: "600",
+    color: "#A68A3F",
     marginTop: "10px",
   },
 
@@ -111,60 +126,71 @@ const styles = {
   },
 
   form: {
-    background: "#fff",
-    padding: "30px",
-    borderRadius: "15px",
+    background: "#FFFDF7", // light cream card
+    padding: "35px",
+    borderRadius: "18px",
     width: "80%",
     maxWidth: "900px",
-    boxShadow: "0 5px 25px rgba(0,0,0,0.05)",
-    border: "1px solid #eee",
+    border: "1px solid #E8DFC8",
+    boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
   },
 
   row: {
     display: "flex",
     gap: "15px",
-    marginBottom: "15px",
+    marginBottom: "18px",
     flexWrap: "wrap",
+    alignItems: "flex-start",
   },
 
   input: {
     flex: "1 1 250px",
     padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
+    borderRadius: "10px",
+    border: "1px solid #D6C7A1",
     outline: "none",
-    background: "#fafafa",
+    background: "#FFF",
+    color: "#4B3F2F",
+    fontFamily: "Inter",
+    fontSize: "14px",
   },
 
   textarea: {
     flex: "1 1 250px",
     padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    height: "100px",
-    background: "#fafafa",
+    borderRadius: "10px",
+    border: "1px solid #D6C7A1",
+    height: "110px",
+    background: "#FFF",
     outline: "none",
+    color: "#4B3F2F",
+    fontFamily: "Inter",
+    fontSize: "14px",
+    lineHeight: "1.4",
+    display: "block",
+    resize: "none",
   },
 
   button: {
     marginTop: "20px",
-    padding: "12px 30px",
-    borderRadius: "25px",
+    padding: "12px 35px",
+    borderRadius: "30px",
     border: "none",
-    background: "#d4af37", // gold
+    background: "#C9A227",
     color: "#fff",
     fontWeight: "600",
+    fontFamily: "Poppins",
     cursor: "pointer",
-    transition: "0.3s",
   },
 
   map: {
-    marginTop: "40px",
+    marginTop: "50px",
   },
 
   iframe: {
     width: "100%",
-    height: "300px",
+    height: "320px",
     border: "none",
+    filter: "sepia(20%) brightness(95%)",
   },
 };

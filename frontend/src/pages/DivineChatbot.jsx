@@ -56,9 +56,8 @@ export default function DivineChatbot() {
 
   const [messages, setMessages] = useState([
     {
-      text: "🙏 Welcome! Explore divine places below:",
+      text: "🙏 Select a temple below:",
       sender: "bot",
-      suggestions: temples,
     },
   ]);
 
@@ -79,18 +78,22 @@ export default function DivineChatbot() {
         sender: "bot",
         options: foundTemple,
       };
+
+      // 🔥 Clear previous messages except first
+      setMessages([messages[0], userMsg, botMsg]);
     } else {
       botMsg = {
-        text: "🙏 Here are some divine places:",
+        text: "🙏 Please select a temple from above.",
         sender: "bot",
-        suggestions: temples,
       };
+
+      setMessages((prev) => [...prev, userMsg, botMsg]);
     }
 
-    setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
   };
 
+  // 🔥 CLICK TEMPLE → RESET CHAT (except header)
   const handleTempleClick = (temple) => {
     const botReply = {
       text: `🛕 ${temple.name}\nChoose what you want to know:`,
@@ -98,7 +101,7 @@ export default function DivineChatbot() {
       options: temple,
     };
 
-    setMessages((prev) => [...prev, botReply]);
+    setMessages([messages[0], botReply]); // keep only header + new temple
   };
 
   const handleOptionClick = (temple, type) => {
@@ -124,10 +127,22 @@ export default function DivineChatbot() {
         🛕
       </div>
 
-      {/* CHATBOX */}
       {open && (
         <div style={styles.chatbox}>
           <div style={styles.header}>🙏 Divine Assistant</div>
+
+          {/* 🔥 STATIC TEMPLE LIST */}
+          <div style={styles.staticSuggestions}>
+            {temples.map((temple, idx) => (
+              <button
+                key={idx}
+                style={styles.suggestionBtn}
+                onClick={() => handleTempleClick(temple)}
+              >
+                {temple.name}
+              </button>
+            ))}
+          </div>
 
           <div style={styles.messages}>
             {messages.map((msg, i) => (
@@ -139,30 +154,14 @@ export default function DivineChatbot() {
                       msg.sender === "user" ? "flex-end" : "flex-start",
                     background:
                       msg.sender === "user"
-                        ? "linear-gradient(45deg,#FFD700,#FFA500)"
-                        : "#ffffff",
-                    color: msg.sender === "user" ? "#000" : "#333",
+                        ? "linear-gradient(45deg,#E6C97A,#C9A227)"
+                        : "#FFFDF7",
                   }}
                 >
                   {msg.text}
                 </div>
 
-                {/* Suggestions */}
-                {msg.suggestions && (
-                  <div style={styles.suggestionBox}>
-                    {msg.suggestions.map((temple, idx) => (
-                      <button
-                        key={idx}
-                        style={styles.suggestionBtn}
-                        onClick={() => handleTempleClick(temple)}
-                      >
-                        {temple.name}
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {/* Options */}
+                {/* OPTIONS */}
                 {msg.options && (
                   <div style={styles.suggestionBox}>
                     {["history", "significance", "highlights", "bestTime"].map(
@@ -205,19 +204,17 @@ export default function DivineChatbot() {
   );
 }
 
-/* 🤍 OFF-WHITE + GOLD THEME */
+/* 🎨 STYLES */
 const styles = {
   fab: {
     position: "fixed",
     bottom: "20px",
     right: "20px",
-    background: "linear-gradient(45deg,#FFD700,#FF8C00)",
+    background: "linear-gradient(45deg,#E6C97A,#C9A227)",
     padding: "16px",
     borderRadius: "50%",
     cursor: "pointer",
     fontSize: "22px",
-    boxShadow: "0 0 15px gold",
-    zIndex: 999,
   },
 
   chatbox: {
@@ -225,22 +222,26 @@ const styles = {
     bottom: "80px",
     right: "20px",
     width: "340px",
-    height: "460px",
-    background: "#FAF9F6", // off white
+    height: "480px",
+    background: "#F8F5EC",
     borderRadius: "15px",
     display: "flex",
     flexDirection: "column",
-    boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-    border: "1px solid #eee",
-    overflow: "hidden",
   },
 
   header: {
-    background: "linear-gradient(45deg,#FFD700,#FF8C00)",
-    color: "#000",
-    padding: "12px",
+    background: "linear-gradient(45deg,#E6C97A,#C9A227)",
+    padding: "10px",
     textAlign: "center",
     fontWeight: "bold",
+  },
+
+  staticSuggestions: {
+    padding: "8px",
+    borderBottom: "1px solid #ddd",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "6px",
   },
 
   messages: {
@@ -252,10 +253,10 @@ const styles = {
   },
 
   message: {
-    padding: "8px 12px",
+    padding: "8px",
     borderRadius: "10px",
-    maxWidth: "80%",
     marginBottom: "6px",
+    maxWidth: "80%",
     whiteSpace: "pre-line",
   },
 
@@ -263,18 +264,15 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     gap: "6px",
-    marginBottom: "10px",
   },
 
   suggestionBtn: {
-    background: "#ffffff",
-    color: "#8B7500",
-    border: "1px solid #FFD700",
+    background: "#FFF",
+    border: "1px solid #ccc",
     borderRadius: "20px",
-    padding: "6px 12px",
+    padding: "5px 10px",
     cursor: "pointer",
     fontSize: "12px",
-    transition: "0.3s",
   },
 
   inputBox: {
@@ -287,15 +285,12 @@ const styles = {
     padding: "10px",
     border: "none",
     outline: "none",
-    background: "#ffffff",
-    color: "#333",
   },
 
   sendBtn: {
-    background: "linear-gradient(45deg,#FFD700,#FF8C00)",
-    color: "#000",
-    border: "none",
     padding: "10px",
     cursor: "pointer",
+    background: "#E6C97A",
+    border: "none",
   },
 };
