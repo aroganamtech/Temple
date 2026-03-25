@@ -1,265 +1,145 @@
 import React, { useState } from 'react';
 import { 
-  Box, Container, Typography, Grid, Card, CardMedia, 
-  CardContent, Button, Stack, Avatar, Divider, Fade 
+  Box, Container, Typography, Grid, Avatar, Card, 
+  CardContent, Stack, Chip, Button, Divider, Paper, 
+  Dialog, DialogTitle, DialogContent, IconButton, List, ListItem, ListItemText, ListItemIcon
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import CloseIcon from '@mui/icons-material/Close';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import ChurchIcon from '@mui/icons-material/Church';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 const Adiyargal = () => {
-  const [selectedSaint, setSelectedSaint] = useState(null);
+  const [selectedAdiyar, setSelectedAdiyar] = useState(null);
 
-  const data = [
-    { 
-      id: 1, 
-      name: "Thirugnana Sambandar", 
-      title: "The Child Saint", 
-      temple: "Sirkazhi Sattainathar",
-      image: "https://images.unsplash.com/photo-1544085311-11a028a6a145?w=800", 
-      summary: "Received divine milk from Goddess Parvati at the age of three and sang the first Thevaram.",
-      history: "At just three years old, while his father was bathing in the temple tank at Sirkazhi, Sambandar cried for milk. It is believed Goddess Parvati appeared and fed him 'Gnana-Paal' (Milk of Wisdom). When his father asked who fed him, the child pointed to the sky and sang his first hymn 'Thodudaiya Seviyan'. He traveled across Tamil Nadu on his father's shoulders, reviving Shaivism through thousands of musical verses."
-    },
-    { 
-      id: 2, 
-      name: "Appar (Thirunavukkarasar)", 
-      title: "The King of Speech", 
-      temple: "Tiruvadigai Veerattam",
-      image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800", 
-      summary: "Famous for his 'Uzhavarappani' (temple cleaning) and surviving trials by stone and fire.",
-      history: "Originally a Jain monk, Appar returned to Shaivism after being cured of a stomach ailment by his sister’s prayers. The Pallava King, angry at his conversion, threw him into a lime kiln and later tied him to a stone and dropped him into the sea. Appar survived by chanting 'Namah Shivaya', and the stone floated like a boat. He spent his life cleaning temple premises with a small hoe, teaching that physical service is as great as prayer."
-    },
-    { 
-      id: 3, 
-      name: "Andal", 
-      title: "The Goddess of Srivilliputhur", 
-      temple: "Srivilliputhur Andal Temple",
-      image: "https://images.unsplash.com/photo-1590050752117-23a9d7fc2014?w=800", 
-      summary: "The only female Alwar who dreamt of marrying Lord Ranganatha himself.",
-      history: "Andal was found as a baby under a Tulsi plant by Periyalwar. Growing up, she wore the flower garlands intended for the Lord to see if she was a fit bride for Him. Though her father was shocked, the Lord appeared in a dream saying He only wanted the garlands worn by Andal. She composed the 'Thiruppavai', a collection of 30 verses that are still sung every winter in Tamil Nadu to celebrate divine love."
-    },
-    { 
-      id: 4, 
-      name: "Sundarar", 
-      title: "Friend of God", 
-      temple: "Thiruvarur Tyagaraja",
-      image: "https://images.unsplash.com/photo-1600100397608-f09074aa9401?w=800", 
-      summary: "Known as 'Thambiran Thozhan'—Shiva himself walked as a messenger for him.",
-      history: "Sundarar had a unique relationship with Shiva, treating Him as a close friend. When Sundarar fell in love with Paravai Nachiyar, Lord Shiva Himself walked through the streets of Thiruvarur as a messenger to arrange their marriage. His life demonstrates that God is not just a master to be feared, but a companion who participates in the joys and sorrows of a devotee's daily life."
-    },
-    { 
-      id: 5, 
-      name: "Karaikkal Ammaiyar", 
-      title: "The Mother", 
-      temple: "Thiruvalangadu",
-      image: "https://images.unsplash.com/photo-1621259072059-e1f409549f50?w=800", 
-      summary: "Renounced her beauty to become a 'ghoul' to serve Lord Shiva eternally.",
-      history: "Born as Punitavati, she was exceptionally beautiful. After a miracle involving divine mangoes, she realized her life belonged only to Shiva. She prayed to lose her beauty so she could serve without distraction. Her wish was granted, and she turned into a skeletal figure. She walked to Mount Kailash on her hands, not wanting to step on the holy ground with her feet. Shiva welcomed her by calling her 'Amma' (Mother)."
-    },
-    { 
-      id: 6, 
-      name: "Kannappa Nayanar", 
-      title: "The Hunter Saint", 
-      temple: "Sri Kalahasti",
-      image: "https://images.unsplash.com/photo-1512100356956-c1b47f4b8a21?w=800", 
-      summary: "A simple hunter who offered his own eyes to stop the Shiva Lingam from bleeding.",
-      history: "Thinnan was a hunter who knew nothing of Vedic rituals. He offered meat and water from his mouth to a Lingam in the forest. To test his love, Shiva made the Lingam’s eyes bleed. Thinnan immediately plucked out his own eye with an arrow to replace it. When the second eye bled, he placed his foot on the spot to mark it and was about to pluck his second eye when Shiva stopped him, granting him eternal liberation."
-    },
-    { 
-      id: 7, 
-      name: "Manikkavasagar", 
-      title: "He whose words are Rubies", 
-      temple: "Chidambaram Natarajar",
-      image: "https://images.unsplash.com/photo-1621873264510-d009e5306ec4?w=800", 
-      summary: "A powerful Prime Minister who gave up everything to write the Thiruvasagam.",
-      history: "Once a high-ranking minister, he spent the king's money to build a temple for Shiva. When imprisoned, he was saved by Shiva’s miracles. He spent his later years in Chidambaram. When asked for the meaning of his poetry, he pointed to the statue of Lord Nataraja and disappeared into a flame. His work, 'Thiruvasagam', is considered the most emotional and soul-stirring literature in the Tamil language."
-    },
-    { 
-      id: 8, 
-      name: "Nammalwar", 
-      title: "The Soul of Alwars", 
-      temple: "Alwarthirunagari",
-      image: "https://images.unsplash.com/photo-1632766329480-49635b7501a4?w=800", 
-      summary: "Sat in a hollow of a tamarind tree in silence for 16 years until enlightenment.",
-      history: "Born in a state of deep meditation, Nammalwar never spoke or ate for sixteen years. He sat under a tamarind tree until another saint, Madhurakavi Alwar, threw a stone and asked a philosophical question. Nammalwar spoke for the first time, delivering the essence of the four Vedas in four Tamil works (Tiruvaymoli). He is considered the 'Soul' of the twelve Alwars."
-    },
-    { 
-      id: 9, 
-      name: "Thirumular", 
-      title: "The Great Mystic", 
-      temple: "Thiruvavaduthurai",
-      image: "https://images.unsplash.com/photo-1630139191632-68937076e09e?w=800", 
-      summary: "A Yogi who lived for 3000 years, writing one verse of the Thirumandiram every year.",
-      history: "Thirumular was a Himalayan yogi who entered the body of a dead cowherd named Mulan out of compassion for the crying cows. He stayed in that body and meditated under a Peepal tree. Every year, he would come out of samadhi and write one verse (song). Over 3,000 years, he completed the 'Thirumandiram', which explains the secrets of Yoga, Tantra, and the unity of God and Mankind ('Anbe Sivam')."
-    },
-    { 
-      id: 10, 
-      name: "Periyalwar", 
-      title: "The Elder Alwar", 
-      temple: "Srivilliputhur",
-      image: "https://images.unsplash.com/photo-1624716443425-455ef1131100?w=800", 
-      summary: "Sang 'Pallandu' to protect God Himself from the evil eye during a procession.",
-      history: "He was a simple priest who won a great debate in the Pandyan court through divine grace. During a victory procession, he saw the Lord in the sky. Instead of asking for blessings for himself, he feared for the Lord's safety in the cruel world and sang 'Tirupallandu' (Long live the Lord). This 'reverse-devotion' where the devotee protects God is considered the highest form of love."
-    },
-    { 
-      id: 11, 
-      name: "Avvaiyar", 
-      title: "The Wise Grandmother", 
-      temple: "Many Murugan Temples",
-      image: "https://images.unsplash.com/photo-1621259182978-f09e5f24d90d?w=800", 
-      summary: "The legendary poetess who taught ethics through simple Tamil rhymes.",
-      history: "Avvaiyar was a contemporary of many kings and saints. She chose to be an old woman so she could travel freely and teach wisdom. Her famous interaction with Lord Murugan (the 'Roasted or Unroasted Fruit' story) taught her that learning is never complete. Her works like 'Aathichoodi' remain the first books Tamil children read to learn ethics and the alphabet simultaneously."
-    },
-    { 
-      id: 12, 
-      name: "Sekkhizhar", 
-      title: "The Historian of Saints", 
-      temple: "Kunrathur",
-      image: "https://images.unsplash.com/photo-1625032543167-93361110004e?w=800", 
-      summary: "Compiled the Periya Puranam, documenting the lives of all 63 Nayanmars.",
-      history: "A minister in the Chola court, Sekkhizhar was commissioned to write the history of Shaivite saints. He visited every temple associated with them to verify facts. He wrote the 'Periya Puranam' in the Chidambaram temple. It was so highly regarded that the Chola King himself sat on the floor while Sekkhizhar read the epic from the throne, symbolizing that history and devotion are higher than royalty."
-    },
-    { 
-      id: 13, 
-      name: "Arunagirinathar", 
-      title: "Master of Rhythm", 
-      temple: "Tiruvannamalai",
-      image: "https://images.unsplash.com/photo-1616422323292-6f296d888365?w=800", 
-      summary: "Transformed from a sinner to a saint after Lord Murugan saved his life.",
-      history: "Living a life of debauchery, Arunagirinathar felt so much guilt that he jumped from the Vallala Gopuram of Tiruvannamalai to end his life. Lord Murugan caught him in His arms, touched his tongue with a spear, and gave him the first line for his songs. He went on to write the 'Thiruppugazh', a collection of 16,000 songs famous for their complex rhythms and divine music."
-    },
-    { 
-      id: 14, 
-      name: "Kulasekhara Alwar", 
-      title: "The King Saint", 
-      temple: "Mannarkoil / Tirupati",
-      image: "https://images.unsplash.com/photo-1634704784915-aacf363b021f?w=800", 
-      summary: "A Chera King who wished to be a stone step in the temple to be trodden by devotees.",
-      history: "As a king, he loved the Ramayana so much that he once ordered his army to march when he heard Sita was captured in the story. Realizing his worldly duties were a distraction, he abdicated his throne. In his famous prayer, he asked to be born as a fish in the temple pond or a step at the entrance of the Tirumala temple so he could always be near the feet of the Lord and His devotees."
-    },
-    { 
-      id: 15, 
-      name: "Pattinathar", 
-      title: "The Saint of Renunciation", 
-      temple: "Thiruvottiyur",
-      image: "https://images.unsplash.com/photo-1544085311-11a028a6a145?w=800", 
-      summary: "Left his massive wealth after his son gave him a small note about a broken needle.",
-      history: "A multi-millionaire merchant, he received a small box from his son. Inside was a broken needle and a note: 'Not even a broken needle will follow you in your final journey.' This sparked instant realization. He walked out of his mansion, wearing only a loincloth. His songs are deeply philosophical, focusing on the temporary nature of the human body and the ultimate truth of death and divinity."
-    }
+  // 15 Expanded Profiles of Modern Adiyargal
+  const adiyargalList = [
+    { id: 1, name: "Dr. Arulmozhi", role: "Chief Sthapathi", temples: 12, impact: "Structural Stability", avatar: "A", bio: "Expert in Agamic architecture and granite structural realignment. Led the 2024 Vengadampettai foundation project.", skills: ["Structural Audit", "Grouting", "Vastu Shastra"] },
+    { id: 2, name: "Rajesh Kannan", role: "Uzhavar Pani Lead", temples: 45, impact: "Vegetation Clearing", avatar: "R", bio: "Specializes in the non-invasive removal of deep-rooted Banyan trees from temple Gopurams without damaging stone joints.", skills: ["Root Extraction", "Scaffolding", "Lime Mortar"] },
+    { id: 3, name: "Meenakshi Iyer", role: "Heritage Philanthropist", temples: 8, impact: "Mural Conservation", avatar: "M", bio: "Focuses on funding the restoration of Chola-era vegetable dye paintings using eco-friendly preservation techniques.", skills: ["Fundraising", "Mural Research", "Sponsorship"] },
+    { id: 4, name: "Senthil Kumar", role: "Digital Archivist", temples: 22, impact: "3D Preservation", avatar: "S", bio: "Uses LiDAR scanning to create digital twins of decaying temples before structural collapse for future reconstruction.", skills: ["3D Scanning", "Photogrammetry", "Data Archiving"] },
+    { id: 5, name: "Kavitha Selvam", role: "Epigraphist", temples: 15, impact: "Inscription Reading", avatar: "K", bio: "Expert in reading Vatteluttu and Ancient Tamil scripts. Documents lost inscriptions for the State Archeological Dept.", skills: ["Script Reading", "Stampage", "Historical Mapping"] },
+    { id: 6, name: "Madan Gowri", role: "Awareness Creator", temples: 30, impact: "Youth Engagement", avatar: "M", bio: "Uses social media to highlight 'forgotten' temples, bringing over 5,000 volunteers to local restoration sites.", skills: ["Storytelling", "Video Production", "Community Building"] },
+    { id: 7, name: "Srinivasan", role: "Traditional Mason", temples: 18, impact: "Stone Carving", avatar: "S", bio: "One of the few remaining masons skilled in 'Nool Pidi' (thread alignment) for traditional temple reconstruction.", skills: ["Stone Chiseling", "Joint Fitting", "Temple Layout"] },
+    { id: 8, name: "Deepa Raghavan", role: "Ritual Reviver", temples: 10, impact: "Daily Pooja Setup", avatar: "D", bio: "Works on 'Oru Kaala Pooja' schemes, ensuring that dormant temples are relit and daily rituals are performed sustainably.", skills: ["Community Coordination", "Trust Management", "Spiritual Logistics"] },
+    { id: 9, name: "Vignesh Shivan", role: "Drone Specialist", temples: 25, impact: "Aerial Survey", avatar: "V", bio: "Conducts aerial thermal imaging to detect hidden cracks in temple ceilings that are invisible from the ground.", skills: ["Drone Pilot", "Thermal Mapping", "Damage Detection"] },
+    { id: 10, name: "Anbuchelvan", role: "Local Volunteer", temples: 50, impact: "Ground Maintenance", avatar: "A", bio: "A local legend who has spent 20 years clearing silt and cleaning temple ponds (Pushkarani) across the delta region.", skills: ["Pond Cleaning", "Silt Removal", "General Labor"] },
+    { id: 11, name: "Thara Ganesan", role: "Chemistry Conservator", temples: 14, impact: "Stone Hardening", avatar: "T", bio: "PhD in Material Science. Developed a specialized nano-lime solution to stop sandstone dusting in Kanchipuram temples.", skills: ["Chemical Cleaning", "Nano-coatings", "Lab Analysis"] },
+    { id: 12, name: "Bala Murugan", role: "Woodwork Expert", temples: 9, impact: "Chariot Restoration", avatar: "B", bio: "Master craftsman specializing in the restoration of ancient wooden temple cars (Ther) and Vahanas.", skills: ["Wood Carving", "Termite Treatment", "Polishing"] },
+    { id: 13, name: "Lakshmi Narayanan", role: "Legal Advisor", temples: 20, impact: "Encroachment Removal", avatar: "L", bio: "Provides pro-bono legal support to retrieve temple lands from illegal encroachments and document land deeds.", skills: ["Land Laws", "Documentation", "Legal Research"] },
+    { id: 14, name: "Prakash Raj", role: "Lighting Designer", temples: 11, impact: "Eco-Lighting", avatar: "P", bio: "Installs non-heat emitting, UV-protected lighting systems to illuminate sculptures without damaging stone or murals.", skills: ["Electrical Design", "LED Tech", "Aesthetic Lighting"] },
+    { id: 15, name: "Uma Maheshwari", role: "Plant Biologist", temples: 17, impact: "Invasive Species Control", avatar: "U", bio: "Researches specific bio-enzymes that prevent moss and algae growth on temple walls without corroding the stone.", skills: ["Biology", "Eco-enzymes", "Surface Protection"] }
   ];
 
-  // --- VIEW 1: BIOGRAPHY / HISTORY VIEW ---
-  if (selectedSaint) {
-    return (
-      <Fade in={true} timeout={500}>
-        <Box sx={{ bgcolor: '#0B0B0B', minHeight: '100vh', py: { xs: 4, md: 8 }, color: 'white' }}>
-          <Container maxWidth="md">
-            <Button 
-              startIcon={<ArrowBackIcon />} 
-              onClick={() => setSelectedSaint(null)}
-              sx={{ color: '#D4AF37', mb: 4, fontWeight: 900 }}
-            >
-              Back to Adiyargal List
-            </Button>
-            
-            <CardMedia 
-              component="img" 
-              image={selectedSaint.image} 
-              sx={{ borderRadius: '30px', height: { xs: '300px', md: '500px' }, mb: 4, border: '1px solid #333' }} 
-            />
-            
-            <Stack direction="row" spacing={2} alignItems="center" mb={2}>
-              <Avatar sx={{ bgcolor: '#D4AF37', color: 'black', width: 60, height: 60, fontSize: '1.5rem', fontWeight: 900 }}>
-                {selectedSaint.name[0]}
-              </Avatar>
-              <Box>
-                <Typography variant="h2" sx={{ color: '#D4AF37', fontWeight: 900, fontSize: { xs: '2.5rem', md: '3.5rem' } }}>
-                  {selectedSaint.name}
-                </Typography>
-                <Typography variant="h6" sx={{ color: '#B0B0B0', fontWeight: 600 }}>{selectedSaint.title}</Typography>
-              </Box>
-            </Stack>
-            
-            <Stack direction="row" spacing={1} sx={{ color: '#D4AF37', mb: 4 }}>
-              <ChurchIcon fontSize="small" />
-              <Typography variant="body1" sx={{ fontWeight: 700 }}>Associated with: {selectedSaint.temple}</Typography>
-            </Stack>
+  const styles = {
+    hero: {
+      background: 'linear-gradient(135deg, #1A1A1A 0%, #3E2723 100%)',
+      py: 10, color: 'white', textAlign: 'center', borderRadius: '0 0 50px 50px', mb: 6
+    },
+    card: {
+      borderRadius: '24px', transition: '0.4s', border: '1px solid #EAE2D6',
+      '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 15px 35px rgba(62,39,35,0.15)' }
+    },
+    modal: {
+      '& .MuiPaper-root': { borderRadius: '24px', background: 'linear-gradient(135deg, #1A1A1A 0%, #3E2723 100%)', color: 'white' }
+    }
+  };
 
-            <Divider sx={{ bgcolor: '#333', mb: 5 }} />
-
-            <Typography variant="h4" sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 2, fontWeight: 800 }}>
-              <MenuBookIcon sx={{ color: '#D4AF37' }} /> Life & Miracles
-            </Typography>
-            
-            <Typography variant="body1" sx={{ lineHeight: 2, fontSize: '1.2rem', color: '#E0E0E0', textAlign: 'justify', whiteSpace: 'pre-line' }}>
-              {selectedSaint.history}
-            </Typography>
-
-            <Button 
-              variant="contained" 
-              startIcon={<AutoAwesomeIcon />}
-              sx={{ mt: 6, bgcolor: '#D4AF37', color: 'black', fontWeight: 900, px: 6, py: 2, borderRadius: '15px' }}
-            >
-              Read Their Hymns
-            </Button>
-          </Container>
-        </Box>
-      </Fade>
-    );
-  }
-
-  // --- VIEW 2: GRID LIST VIEW ---
   return (
-    <Box sx={{ bgcolor: '#0B0B0B', minHeight: '100vh', py: 8 }}>
-      <Container>
-        <Box sx={{ textAlign: 'center', mb: 8 }}>
-          <Typography variant="h2" sx={{ color: '#D4AF37', fontWeight: 900, mb: 2, letterSpacing: '3px' }}>
-            THE ADIYARGAL
-          </Typography>
-          <Typography variant="h6" sx={{ color: '#B0B0B0', fontWeight: 300, maxWidth: '700px', mx: 'auto' }}>
-            Explore the lives of 15 divine saints whose devotion turned stones into singing monuments. Click a card to read their full story.
-          </Typography>
-        </Box>
+    <Box sx={{ bgcolor: '#F7F4F0', minHeight: '100vh', pb: 10 }}>
+      {/* HEADER */}
+      <Box sx={styles.hero}>
+        <Container maxWidth="md">
+          <Typography variant="overline" sx={{ letterSpacing: 5, color: '#FFD700', fontWeight: 900 }}>அடியார்கள்</Typography>
+          <Typography variant="h2" sx={{ fontWeight: 900, mb: 1, fontFamily: 'serif' }}>The Adiyargal Collective</Typography>
+          <Typography variant="body1" sx={{ opacity: 0.8 }}>15 Guardians of Tamil Heritage. Hover for status, Click for contribution.</Typography>
+        </Container>
+      </Box>
 
-        <Grid container spacing={4}>
-          {data.map((item) => (
-            <Grid item xs={12} sm={6} lg={4} key={item.id} sx={{ display: 'flex' }}>
-              <Card 
-                onClick={() => setSelectedSaint(item)}
-                sx={{ 
-                  bgcolor: '#1A1A1A', 
-                  borderRadius: '24px', 
-                  border: '1px solid #333',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  cursor: 'pointer',
-                  transition: '0.4s ease-in-out',
-                  '&:hover': { transform: 'translateY(-15px)', borderColor: '#D4AF37', boxShadow: '0 10px 30px rgba(212,175,55,0.2)' }
-                }}
-              >
-                <CardMedia component="img" height="230" image={item.image} alt={item.name} />
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 800, mb: 1 }}>{item.name}</Typography>
-                  <Typography variant="caption" sx={{ color: '#D4AF37', fontWeight: 900, textTransform: 'uppercase', mb: 2, display: 'block' }}>
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#B0B0B0', mb: 3, flexGrow: 1, minHeight: '60px' }}>
-                    {item.summary}
-                  </Typography>
+      <Container>
+        <Grid container spacing={3}>
+          {adiyargalList.map((adiyar) => (
+            <Grid item xs={12} sm={6} md={4} lg={2.4} key={adiyar.id}>
+              <Card sx={styles.card} elevation={0}>
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Avatar sx={{ width: 65, height: 65, mx: 'auto', mb: 2, bgcolor: '#3E2723', color: '#FFD700', border: '3px solid #FFD700', fontWeight: 900 }}>
+                    {adiyar.avatar}
+                  </Avatar>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 900, color: '#3E2723', lineHeight: 1.2 }}>{adiyar.name}</Typography>
+                  <Typography variant="caption" sx={{ color: '#8B6508', fontWeight: 700, display: 'block', mb: 2 }}>{adiyar.role}</Typography>
                   
-                  <Divider sx={{ bgcolor: '#333', mb: 2 }} />
-                  
-                  <Stack direction="row" justifyContent="space-between" alignItems="center">
-                    <Typography variant="caption" sx={{ color: '#888' }}>History View</Typography>
-                    <Button size="small" sx={{ color: '#D4AF37', fontWeight: 800 }}>Read More</Button>
+                  <Stack direction="row" justifyContent="center" spacing={1} sx={{ mb: 2 }}>
+                    <Chip label={`${adiyar.temples} Sites`} size="small" sx={{ height: 20, fontSize: '0.65rem', fontWeight: 800, bgcolor: '#FDF5E6' }} />
                   </Stack>
+
+                  <Button 
+                    fullWidth variant="contained" 
+                    onClick={() => setSelectedAdiyar(adiyar)}
+                    sx={{ bgcolor: '#3E2723', color: 'white', borderRadius: '10px', textTransform: 'none', fontWeight: 700, '&:hover': { bgcolor: '#5D4037' } }}
+                  >
+                    View
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
+
+        {/* DETAILS DIALOG */}
+        <Dialog open={!!selectedAdiyar} onClose={() => setSelectedAdiyar(null)} maxWidth="sm" fullWidth sx={styles.modal}>
+          {selectedAdiyar && (
+            <>
+              <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 4 }}>
+                <Typography variant="h5" sx={{ fontWeight: 900, color: '#FFD700' }}>Adiyar Dossier</Typography>
+                <IconButton onClick={() => setSelectedAdiyar(null)} sx={{ color: 'white' }}><CloseIcon /></IconButton>
+              </DialogTitle>
+              <DialogContent sx={{ p: 4, pt: 0 }}>
+                <Stack direction="row" spacing={3} alignItems="center" mb={4}>
+                  <Avatar sx={{ width: 100, height: 100, bgcolor: '#FFD700', color: '#000', fontSize: '2.5rem', fontWeight: 900 }}>{selectedAdiyar.avatar}</Avatar>
+                  <Box>
+                    <Typography variant="h4" fontWeight={900}>{selectedAdiyar.name} <VerifiedIcon color="info" sx={{ fontSize: 20 }} /></Typography>
+                    <Typography variant="h6" sx={{ color: '#FFD700', opacity: 0.9 }}>{selectedAdiyar.role}</Typography>
+                  </Box>
+                </Stack>
+
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', letterSpacing: 1.5, mb: 1 }}>BACKGROUND & CONTRIBUTION</Typography>
+                <Typography variant="body1" sx={{ color: '#E0C097', mb: 4, lineHeight: 1.7 }}>{selectedAdiyar.bio}</Typography>
+
+                <Typography variant="subtitle2" sx={{ color: '#FFD700', letterSpacing: 1.5, mb: 2 }}>CORE EXPERTISE</Typography>
+                <Grid container spacing={1} mb={4}>
+                  {selectedAdiyar.skills.map((skill, index) => (
+                    <Grid item key={index}>
+                      <Chip label={skill} sx={{ bgcolor: 'rgba(255,215,0,0.1)', color: '#FFD700', border: '1px solid #FFD700', fontWeight: 700 }} />
+                    </Grid>
+                  ))}
+                </Grid>
+
+                <Paper sx={{ p: 3, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <Stack direction="row" justifyContent="space-around">
+                    <Box textAlign="center">
+                      <MenuBookIcon sx={{ color: '#FFD700', mb: 1 }} />
+                      <Typography variant="h6" fontWeight={900}>{selectedAdiyar.temples}</Typography>
+                      <Typography variant="caption">SITES SAVED</Typography>
+                    </Box>
+                    <Box textAlign="center">
+                      <WorkspacePremiumIcon sx={{ color: '#FFD700', mb: 1 }} />
+                      <Typography variant="h6" fontWeight={900}>LEVEL 4</Typography>
+                      <Typography variant="caption">HERITAGE RANK</Typography>
+                    </Box>
+                    <Box textAlign="center">
+                      <HandymanIcon sx={{ color: '#FFD700', mb: 1 }} />
+                      <Typography variant="h6" fontWeight={900}>100%</Typography>
+                      <Typography variant="caption">SUCCESS RATE</Typography>
+                    </Box>
+                  </Stack>
+                </Paper>
+              </DialogContent>
+            </>
+          )}
+        </Dialog>
       </Container>
     </Box>
   );
