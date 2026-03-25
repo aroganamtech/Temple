@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   AppBar,
@@ -14,6 +15,7 @@ import {
   ListItemText,
   Collapse,
   Box,
+
 } from '@mui/material';
 import { Link, useLocation } from "react-router-dom";
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
@@ -25,6 +27,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 const Navbar = () => {
   const location = useLocation();
   
+
   // Desktop Dropdown States
   const [templeAnchor, setTempleAnchor] = useState(null);
   const [bookingAnchor, setBookingAnchor] = useState(null);
@@ -33,6 +36,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileTempleOpen, setMobileTempleOpen] = useState(false);
   const [mobileBookingOpen, setMobileBookingOpen] = useState(false);
+
 
   const navLinks = [
     { label: 'Home', path: '/' },
