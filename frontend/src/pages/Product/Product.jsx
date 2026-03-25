@@ -171,7 +171,7 @@ const CATEGORIES = [
   {
     id: 9,
     name: "Atharva Veda",
-    image: "https://m.media-amazon.com/images/I/71jK2y7X6FL.jpg",
+    image: "https://i.pinimg.com/736x/1c/2f/14/1c2f148855f891968eb6a3ff622c5414.jpg",
     price: 499,
     mrp: 780,
     desc: "Knowledge of daily rituals and healing.",
@@ -181,7 +181,7 @@ const CATEGORIES = [
   {
     id: 10,
     name: "Upanishads Collection",
-    image: "https://m.media-amazon.com/images/I/81Upanishad.jpg",
+    image: "https://i.pinimg.com/736x/8e/c2/d9/8ec2d9df684b7ef34fe99392ab8ce1f3.jpg",
     price: 699,
     mrp: 999,
     desc: "Philosophical teachings of Hinduism.",
@@ -191,7 +191,7 @@ const CATEGORIES = [
   {
     id: 11,
     name: "Hanuman Chalisa Book",
-    image: "https://m.media-amazon.com/images/I/71Hanuman.jpg",
+    image: "https://i.pinimg.com/736x/b9/25/c6/b925c6efe7fad542007763425ffdbc34.jpg",
     price: 99,
     mrp: 150,
     desc: "Devotional hymn for Lord Hanuman.",
@@ -201,7 +201,7 @@ const CATEGORIES = [
   {
     id: 12,
     name: "Sai Satcharitra",
-    image: "https://m.media-amazon.com/images/I/71Sai.jpg",
+    image: "https://i.pinimg.com/1200x/3f/48/7c/3f487c1736d47b7f7ab7546fbb2ff2bb.jpg",
     price: 299,
     mrp: 450,
     desc: "Life and miracles of Sai Baba.",
@@ -211,7 +211,7 @@ const CATEGORIES = [
   {
     id: 13,
     name: "Garuda Purana",
-    image: "https://m.media-amazon.com/images/I/71Garuda.jpg",
+    image: "https://i.pinimg.com/736x/0d/42/7b/0d427b795729559cd3e63963a6c24102.jpg",
     price: 349,
     mrp: 500,
     desc: "Afterlife and karma teachings.",
@@ -221,7 +221,7 @@ const CATEGORIES = [
   {
     id: 14,
     name: "Bhagavata Purana",
-    image: "https://m.media-amazon.com/images/I/81Bhagavata.jpg",
+    image: "https://i.pinimg.com/1200x/0a/a5/a3/0aa5a31b11011d3270190d01ea862c99.jpg",
     price: 599,
     mrp: 850,
     desc: "Stories of Lord Krishna.",
