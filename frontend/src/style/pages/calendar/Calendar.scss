@@ -1,0 +1,133 @@
+$gold: #D4AF37;
+$cream: #FDFBF0;
+$coffee: #4A3E2F;
+
+.calendar-root {
+  background-color: $cream;
+  min-height: 100vh;
+  padding: 20px 0 60px;
+  position: relative;
+}
+
+.text-center { text-align: center; }
+
+/* --- BACK BUTTON STYLING --- */
+.back-btn-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+
+  @media (max-width: 414px) { top: 10px; left: 10px; }
+
+  .back-btn {
+    color: $gold !important;
+    text-transform: none !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    &:hover { background: transparent; opacity: 0.7; }
+  }
+}
+
+.serif-title {
+  font-family: 'Playfair Display', serif !important;
+  color: $coffee;
+  font-weight: 700 !important;
+  @media (max-width: 414px) { font-size: 1.8rem !important; }
+}
+
+.toggle-container {
+  background: rgba(0,0,0,0.05);
+  border-radius: 50px;
+  width: fit-content;
+  margin: 30px auto 0;
+  border: 1px solid rgba($gold, 0.2);
+
+  .toggle-btn {
+    padding: 10px 30px;
+    color: $coffee;
+    font-weight: 600;
+    @media (max-width: 360px) { padding: 8px 15px; font-size: 0.75rem; }
+
+    &.active {
+      background-color: $gold;
+      color: white;
+    }
+  }
+}
+
+/* --- CALENDAR RESPONSIVENESS --- */
+.calendar-paper {
+  background: white !important;
+  border-radius: 24px !important;
+  padding: 25px;
+  margin-top: 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05) !important;
+
+  @media (max-width: 414px) { padding: 15px 5px; border-radius: 12px !important; }
+
+  .month-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .month-name { font-weight: 700; @media (max-width: 360px) { font-size: 1rem; } }
+  }
+
+  .calendar-grid {
+    .grid-header {
+      font-weight: 700;
+      color: $gold;
+      font-size: 0.9rem;
+      padding-bottom: 10px;
+      @media (max-width: 360px) { font-size: 0.7rem; }
+    }
+    .grid-cell {
+      padding: 5px 0;
+      .cell-content {
+        width: 40px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto; border-radius: 10px; cursor: pointer;
+        
+        // Responsive Cell Sizes
+        @media (max-width: 414px) { width: 35px; height: 35px; font-size: 0.85rem; }
+        @media (max-width: 360px) { width: 28px; height: 28px; font-size: 0.75rem; }
+
+        &.today { background: $gold; color: white; }
+      }
+    }
+  }
+}
+
+/* --- DATE VIEW RESPONSIVENESS --- */
+.date-scroll-view {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+
+  // Mobile: Stack vertically
+  @media (max-width: 414px) { flex-direction: column; align-items: center; }
+  
+  // Tablet & Desktop: Row
+  @media (min-width: 768px) { flex-direction: row; flex-wrap: wrap; }
+
+  .date-card {
+    width: 100%;
+    max-width: 260px;
+    padding: 25px;
+    text-align: center;
+    border-radius: 15px;
+    background: white !important;
+    border: 1px solid rgba($gold, 0.1);
+
+    .card-date { font-weight: 700; color: $coffee; }
+    .card-day { color: $gold; text-transform: uppercase; font-size: 0.75rem; margin-top: 5px; }
+
+    &.active-card {
+      background: $gold !important;
+      .card-date, .card-day { color: white; }
+    }
+  }
+}

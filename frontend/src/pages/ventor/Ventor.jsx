@@ -1,117 +1,163 @@
 import React, { useState } from 'react';
-import { Box, Container, Typography, Grid, Button, IconButton, Fade, Dialog } from '@mui/material';
+import { Box, Container, Typography, IconButton, Fade, Dialog, Button } from '@mui/material';
 import { motion } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew'; // Elegant back icon
 import TrainIcon from '@mui/icons-material/DirectionsRailway';
 import FlightIcon from '@mui/icons-material/FlightTakeoff';
 import HotelIcon from '@mui/icons-material/Bed';
 import GuideIcon from '@mui/icons-material/SelfImprovement';
 import SchoolIcon from '@mui/icons-material/MenuBook';
 import MapIcon from '@mui/icons-material/Explore';
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import '../../style/pages/ventor/Ventor.scss';
 
 const services = [
-  { id: 1, title: 'Train Booking', sub: 'Sacred Path', icon: <TrainIcon fontSize="large" /> },
-  { id: 2, title: 'Flight Booking', sub: 'Vayu Yatra', icon: <FlightIcon fontSize="large" /> },
-  { id: 3, title: 'Room Booking', sub: 'Temple Stay', icon: <HotelIcon fontSize="large" /> },
-  { id: 4, title: 'Temple Guides', sub: 'Soul Scholars', icon: <GuideIcon fontSize="large" /> },
-  { id: 5, title: 'Training', sub: 'Dharma Wisdom', icon: <SchoolIcon fontSize="large" /> },
-  { id: 6, title: 'Tour Packages', sub: 'Ananda Tours', icon: <MapIcon fontSize="large" /> },
+  { id: 1, title: 'Train Booking', sub: 'Sacred Path', icon: <TrainIcon />, delay: 0.1 },
+  { id: 2, title: 'Flight Booking', sub: 'Vayu Yatra', icon: <FlightIcon />, delay: 0.2 },
+  { id: 3, title: 'Room Booking', sub: 'Temple Stay', icon: <HotelIcon />, delay: 0.3 },
+  { id: 4, title: 'Temple Guides', sub: 'Soul Scholars', icon: <GuideIcon />, delay: 0.4 },
+  { id: 5, title: 'Training', sub: 'Dharma Wisdom', icon: <SchoolIcon />, delay: 0.5 },
+  { id: 6, title: 'Tour Packages', sub: 'Ananda Tours', icon: <MapIcon />, delay: 0.6 },
 ];
 
-const InnovativeVendorPage = () => {
+const VendorPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const navigate = useNavigate(); // 2. Initialize navigate function
+
+  const handleConfirm = () => {
+    if (activeItem) {
+      const storageData = {
+        id: activeItem.id,
+        title: activeItem.title,
+        subTitle: activeItem.sub,
+        timestamp: new Date().toISOString(),
+        status: "Interest Confirmed"
+      };
+
+      console.log("Data Stored to Console:", storageData);
+      setOpenModal(false);
+    }
+  };
 
   return (
-    <Box className="pavilion-container">
-      <Container maxWidth="lg">
-        {/* Minimalist Title Area */}
-        <Box sx={{ py: 10, textAlign: 'center' }}>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
-            <Typography variant="h3" sx={{ fontFamily: 'Playfair Display', fontWeight: 300, color: '#D4AF37', mb: 2 }}>
+    <Box className="lotus-root-container">
+      <div className="ambient-blur-1" />
+      <div className="ambient-blur-2" />
+
+      {/* --- ADDED: MINIMALIST BACK BUTTON --- */}
+      <Box sx={{ position: 'absolute', top: { xs: 20, md: 40 }, left: { xs: 15, md: 40 }, zIndex: 100 }}>
+        <Button 
+          onClick={() => navigate(-1)} // 3. This goes to the previous page
+          startIcon={<ArrowBackIcon sx={{ fontSize: '0.9rem !important' }} />}
+          sx={{ 
+            color: '#D4AF37', 
+            textTransform: 'none', 
+            fontWeight: 600,
+            fontFamily: 'Outfit',
+            letterSpacing: 1.5,
+            '&:hover': { background: 'transparent', opacity: 0.7 }
+          }}
+        >
+          BACK
+        </Button>
+      </Box>
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 10 }}>
+        <Box sx={{ py: 12, textAlign: 'center' }}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 1.5 }}
+          >
+            <Typography variant="h2" className="lotus-main-title">
               The Lotus Pavilion
             </Typography>
-            <Box sx={{ width: '40px', height: '1px', bgcolor: '#D4AF37', mx: 'auto', mb: 2 }} />
-            <Typography variant="body1" sx={{ color: '#8B7355', letterSpacing: 3, fontSize: '0.8rem', textTransform: 'uppercase' }}>
-              Select your sacred service
+            <div className="sacred-geometry-divider">
+              <span className="dot" />
+              <div className="line" />
+              <span className="dot" />
+            </div>
+            <Typography className="sacred-subtitle">
+              SELECT YOUR SACRED SERVICE
             </Typography>
           </motion.div>
         </Box>
 
-        {/* HEXAGONAL/PETAL GRID */}
-        <Grid container spacing={6} justifyContent="center">
-          {services.map((service, index) => (
-            <Grid item key={service.id} xs={12} sm={6} md={4} className="petal-card-wrapper">
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
-              >
-                <Box className="innovative-petal-card">
-                  <Box className="card-content">
-                    <Box className="icon-container">
-                      {service.icon}
-                    </Box>
-                    <Typography variant="h6" sx={{ color: '#5D4E3A', fontWeight: 500 }}>
-                      {service.title}
-                    </Typography>
-                    <Typography variant="caption" sx={{ color: '#D2B48C', fontStyle: 'italic', display: 'block', mt: 1 }}>
-                      {service.sub}
-                    </Typography>
-                    <Button 
-                      className="view-btn"
-                      onClick={() => { setActiveItem(service); setOpenModal(true); }}
-                    >
-                      BEGIN
-                    </Button>
-                  </Box>
-                </Box>
-              </motion.div>
-            </Grid>
+        <Box className="petal-flow-grid">
+          {services.map((service) => (
+            <motion.div
+              key={service.id}
+              className="petal-element"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -15, transition: { duration: 0.4 } }}
+              viewport={{ once: true }}
+              transition={{ delay: service.delay, duration: 0.8 }}
+            >
+              <div className="petal-glass-card" onClick={() => { setActiveItem(service); setOpenModal(true); }}>
+                <div className="petal-inner-border" />
+                
+                <div className="petal-content">
+                  <div className="icon-halo">
+                    {service.icon}
+                  </div>
+                  <Typography variant="h5" className="service-name">
+                    {service.title}
+                  </Typography>
+                  <Typography variant="body2" className="service-essence">
+                    {service.sub}
+                  </Typography>
+                  
+                  <button className="begin-path-btn">
+                    <span>BEGIN PATH</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </Grid>
+        </Box>
       </Container>
 
-      {/* MODAL OVERLAY */}
       <Dialog
         fullScreen
         open={openModal}
         onClose={() => setOpenModal(false)}
         TransitionComponent={Fade}
-        transitionDuration={700}
+        transitionDuration={600}
         PaperProps={{
-          sx: { background: 'rgba(255, 253, 245, 0.98)', backdropFilter: 'blur(10px)' }
+          sx: { background: 'rgba(255, 254, 250, 0.98)', backdropFilter: 'blur(15px)' }
         }}
       >
-        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+        <Box className="sacred-modal-body">
           <IconButton 
             onClick={() => setOpenModal(false)}
-            sx={{ position: 'absolute', top: 30, right: 30, color: '#D4AF37' }}
+            className="modal-close-trigger"
           >
             <CloseIcon fontSize="large" />
           </IconButton>
           
-          <Box sx={{ textAlign: 'center', p: 4 }}>
-            <Typography variant="h4" color="#5D4E3A" sx={{ fontFamily: 'Playfair Display', mb: 4 }}>
-              Register for {activeItem?.title}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="modal-inner-content"
+          >
+            <Typography variant="h3" className="modal-title-gold">
+              {activeItem?.title}
             </Typography>
-            {/* Simple Form Mockup */}
-            <Box sx={{ width: '300px', mx: 'auto' }}>
-                <Box sx={{ height: '1px', bgcolor: '#D4AF37', mb: 4 }} />
-                <Typography variant="body2" color="#8B7355" sx={{ mb: 4 }}>
-                  Our sacred guides will reach out to you shortly to finalize your {activeItem?.sub}.
-                </Typography>
-                <Button fullWidth className="view-btn" sx={{ py: 2 }} onClick={() => setOpenModal(false)}>
-                    Confirm Interest
-                </Button>
-            </Box>
-          </Box>
+            <div className="gold-separator" />
+            <Typography variant="h6" className="modal-description">
+              Our guides are preparing the {activeItem?.sub} journey for you.
+            </Typography>
+            <Button className="modal-confirm-btn" onClick={handleConfirm}>
+              CONFIRM INTEREST
+            </Button>
+          </motion.div>
         </Box>
       </Dialog>
     </Box>
   );
 };
 
-export default InnovativeVendorPage;
+export default VendorPage;

@@ -1,6 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import '../../style/pages/contact/Contact.scss'; // Importing the advanced styles
 
 export default function ContactUs() {
+  // State to store form details
+  const [formData, setFormData] = useState({
+    name: "",
+    mobile: "",
+    email: "",
+    location: "",
+    message: "",
+  });
 
   useEffect(() => {
     const elements = document.querySelectorAll(".fade-in");
@@ -12,185 +21,93 @@ export default function ContactUs() {
     });
   }, []);
 
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle Form Submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("%c Form Submission Received ", "background: #8B6B2E; color: #fff; font-weight: bold; padding: 5px;");
+    console.table(formData); // Displays data in a clean table in the console
+    // alert("Data stored in console! Open Inspect > Console to view.");
+  };
+
   return (
-    <div style={styles.page}>
+    <div className="contact-page">
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@600&family=Inter:wght@400&display=swap" rel="stylesheet" />
 
-      {/* GOOGLE FONTS */}
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@600&family=Inter:wght@400&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-
-      {/* HERO */}
-      <div style={styles.hero}>
-        <h1 style={styles.title} className="fade-in">Contact Us</h1>
-        <p style={styles.subtitle} className="fade-in">
-          We would love to hear from you
-        </p>
+      <div className="hero-section">
+        <h1 className="fade-in">Contact Us</h1>
+        <p className="fade-in subtitle">We would love to hear from you</p>
       </div>
 
-      {/* FORM */}
-      <div style={styles.container}>
-        <form style={styles.form} className="fade-in">
-
-          <div style={styles.row}>
-            <input type="text" placeholder="Enter Name" style={styles.input} />
-            <input type="text" placeholder="Enter Mobile" style={styles.input} />
-            <input type="email" placeholder="Enter Email" style={styles.input} />
+      <div className="form-container">
+        <form className="contact-form fade-in" onSubmit={handleSubmit}>
+          <div className="input-group row">
+            <input 
+              type="text" 
+              name="name" 
+              placeholder="Enter Name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              required 
+            />
+            <input 
+              type="text" 
+              name="mobile" 
+              placeholder="Enter Mobile" 
+              value={formData.mobile} 
+              onChange={handleChange} 
+              required 
+            />
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Enter Email" 
+              value={formData.email} 
+              onChange={handleChange} 
+              required 
+            />
           </div>
 
-          <div style={styles.row}>
-            <input type="text" placeholder="Enter Location" style={styles.input} />
-            <textarea placeholder="Your Message" style={styles.textarea}></textarea>
+          <div className="input-group row">
+            <input 
+              type="text" 
+              name="location" 
+              placeholder="Enter Location" 
+              value={formData.location} 
+              onChange={handleChange} 
+              required 
+            />
+            <textarea 
+              name="message" 
+              placeholder="Your Message" 
+              value={formData.message} 
+              onChange={handleChange} 
+              required
+            ></textarea>
           </div>
 
-          <button style={styles.button}>Submit</button>
+          <div className="button-wrapper">
+            <button type="submit" className="submit-btn">Submit</button>
+          </div>
         </form>
       </div>
 
-      {/* MAP */}
-      <div style={styles.map} className="fade-in">
+      <div className="map-section fade-in">
         <iframe
           title="Temple Location"
-          src="https://www.google.com/maps?q=tirupati%20temple&output=embed"
-          style={styles.iframe}
-        />
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345059173!2d144.9537353153166!3d-37.81627977975124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2230d5708!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sin!4v1611555555555!5m2!1sen!2sin"
+          allowFullScreen=""
+          loading="lazy"
+        ></iframe>
       </div>
-
-      {/* ANIMATIONS */}
-      <style>{`
-        .fade-in {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: all 0.8s ease;
-        }
-
-        input:hover, textarea:hover {
-          border-color: #c9a227;
-          box-shadow: 0 0 10px rgba(201,162,39,0.3);
-        }
-
-        button:hover {
-          background: #b8952f;
-          transform: scale(1.05);
-        }
-
-        @media (max-width: 768px) {
-          h1 {
-            font-size: 30px !important;
-          }
-
-          p {
-            font-size: 14px !important;
-          }
-
-          form {
-            width: 95% !important;
-          }
-        }
-      `}</style>
-
     </div>
   );
 }
-
-/* 🎨 CREAM THEME STYLES */
-const styles = {
-  page: {
-    fontFamily: "Inter, sans-serif",
-    background: "#F8F5EC", // cream background
-    minHeight: "100vh",
-    color: "#4B3F2F",
-  },
-
-  hero: {
-    textAlign: "center",
-    padding: "70px 20px 40px",
-  },
-
-  title: {
-    fontFamily: "Playfair Display, serif",
-    fontSize: "44px",
-    fontWeight: "700",
-    color: "#8B6B2E", // soft gold brown
-  },
-
-  subtitle: {
-    fontFamily: "Poppins, sans-serif",
-    fontSize: "18px",
-    fontWeight: "600",
-    color: "#A68A3F",
-    marginTop: "10px",
-  },
-
-  container: {
-    display: "flex",
-    justifyContent: "center",
-  },
-
-  form: {
-    background: "#FFFDF7", // light cream card
-    padding: "35px",
-    borderRadius: "18px",
-    width: "80%",
-    maxWidth: "900px",
-    border: "1px solid #E8DFC8",
-    boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
-  },
-
-  row: {
-    display: "flex",
-    gap: "15px",
-    marginBottom: "18px",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-  },
-
-  input: {
-    flex: "1 1 250px",
-    padding: "12px",
-    borderRadius: "10px",
-    border: "1px solid #D6C7A1",
-    outline: "none",
-    background: "#FFF",
-    color: "#4B3F2F",
-    fontFamily: "Inter",
-    fontSize: "14px",
-  },
-
-  textarea: {
-    flex: "1 1 250px",
-    padding: "12px",
-    borderRadius: "10px",
-    border: "1px solid #D6C7A1",
-    height: "110px",
-    background: "#FFF",
-    outline: "none",
-    color: "#4B3F2F",
-    fontFamily: "Inter",
-    fontSize: "14px",
-    lineHeight: "1.4",
-    display: "block",
-    resize: "none",
-  },
-
-  button: {
-    marginTop: "20px",
-    padding: "12px 35px",
-    borderRadius: "30px",
-    border: "none",
-    background: "#C9A227",
-    color: "#fff",
-    fontWeight: "600",
-    fontFamily: "Poppins",
-    cursor: "pointer",
-  },
-
-  map: {
-    marginTop: "50px",
-  },
-
-  iframe: {
-    width: "100%",
-    height: "320px",
-    border: "none",
-    filter: "sepia(20%) brightness(95%)",
-  },
-};

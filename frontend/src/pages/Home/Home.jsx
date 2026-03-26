@@ -35,13 +35,13 @@ const SLIDES = [
 ];
 
 
-
-const services = [
+  const services = [
     { title: "Vendor Service", icon: <Storefront />, desc: "Find verified temple vendors.", path:'/ventor'},
-    { title: "Calendar", icon: <CalendarMonth />, desc: "Auspicious dates & timings." },
-    { title: "Blog", icon: <MenuBook />, desc: "Spiritual insights & news." },
+    { title: "Calendar", icon: <CalendarMonth />, desc: "Auspicious dates & timings.", path:'/calendar'},
+    { title: "Blog", icon: <MenuBook />, desc: "Spiritual insights & news.", path:'/blogs' },
     { title: "Event", icon: <Celebration />, desc: "Upcoming temple festivals." },
   ];
+
 
 const Home = () => {
   const navigate = useNavigate(); // 2. Initialize navigate hook
@@ -260,6 +260,7 @@ const Home = () => {
         >
           {/* Individual Service Box - INNOVATIVE WHITE DESIGN */}
           <Box 
+           onClick={() => service.path && navigate(service.path)}
             sx={{ 
               bgcolor: '#ffffff', 
               // Using a soft "spiritual" shadow instead of harsh borders
