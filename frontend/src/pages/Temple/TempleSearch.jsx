@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const TempleSearch = () => {
+function TempleSearch() {
   return (
-    <center><div>Temple Search Page Section</div></center>
-  )
+    <div>
+      <h1>Temple Search Page</h1>
+    </div>
+  );
 }
 
-export default TempleSearch
+export default TempleSearch;
