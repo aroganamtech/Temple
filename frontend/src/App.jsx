@@ -32,6 +32,7 @@ import Adiyargal from './pages/Temple/Adiyargal';
 import VendorPage from './pages/ventor/Ventor';
 import Calendar from './pages/Calendar/Calendar';
 import Blogs from './pages/Blogs/Blogs';
+import EventsPage from './pages/Event/Event';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path='/ventor' element={<VendorPage />} />
           <Route path='/calendar' element={<Calendar />} />
           <Route path='/blogs' element={<Blogs />} />
+          <Route path='/event' element={<EventsPage />} />
 
           
           {/* <Route path="/contact" element={<ContactUs />} /> */}

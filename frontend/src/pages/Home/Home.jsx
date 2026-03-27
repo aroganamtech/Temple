@@ -39,7 +39,7 @@ const SLIDES = [
     { title: "Vendor Service", icon: <Storefront />, desc: "Find verified temple vendors.", path:'/ventor'},
     { title: "Calendar", icon: <CalendarMonth />, desc: "Auspicious dates & timings.", path:'/calendar'},
     { title: "Blog", icon: <MenuBook />, desc: "Spiritual insights & news.", path:'/blogs' },
-    { title: "Event", icon: <Celebration />, desc: "Upcoming temple festivals." },
+    { title: "Event", icon: <Celebration />, desc: "Upcoming temple festivals.", path:'/event' },
   ];
 
 

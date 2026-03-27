@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../../style/pages/blogs/Blogs.scss';
-import temp from '../../assets/blog-tem.jpg'
+import temp from '../../assets/blog-tem.jpg';
+import temp2 from '../../assets/blog-tem2.jpg';
+import temp3 from '../../assets/blog-tem3.jpg'
+import temp4 from '../../assets/blog-tem4.jpg'
+import temp5 from '../../assets/blog-tem5.jpg'
+import temp6 from '../../assets/blog-tem6.jpg'
+import temp7 from '../../assets/blog-tem7.jpg'
 
 const Blogs = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,10 +18,10 @@ const Blogs = () => {
   }, []);
 
   const destinations = [
-    { name: "Meenakshi Amman", loc: "Madurai", img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800", size: "large" },
-    { name: "Brihadisvara", loc: "Thanjavur", img: "https://images.unsplash.com/photo-1621252179027-94459d278660?q=80&w=600", size: "small" },
-    { name: "Kashi Vishwanath", loc: "Varanasi", img: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=600", size: "small" },
-    { name: "Lotus Temple", loc: "Delhi", img: "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=600", size: "medium" }
+    { name: "Meenakshi Amman", loc: "Madurai", img: temp3, size: "large" },
+    { name: "Brihadisvara", loc: "Thanjavur", img: temp4, size: "small" },
+    { name: "Kashi Vishwanath", loc: "Varanasi", img: temp5, size: "small" },
+    { name: "Lotus Temple", loc: "Delhi", img: temp6, size: "medium" }
   ];
 
   return (
@@ -53,7 +59,7 @@ const Blogs = () => {
               <img src={temp} alt="Temple" />
             </div>
             <div className="collage-item float-frame">
-              <img src="https://images.unsplash.com/photo-1590733400249-16474b97771d?q=80&w=600" alt="Vedic Art" />
+              <img src={temp2} alt="Vedic Art" />
             </div>
           </div>
         </div>
@@ -89,7 +95,7 @@ const Blogs = () => {
         <div className="stories-inner">
           <div className="story-featured">
             <div className="img-reveal">
-              <img src="https://images.unsplash.com/photo-1528642466245-0d04895698b9?q=80&w=1200" alt="Rituals" />
+              <img src={temp7} alt="Rituals" />
             </div>
             <div className="content-box">
               <span className="label">Traditions</span>

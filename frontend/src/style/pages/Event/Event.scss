@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  --gold: #DAA520;
+  --gold-gradient: linear-gradient(180deg, #F5D76E 0%, #DAA520 100%);
+  --charcoal: #121212;
+  --glass: rgba(255, 255, 255, 0.03);
+}
+
+.temple-ui-root {
+  background: var(--charcoal);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.font-serif { font-family: 'Playfair Display', serif; }
+
+/* 🌌 HERO EFFECTS */
+.temple-hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+}
+
+.mandala-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.15;
+}
+
+.mandala-layer {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+}
+
+.layer-1 { width: 800px; height: 800px; animation: rotate 120s linear infinite; }
+.layer-2 { width: 600px; height: 600px; animation: rotate 80s linear infinite reverse; border-style: dashed; }
+
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.gold-shimmer {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(218, 165, 32, 0.3));
+}
+
+.live-countdown-gold {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.timer-slot {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  min-width: 80px;
+}
+
+.timer-val { font-size: 2.5rem; font-weight: 700; color: var(--gold); display: block; }
+.timer-unit { font-size: 0.6rem; opacity: 0.5; letter-spacing: 2px; }
+
+/* 🪔 PREMIUM CARDS */
+.temple-card-premium {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 2rem;
+  padding: 1.5rem;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(20px);
+}
+
+.temple-card-premium:hover {
+  border-color: var(--gold);
+  transform: translateY(-10px);
+  background: rgba(218, 165, 32, 0.05);
+}
+
+.card-visual {
+  height: 160px;
+  background: rgba(0,0,0,0.3);
+  margin: 1.5rem 0;
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.event-type-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: var(--gold);
+  color: #000;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+}
+
+/* 📌 STICKY BAR */
+.sticky-action-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(20px);
+  padding: 1rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(218, 165, 32, 0.2);
+  z-index: 1000;
+}
+
+.bar-btn.primary {
+  background: var(--gold);
+  color: #000;
+  font-weight: 800;
+  padding: 0.8rem 2.5rem;
+  border-radius: 2rem;
+  border: none;
+}
+
+/* 📱 MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-heading { font-size: 3rem; }
+  .sticky-action-bar { padding: 1rem 1.5rem; }
+  .live-countdown-gold { gap: 0.5rem; }
+  .timer-slot { min-width: 60px; padding: 0.5rem; }
+}
