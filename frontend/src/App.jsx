@@ -14,25 +14,6 @@ import ProductDetails from './pages/Product/ProductDetails';
 import Product from './pages/Product/Product';
 import QuickBooking from './pages/QuickBooking/QuickBooking';
 import TempleSearch from './pages/Temple/TempleSearch';
-import ContactUs from './pages/Contact/ContactUs';
-import Dashboard from './pages/Admin/Dashboard';
-import DonationPage from './pages/Donate/DonationPage';
-
-import Login from './pages/Auth/Login';
-import DivineChatbot from "./pages/DivineChatbot";
-
-// import Login from "./pages/Auth/Login";
-import YatraBooking from './pages/QuickBooking/YatraBooking';
-// --- Dropdown Pages for Temple Module ---
-// Ensure these files exist in your 'pages/Temple/' folder
-import Gods from './pages/Temple/Gods';
-import Dosham from './pages/Temple/Dosham';
-import DecayingTemples from './pages/Temple/DecayingTemples';
-import Adiyargal from './pages/Temple/Adiyargal';
-import VendorPage from './pages/ventor/Ventor';
-import Calendar from './pages/Calendar/Calendar';
-import Blogs from './pages/Blogs/Blogs';
-import EventsPage from './pages/Event/Event';
 
 function App() {
   return (
