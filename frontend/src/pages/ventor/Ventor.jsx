@@ -10,6 +10,7 @@ import GuideIcon from '@mui/icons-material/SelfImprovement';
 import SchoolIcon from '@mui/icons-material/MenuBook';
 import MapIcon from '@mui/icons-material/Explore';
 import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
+// import '../../style/pages/ventor/Ventor.scss';
 import '../../style/pages/ventor/Ventor.scss';
 
 const services = [
@@ -21,7 +22,7 @@ const services = [
   { id: 6, title: 'Tour Packages', sub: 'Ananda Tours', icon: <MapIcon />, delay: 0.6 },
 ];
 
-const VendorPage = () => {
+const VentorPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const navigate = useNavigate(); // 2. Initialize navigate function
@@ -160,4 +161,4 @@ const VendorPage = () => {
   );
 };
 
-export default VendorPage;
+export default VentorPage;
