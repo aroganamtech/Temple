@@ -663,6 +663,22 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
+// temple event images
+import MahaShivaratri from '../../assets/maha-shivaratri.jpg';
+import SaraswatiPuja from '../../assets/SaraswatiPuja.jpg';
+import VedicDiscourse from '../../assets/VedicDiscourse.jpg';
+import KarthigaiDeepam from '../../assets/KarthigaiDeepam.jpg';
+import Abhishekam from '../../assets/Abhishekam.jpg';
+import PanguniUthiram from '../../assets/PanguniUthiram.jpeg';
+import PradoshamPooja from '../../assets/PradoshamPooja.jpg';
+import AadiPerukku from '../../assets/AadiPerukku.png';
+import GaneshChaturthi from '../../assets/GaneshChaturthi.jpg';
+import Navaratri from '../../assets/Navaratri.jpg';
+import TempleBell from '../../assets/TempleBellCasting.jpg';
+import NagaPanchami from '../../assets/NagaPanchami.jpg';
+import GauSeva from '../../assets/GauSevaDay.jpg';
+
+
 /* ─────────────────────────────────────
    THEME
 ───────────────────────────────────── */
@@ -699,18 +715,28 @@ const theme = createTheme({
    DATA
 ───────────────────────────────────── */
 const EVENTS = [
-    { id: 1, img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80', badge: 'Festival', deity: '🔱', title: 'Maha Shivaratri', tags: ['Shiva Pooja', 'All Night'], desc: 'The great night of Lord Shiva — an all-night vigil of devotion, fasting, and divine chanting.', date: 'Feb 26', time: '6:00 PM – 6:00 AM', location: 'Chidambaram Temple', prana: '+150 pts' },
-    { id: 2, img: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80', badge: 'Pooja', deity: '🪷', title: 'Saraswati Puja', tags: ['Learning', 'Blessings'], desc: 'Seek the blessings of Goddess Saraswati for wisdom, arts, and knowledge on this auspicious day.', date: 'Mar 2', time: '8:00 AM – 12:00 PM', location: 'Mylapore Temple', prana: '+80 pts' },
-    { id: 3, img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80', badge: 'Satsang', deity: '📿', title: 'Vedic Discourse', tags: ['Wisdom', 'Meditation'], desc: 'Join our revered Guru for an immersive session on the Bhagavad Gita and path to liberation.', date: 'Mar 8', time: '5:00 PM – 7:00 PM', location: 'Virtual + Chennai', prana: '+60 pts' },
-    { id: 4, img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80', badge: 'Seva', deity: '🌸', title: 'Annadanam Seva', tags: ['Community', 'Food'], desc: 'Participate in the sacred act of feeding 5,000 devotees as an offering to the divine.', date: 'Mar 15', time: '9:00 AM – 2:00 PM', location: 'Tirupati Temple', prana: '+200 pts' },
-    { id: 5, img: 'https://images.unsplash.com/photo-1609766857585-a8e6e4e2e517?w=600&q=80', badge: 'Festival', deity: '🪔', title: 'Karthigai Deepam', tags: ['Light Festival', 'Prayers'], desc: 'The festival of lights — thousands of lamps illuminate the sacred hills in divine splendour.', date: 'Mar 22', time: 'Dusk – Midnight', location: 'Thiruvannamalai', prana: '+120 pts' },
-    { id: 6, img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80', badge: 'Virtual', deity: '🕉', title: 'Online Abhishekam', tags: ['Virtual', 'Shiva'], desc: 'Participate in the sacred Abhishekam ritual from anywhere in the world via live stream.', date: 'Mar 28', time: '7:00 AM – 9:00 AM', location: 'Live Stream', prana: '+50 pts' },
-    { id: 7, img: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80', badge: 'Festival', deity: '🌺', title: 'Panguni Uthiram', tags: ['Murugan', 'Procession'], desc: 'The celestial wedding of Lord Murugan — a grand chariot procession through sacred streets.', date: 'Apr 5', time: 'All Day', location: 'Palani Temple', prana: '+180 pts' },
-    { id: 8, img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80', badge: 'Satsang', deity: '🎵', title: 'Carnatic Bhajan Night', tags: ['Music', 'Devotion'], desc: 'An evening of soul-stirring classical devotional music by renowned artists from Tamil Nadu.', date: 'Apr 10', time: '6:30 PM – 10:00 PM', location: 'Kapaleeshwarar Temple', prana: '+70 pts' },
-    { id: 9, img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80', badge: 'Pooja', deity: '🔱', title: 'Pradosham Pooja', tags: ['Shiva', 'Monthly'], desc: 'The sacred bi-monthly Pradosham — an auspicious time to worship Lord Shiva and seek blessings.', date: 'Apr 14', time: '5:30 PM – 7:30 PM', location: 'Multiple Temples', prana: '+90 pts' },
-    { id: 10, img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80', badge: 'Seva', deity: '📚', title: 'Vedic School Seva', tags: ['Education', 'Children'], desc: 'Volunteer to teach Vedic chanting and Sanskrit to underprivileged children at our gurukul.', date: 'Apr 20', time: '9:00 AM – 1:00 PM', location: 'Chennai Gurukul', prana: '+250 pts' },
-    { id: 11, img: 'https://images.unsplash.com/photo-1609766857585-a8e6e4e2e517?w=600&q=80', badge: 'Festival', deity: '🌙', title: 'Aadi Perukku', tags: ['Water Festival', 'Goddess'], desc: 'Celebrate the sacred rivers with offerings to Goddess Kaveri — a joyful water festival.', date: 'May 3', time: 'Morning', location: 'Kaveri River Banks', prana: '+100 pts' },
-    { id: 12, img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80', badge: 'Virtual', deity: '🧘', title: 'Meditation Retreat', tags: ['Wellness', 'Peace'], desc: 'A 3-day virtual meditation retreat guided by senior monks — find stillness in the divine.', date: 'May 10', time: '3 Days', location: 'Online', prana: '+300 pts' },
+    { id: 1, img: MahaShivaratri, badge: 'Festival', deity: '🔱', title: 'Maha Shivaratri', tags: ['Shiva Pooja', 'All Night'], desc: 'The great night of Lord Shiva — an all-night vigil of devotion, fasting, and divine chanting.', date: 'Feb 26', time: '6:00 PM – 6:00 AM', location: 'Chidambaram Temple', prana: '+150 pts' },
+    { id: 2, img: SaraswatiPuja, badge: 'Pooja', deity: '🪷', title: 'Saraswati Puja', tags: ['Learning', 'Blessings'], desc: 'Seek the blessings of Goddess Saraswati for wisdom, arts, and knowledge on this auspicious day.', date: 'Mar 2', time: '8:00 AM – 12:00 PM', location: 'Mylapore Temple', prana: '+80 pts' },
+    { id: 3, img: VedicDiscourse, badge: 'Satsang', deity: '📿', title: 'Vedic Discourse', tags: ['Wisdom', 'Meditation'], desc: 'Join our revered Guru for an immersive session on the Bhagavad Gita and path to liberation.', date: 'Mar 8', time: '5:00 PM – 7:00 PM', location: 'Virtual + Chennai', prana: '+60 pts' },
+    // { id: 4, img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80', badge: 'Seva', deity: '🌸', title: 'Annadanam Seva', tags: ['Community', 'Food'], desc: 'Participate in the sacred act of feeding 5,000 devotees as an offering to the divine.', date: 'Mar 15', time: '9:00 AM – 2:00 PM', location: 'Tirupati Temple', prana: '+200 pts' },
+    { id: 5, img: KarthigaiDeepam, badge: 'Festival', deity: '🪔', title: 'Karthigai Deepam', tags: ['Light Festival', 'Prayers'], desc: 'The festival of lights — thousands of lamps illuminate the sacred hills in divine splendour.', date: 'Mar 22', time: 'Dusk – Midnight', location: 'Thiruvannamalai', prana: '+120 pts' },
+    { id: 6, img: Abhishekam, badge: 'Virtual', deity: '🕉', title: 'Online Abhishekam', tags: ['Virtual', 'Shiva'], desc: 'Participate in the sacred Abhishekam ritual from anywhere in the world via live stream.', date: 'Mar 28', time: '7:00 AM – 9:00 AM', location: 'Live Stream', prana: '+50 pts' },
+    { id: 7, img: PanguniUthiram, badge: 'Festival', deity: '🌺', title: 'Panguni Uthiram', tags: ['Murugan', 'Procession'], desc: 'The celestial wedding of Lord Murugan — a grand chariot procession through sacred streets.', date: 'Apr 5', time: 'All Day', location: 'Palani Temple', prana: '+180 pts' },
+    // { id: 8, img: PradoshamPooja, badge: 'Satsang', deity: '🎵', title: 'Carnatic Bhajan Night', tags: ['Music', 'Devotion'], desc: 'An evening of soul-stirring classical devotional music by renowned artists from Tamil Nadu.', date: 'Apr 10', time: '6:30 PM – 10:00 PM', location: 'Kapaleeshwarar Temple', prana: '+70 pts' },
+    { id: 9, img: PradoshamPooja, badge: 'Pooja', deity: '🔱', title: 'Pradosham Pooja', tags: ['Shiva', 'Monthly'], desc: 'The sacred bi-monthly Pradosham — an auspicious time to worship Lord Shiva and seek blessings.', date: 'Apr 14', time: '5:30 PM – 7:30 PM', location: 'Multiple Temples', prana: '+90 pts' },
+    // { id: 10, img: GaneshChaturthi, badge: 'Seva', deity: '📚', title: 'Vedic School Seva', tags: ['Education', 'Children'], desc: 'Volunteer to teach Vedic chanting and Sanskrit to underprivileged children at our gurukul.', date: 'Apr 20', time: '9:00 AM – 1:00 PM', location: 'Chennai Gurukul', prana: '+250 pts' },
+    { id: 11, img: AadiPerukku, badge: 'Festival', deity: '🌙', title: 'Aadi Perukku', tags: ['Water Festival', 'Goddess'], desc: 'Celebrate the sacred rivers with offerings to Goddess Kaveri — a joyful water festival.', date: 'May 3', time: 'Morning', location: 'Kaveri River Banks', prana: '+100 pts' },
+    // { id: 12, img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80', badge: 'Virtual', deity: '🧘', title: 'Meditation Retreat', tags: ['Wellness', 'Peace'], desc: 'A 3-day virtual meditation retreat guided by senior monks — find stillness in the divine.', date: 'May 10', time: '3 Days', location: 'Online', prana: '+300 pts' },
+    { id: 13, img: GaneshChaturthi, badge: 'Festival', deity: '🐘', title: 'Ganesh Chaturthi', tags: ['Ganesha', 'Modak'], desc: 'Celebrate the birth of Lord Ganesha, the remover of obstacles, with grand prayers and music.', date: 'Aug 25', time: '9:00 AM – 9:00 PM', location: 'Mumbai / All Temples', prana: '+140 pts' },
+    // { id: 14, img: 'https://images.unsplash.com/photo-1536657235019-030712fd3fa0?w=600&q=80', badge: 'Seva', deity: '🌿', title: 'Tulsi Plant Seva', tags: ['Nature', 'Vishnu'], desc: 'Join the community in planting 108 Tulsi saplings around the temple parikrama path.', date: 'Jun 12', time: '7:00 AM – 10:00 AM', location: 'Vrindavan Gardens', prana: '+110 pts' },
+    { id: 15, img: Navaratri, badge: 'Festival', deity: '🐅', title: 'Navaratri Night', tags: ['Durga', 'Dandiya'], desc: 'Nine nights of honoring the Divine Mother. Join us for Garba and special Devi Alankaram.', date: 'Oct 5', time: '7:00 PM – Midnight', location: 'Temple Courtyard', prana: '+220 pts' },
+    // { id: 16, img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80', badge: 'Workshop', deity: '✍️', title: 'Manuscript Workshop', tags: ['Sanskrit', 'History'], desc: 'Learn the ancient art of Palm Leaf writing and preserving Vedic scriptures.', date: 'Jun 20', time: '11:00 AM – 4:00 PM', location: 'Temple Library', prana: '+90 pts' },
+    // { id: 17, img: 'https://images.unsplash.com/photo-1514332110157-b4500bfe29eb?w=600&q=80', badge: 'Pooja', deity: '🦅', title: 'Garuda Seva', tags: ['Vishnu', 'Procession'], desc: 'Witness the majestic Lord Vishnu mounted on the golden Garuda vahana in a street procession.', date: 'Jul 14', time: '6:00 PM – 9:00 PM', location: 'Kanchi Varadaraja', prana: '+160 pts' },
+    { id: 18, img: TempleBell, badge: 'Virtual', deity: '🔔', title: 'Temple Bell Casting', tags: ['Artisan', 'Donation'], desc: 'Watch the live casting of the main 500kg temple bell by master craftsmen in Thanjavur.', date: 'Jul 28', time: '10:00 AM – 12:00 PM', location: 'Live Stream', prana: '+40 pts' },
+    // { id: 19, img: 'https://images.unsplash.com/photo-1590050752117-23a9d7fc2407?w=600&q=80', badge: 'Festival', deity: '🏹', title: 'Rama Navami', tags: ['Rama', 'Bhakti'], desc: 'Celebrating the birth of Maryada Purushottam Ram with continuous Ramayana chanting.', date: 'Apr 6', time: 'Sunrise – Sunset', location: 'Ayodhya Hall', prana: '+130 pts' },
+    // { id: 20, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80', badge: 'Satsang', deity: '🔥', title: 'Agni Hotra', tags: ['Yagya', 'Purification'], desc: 'A sacred fire ritual for environmental and spiritual purification during the sunset hour.', date: 'Aug 1', time: '6:00 PM – 7:30 PM', location: 'Temple Riverfront', prana: '+85 pts' },
+    { id: 21, img: NagaPanchami, badge: 'Festival', deity: '🐍', title: 'Naga Panchami', tags: ['Serpent', 'Blessings'], desc: 'Traditional worship of the Serpent deities for protection and well-being of the family.', date: 'Aug 18', time: '8:00 AM – 1:00 PM', location: 'Ancient Grove', prana: '+75 pts' },
+    { id: 22, img: GauSeva, badge: 'Seva', deity: '🐄', title: 'Gau Seva Day', tags: ['Cow', 'Service'], desc: 'Spend the day at the Goshala feeding and caring for the sacred cows of the temple.', date: 'Sep 10', time: '9:00 AM – 3:00 PM', location: 'Goshala Grounds', prana: '+210 pts' }
 ]
 
 const CAL_EVENTS = [
@@ -795,61 +821,61 @@ function SectionHead({ eyebrow, title, accent, sub }) {
 /* ─────────────────────────────────────
    NAVBAR
 ───────────────────────────────────── */
-function TempleNavbar() {
-    const navSx = {
-        logoIcon: {
-            width: 42, height: 42, borderRadius: '50%',
-            background: 'linear-gradient(135deg,#b8860b,#daa520,#f5c842,#daa520,#b8860b)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
-            animation: 'logoGlow 3s ease-in-out infinite',
-            '@keyframes logoGlow': { '0%,100%': { boxShadow: '0 0 20px rgba(218,165,32,0.4)' }, '50%': { boxShadow: '0 0 40px rgba(218,165,32,0.9)' } },
-        },
-        navLink: {
-            fontFamily: "'Cinzel',serif", fontSize: 11.5, color: 'rgba(253,246,227,0.5)',
-            textDecoration: 'none', px: 1.8, py: 0.9, borderRadius: '50px', letterSpacing: '.8px',
-            minWidth: 0, textTransform: 'none',
-            '&:hover': { color: '#f5c842', background: 'rgba(218,165,32,0.1)' },
-        },
-        bellBtn: {
-            width: 38, height: 38, borderRadius: '50%', border: '1px solid rgba(218,165,32,0.2)',
-            background: 'rgba(218,165,32,0.06)', color: '#f5c842',
-            '&:hover': { background: 'rgba(218,165,32,0.15)', borderColor: '#daa520' },
-        },
-        ctaBtn: {
-            fontFamily: "'Cinzel',serif", fontSize: 11, fontWeight: 700, letterSpacing: '1px',
-            borderRadius: '50px', px: 2.5, py: 1,
-            background: 'linear-gradient(135deg,#daa520,#f5c842)', color: '#1a1a1a', textTransform: 'none',
-            boxShadow: '0 4px 20px rgba(218,165,32,0.35)',
-            '&:hover': { boxShadow: '0 8px 32px rgba(218,165,32,0.6)', transform: 'scale(1.05)' },
-        },
-    }
-    return (
-        <AppBar position="fixed" elevation={0} sx={{ background: 'rgba(17,17,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(218,165,32,0.2)' }}>
-            <Toolbar sx={{ px: { xs: 2, md: '5vw' }, py: 0.5, justifyContent: 'space-between', minHeight: '64px !important' }}>
-                <Box component="a" href="#" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textDecoration: 'none' }}>
-                    <Box sx={navSx.logoIcon}>🕉</Box>
-                    <Box>
-                        <Typography sx={{ fontFamily: "'Cinzel',serif", fontWeight: 700, fontSize: 16, color: '#f5c842', letterSpacing: '2px', lineHeight: 1 }}>Darshan Journey</Typography>
-                        <Typography sx={{ fontSize: 8, color: 'rgba(218,165,32,0.5)', letterSpacing: '3px', textTransform: 'uppercase' }}>Sacred Temple Platform</Typography>
-                    </Box>
-                </Box>
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.3 }}>
-                    {NAV_LINKS.map(link => (
-                        <Button key={link.label} href={link.href} sx={navSx.navLink}>{link.label}</Button>
-                    ))}
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                    <IconButton sx={navSx.bellBtn}>
-                        <Badge badgeContent={3} color="warning" sx={{ '& .MuiBadge-badge': { fontSize: 9, minWidth: 16, height: 16, background: '#daa520', color: '#1a1a1a' } }}>
-                            <NotificationsIcon sx={{ fontSize: 17 }} />
-                        </Badge>
-                    </IconButton>
-                    <Button variant="contained" disableElevation sx={navSx.ctaBtn}>Join Darshan</Button>
-                </Box>
-            </Toolbar>
-        </AppBar>
-    )
-}
+// function TempleNavbar() {
+//     const navSx = {
+//         logoIcon: {
+//             width: 42, height: 42, borderRadius: '50%',
+//             background: 'linear-gradient(135deg,#b8860b,#daa520,#f5c842,#daa520,#b8860b)',
+//             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+//             animation: 'logoGlow 3s ease-in-out infinite',
+//             '@keyframes logoGlow': { '0%,100%': { boxShadow: '0 0 20px rgba(218,165,32,0.4)' }, '50%': { boxShadow: '0 0 40px rgba(218,165,32,0.9)' } },
+//         },
+//         navLink: {
+//             fontFamily: "'Cinzel',serif", fontSize: 11.5, color: 'rgba(253,246,227,0.5)',
+//             textDecoration: 'none', px: 1.8, py: 0.9, borderRadius: '50px', letterSpacing: '.8px',
+//             minWidth: 0, textTransform: 'none',
+//             '&:hover': { color: '#f5c842', background: 'rgba(218,165,32,0.1)' },
+//         },
+//         bellBtn: {
+//             width: 38, height: 38, borderRadius: '50%', border: '1px solid rgba(218,165,32,0.2)',
+//             background: 'rgba(218,165,32,0.06)', color: '#f5c842',
+//             '&:hover': { background: 'rgba(218,165,32,0.15)', borderColor: '#daa520' },
+//         },
+//         ctaBtn: {
+//             fontFamily: "'Cinzel',serif", fontSize: 11, fontWeight: 700, letterSpacing: '1px',
+//             borderRadius: '50px', px: 2.5, py: 1,
+//             background: 'linear-gradient(135deg,#daa520,#f5c842)', color: '#1a1a1a', textTransform: 'none',
+//             boxShadow: '0 4px 20px rgba(218,165,32,0.35)',
+//             '&:hover': { boxShadow: '0 8px 32px rgba(218,165,32,0.6)', transform: 'scale(1.05)' },
+//         },
+//     }
+//     return (
+//         <AppBar position="fixed" elevation={0} sx={{ background: 'rgba(17,17,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(218,165,32,0.2)' }}>
+//             {/* <Toolbar sx={{ px: { xs: 2, md: '5vw' }, py: 0.5, justifyContent: 'space-between', minHeight: '64px !important' }}>
+//                 <Box component="a" href="#" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textDecoration: 'none' }}>
+//                     <Box sx={navSx.logoIcon}>🕉</Box>
+//                     <Box>
+//                         <Typography sx={{ fontFamily: "'Cinzel',serif", fontWeight: 700, fontSize: 16, color: '#f5c842', letterSpacing: '2px', lineHeight: 1 }}>Darshan Journey</Typography>
+//                         <Typography sx={{ fontSize: 8, color: 'rgba(218,165,32,0.5)', letterSpacing: '3px', textTransform: 'uppercase' }}>Sacred Temple Platform</Typography>
+//                     </Box>
+//                 </Box>
+//                 <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.3 }}>
+//                     {NAV_LINKS.map(link => (
+//                         <Button key={link.label} href={link.href} sx={navSx.navLink}>{link.label}</Button>
+//                     ))}
+//                 </Box>
+//                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+//                     <IconButton sx={navSx.bellBtn}>
+//                         <Badge badgeContent={3} color="warning" sx={{ '& .MuiBadge-badge': { fontSize: 9, minWidth: 16, height: 16, background: '#daa520', color: '#1a1a1a' } }}>
+//                             <NotificationsIcon sx={{ fontSize: 17 }} />
+//                         </Badge>
+//                     </IconButton>
+//                     <Button variant="contained" disableElevation sx={navSx.ctaBtn}>Join Darshan</Button>
+//                 </Box>
+//             </Toolbar> */}
+//         </AppBar>
+//     )
+// }
 
 /* ─────────────────────────────────────
    HERO
@@ -949,10 +975,10 @@ function TempleHero() {
                     <Button variant="outlined" href="#events" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.2, px: '32px', py: '16px', borderRadius: '50px', borderColor: 'rgba(218,165,32,0.3)', borderWidth: '1.5px', background: 'rgba(218,165,32,0.05)', backdropFilter: 'blur(12px)', color: '#f5c842', fontFamily: "'Cinzel',serif", fontSize: 13, letterSpacing: '1px', textTransform: 'none', '&:hover': { background: 'rgba(218,165,32,0.15)', borderColor: '#daa520', transform: 'scale(1.03)' } }}>📅 View All Events</Button>
                 </Stack>
             </Box>
-            <Box sx={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'rgba(218,165,32,0.4)', fontSize: 10, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel',serif", animation: 'scrollBounce 2s ease-in-out infinite', '@keyframes scrollBounce': { '0%,100%': { transform: 'translateX(-50%) translateY(0)' }, '50%': { transform: 'translateX(-50%) translateY(8px)' } } }}>
+            {/* <Box sx={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'rgba(218,165,32,0.4)', fontSize: 10, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel',serif", animation: 'scrollBounce 2s ease-in-out infinite', '@keyframes scrollBounce': { '0%,100%': { transform: 'translateX(-50%) translateY(0)' }, '50%': { transform: 'translateX(-50%) translateY(8px)' } } }}>
                 <Box sx={{ width: 1, height: 40, background: 'linear-gradient(180deg,#b8860b,transparent)' }} />
                 Scroll to Explore
-            </Box>
+            </Box> */}
         </Box>
     )
 }
@@ -1105,14 +1131,14 @@ function TempleCalendar() {
     return (
         <Box component="section" id="calendar" sx={{ py: '90px', px: { xs: 2, md: '5vw' }, background: 'radial-gradient(ellipse at 50% 50%,rgba(218,165,32,0.05) 0%,transparent 70%),#111111', borderTop: '1px solid rgba(218,165,32,0.2)', borderBottom: '1px solid rgba(218,165,32,0.2)' }}>
             <SectionHead eyebrow="🌀 Celestial Calendar" title="Sacred" accent="Event Orbits" sub="Navigate the divine calendar — each golden orb holds a sacred event waiting to unfold." />
-            <Grid container spacing={6} alignItems="center">
+            <Grid container spacing={6} alignItems="right">
                 <Grid item xs={12} md={5}>
                     <Box sx={{ width: '100%', maxWidth: 420, mx: 'auto' }}>
                         <ChakraVisual />
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={7}>
-                    <Stack gap={1.8}>
+                    <Stack gap={1.8} marginLeft={100} width={400}>
                         {CAL_EVENTS.map((e, i) => (
                             <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(218,165,32,0.2)', borderRadius: '16px', p: '16px 20px', cursor: 'pointer', transition: 'all .3s', '&:hover': { background: 'rgba(218,165,32,0.08)', borderColor: '#daa520', transform: 'translateX(6px)', '& .cal-arrow': { color: '#daa520', transform: 'translateX(4px)' } } }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'rgba(218,165,32,0.1)', border: '1px solid rgba(218,165,32,0.2)', borderRadius: '12px', px: '14px', py: '8px', minWidth: 52 }}>
@@ -1235,46 +1261,7 @@ function TempleNexus() {
 /* ─────────────────────────────────────
    FOOTER
 ───────────────────────────────────── */
-function TempleFooter() {
-    return (
-        <Box component="footer" sx={{ background: '#111111', borderTop: '1px solid rgba(218,165,32,0.2)', pt: '60px', pb: '30px', px: { xs: 2, md: '5vw' } }}>
-            <Grid container spacing={5} mb={6}>
-                <Grid item xs={12} md={4}>
-                    <Box component="a" href="#" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.5, textDecoration: 'none', mb: 2 }}>
-                        <Box sx={{ width: 42, height: 42, borderRadius: '50%', background: 'linear-gradient(135deg,#b8860b,#daa520,#f5c842,#daa520,#b8860b)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, boxShadow: '0 0 20px rgba(218,165,32,0.5)' }}>🕉</Box>
-                        <Box>
-                            <Typography sx={{ fontFamily: "'Cinzel',serif", fontWeight: 700, fontSize: 16, color: '#f5c842', letterSpacing: '2px', lineHeight: 1 }}>Darshan Journey</Typography>
-                            <Typography sx={{ fontSize: 8, color: 'rgba(218,165,32,0.5)', letterSpacing: '3px', textTransform: 'uppercase' }}>Sacred Temple Platform</Typography>
-                        </Box>
-                    </Box>
-                    <Typography sx={{ fontFamily: "'Crimson Text',serif", fontStyle: 'italic', fontSize: 13, color: 'rgba(253,246,227,0.55)', lineHeight: 1.8, maxWidth: 280, mb: 2.5 }}>
-                        Connecting millions of devotees to sacred temple experiences, live poojas, and spiritual journeys across India and the world.
-                    </Typography>
-                    <Stack direction="row" gap={1.2}>
-                        {['📘', '📸', '🐦', '▶️'].map(icon => (
-                            <IconButton key={icon} size="small" sx={{ width: 36, height: 36, border: '1px solid rgba(218,165,32,0.2)', background: 'rgba(218,165,32,0.06)', fontSize: 14, '&:hover': { background: 'rgba(218,165,32,0.15)', borderColor: '#daa520' } }}>{icon}</IconButton>
-                        ))}
-                    </Stack>
-                </Grid>
-                {FOOTER_COLS.map(col => (
-                    <Grid item xs={6} sm={4} md={8 / 3} key={col.title}>
-                        <Typography sx={{ fontFamily: "'Cinzel',serif", fontSize: 12, fontWeight: 700, color: '#f5c842', letterSpacing: '1.5px', textTransform: 'uppercase', mb: 2.2 }}>{col.title}</Typography>
-                        <Stack gap={1.3}>
-                            {col.links.map(link => (
-                                <Typography key={link} component="a" href="#" sx={{ fontSize: 12.5, color: 'rgba(253,246,227,0.55)', textDecoration: 'none', fontFamily: "'Crimson Text',serif", transition: 'color .2s', '&:hover': { color: '#f5c842' } }}>{link}</Typography>
-                            ))}
-                        </Stack>
-                    </Grid>
-                ))}
-            </Grid>
-            <Divider sx={{ borderColor: 'rgba(218,165,32,0.2)', mb: 3 }} />
-            <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1.5}>
-                <Typography sx={{ fontSize: 11, color: 'rgba(218,165,32,0.35)', fontFamily: "'Cinzel',serif", letterSpacing: '.5px' }}>© 2025 Darshan Journey. All rights reserved. 🕉 Om Namah Shivaya</Typography>
-                <Box sx={{ fontSize: 20, filter: 'drop-shadow(0 0 8px rgba(218,165,32,0.5))' }}>🪷</Box>
-            </Stack>
-        </Box>
-    )
-}
+
 
 /* ─────────────────────────────────────
    ROOT APP
@@ -1284,13 +1271,13 @@ export default function EventsPage() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Box sx={{ pt: '64px' }}>
-                <TempleNavbar />
+                {/* <TempleNavbar /> */}
                 <TempleHero />
                 <TempleStatsBar />
                 <TempleEvents />
                 <TempleCalendar />
                 <TempleNexus />
-                <TempleFooter />
+                {/* <TempleFooter /> */}
             </Box>
         </ThemeProvider>
     )
