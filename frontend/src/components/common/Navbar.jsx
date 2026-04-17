@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   AppBar,
@@ -14,6 +15,7 @@ import {
   ListItemText,
   Collapse,
   Box,
+
 } from '@mui/material';
 import { Link, useLocation } from "react-router-dom";
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
@@ -25,6 +27,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 const Navbar = () => {
   const location = useLocation();
   
+
   // Desktop Dropdown States
   const [templeAnchor, setTempleAnchor] = useState(null);
   const [bookingAnchor, setBookingAnchor] = useState(null);
@@ -33,6 +36,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileTempleOpen, setMobileTempleOpen] = useState(false);
   const [mobileBookingOpen, setMobileBookingOpen] = useState(false);
+
 
   const navLinks = [
     { label: 'Home', path: '/' },
@@ -75,93 +79,39 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between', px: 2 }}>
           
-          {/* 1. LOGO SECTION (Left) */}
-          <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center' }}>
-            <img 
-              src="/logo.png" 
-              alt="Logo" 
-              style={{ height: '50px', width: 'auto', display: 'block' }} 
-              onError={(e) => { e.target.src = "https://via.placeholder.com/50?text=Logo" }} // Fallback if image missing
+          {/* Main Navigation Links Section */}
+          <Stack direction="row" spacing={0.5}>
+
+            {/* <h1 className="headerNav__logo">
+            <img
+              className="headerNav__imgDiv"
+              style={{ width: "240px", height: "80px", marginLeft: "20px" }}
+              src={temple}
+              alt="Temple Logo"
             />
-          </Box>
-
-          {/* 2. DESKTOP NAV LINKS (Middle) */}
-          <Stack 
-            direction="row" 
-            spacing={1} 
-            sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'center' }}
-          >
-            {navLinks.map((link) => {
-              if (link.isDropdown) {
-                const isTemple = link.type === 'temple';
-                const anchor = isTemple ? templeAnchor : bookingAnchor;
-                const setAnchor = isTemple ? setTempleAnchor : setBookingAnchor;
-                const options = isTemple ? templeOptions : bookingOptions;
-
-                return (
-                  <Box 
-                    key={link.label} 
-                    onMouseEnter={(e) => setAnchor(e.currentTarget)} 
-                    onMouseLeave={() => setAnchor(null)}
-                  >
-                    <Button
-                      component={Link}
-                      to={link.path}
-                      endIcon={<KeyboardArrowDownIcon />}
-                      sx={{
-                        color: 'black',
-                        fontWeight: isActive(link.path) ? '800' : '700',
-                        textTransform: 'none',
-                        fontSize: '0.95rem',
-                        px: 1.5,
-                        borderBottom: isActive(link.path) ? '2px solid #FF9933' : '2px solid transparent',
-                        '&:hover': { bgcolor: 'transparent', color: '#FF9933' }
-                      }}
-                    >
-                      {link.label}
-                    </Button>
-                    <Menu
-                      anchorEl={anchor}
-                      open={Boolean(anchor)}
-                      onClose={() => setAnchor(null)}
-                      MenuListProps={{ onMouseLeave: () => setAnchor(null) }}
-                      PaperProps={{ sx: { mt: 1, boxShadow: '0px 8px 16px rgba(0,0,0,0.1)' } }}
-                    >
-                      {options.map((opt) => (
-                        <MenuItem 
-                          key={opt.label} 
-                          component={Link} 
-                          to={opt.path} 
-                          onClick={() => setAnchor(null)}
-                          sx={{ fontWeight: 600, minWidth: '180px' }}
-                        >
-                          {opt.label}
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </Box>
-                );
-              }
-
-              return (
-                <Button
-                  key={link.label}
-                  component={Link}
-                  to={link.path}
-                  sx={{
-                    color: 'black',
-                    fontWeight: isActive(link.path) ? '800' : '700',
-                    textTransform: 'none',
-                    fontSize: '0.95rem',
-                    px: 1.5,
-                    borderBottom: isActive(link.path) ? '2px solid #FF9933' : '2px solid transparent',
-                    '&:hover': { bgcolor: 'transparent', color: '#FF9933' }
-                  }}
-                >
-                  {link.label}
-                </Button>
-              );
-            })}
+          </h1> */}
+            {navLinks.map((link) => (
+              <Button
+                key={link.label}
+                component={Link}
+                to={link.path}
+                sx={{
+                  color: 'black',
+                  fontWeight: isActive(link.path) ? '800' : '700', // Bold for active page
+                  fontSize: '0.95rem',
+                  textTransform: 'none',
+                  px: 2,
+                  borderRadius: 0,
+                  borderBottom: isActive(link.path) ? '2px solid #FF9933' : '2px solid transparent',
+                  '&:hover': {
+                    bgcolor: 'transparent',
+                    color: '#FF9933', // Saffron hover color
+                  }
+                }}
+              >
+                {link.label}
+              </Button>
+            ))}
           </Stack>
 
           {/* 3. ACTION BUTTONS (Right) */}

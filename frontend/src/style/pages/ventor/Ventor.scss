@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;400;600&display=swap');
+
+$gold-primary: #D4AF37;
+$cream-bg: #FFFDF7;
+$deep-coffee: #4A3E2F;
+$glass-white: rgba(255, 255, 255, 0.7);
+
+.lotus-root-container {
+  background: $cream-bg;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+
+  // Creative Background Orbs
+  .ambient-blur-1 {
+    position: absolute; top: -10%; left: -10%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    filter: blur(80px); z-index: 1;
+  }
+  .ambient-blur-2 {
+    position: absolute; bottom: -5%; right: -5%; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(139, 115, 85, 0.1) 0%, transparent 70%);
+    filter: blur(60px); z-index: 1;
+  }
+}
+
+.lotus-main-title {
+  font-family: 'Playfair Display', serif !important;
+  color: $deep-coffee;
+  font-weight: 700 !important;
+  letter-spacing: -1px;
+}
+
+.sacred-geometry-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+
+  .dot { width: 6px; height: 6px; background: $gold-primary; border-radius: 50%; }
+  .line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, $gold-primary, transparent); }
+}
+
+.sacred-subtitle {
+  color: $gold-primary;
+  letter-spacing: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* CREATIVE PETAL GRID */
+.petal-flow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  padding: 40px 0 100px;
+}
+
+.petal-element {
+  display: flex;
+  justify-content: center;
+}
+
+.petal-glass-card {
+  width: 300px;
+  height: 450px;
+  background: $glass-white;
+  backdrop-filter: blur(10px);
+  border-radius: 150px 150px 20px 20px; // The "Sacred Arch" Shape
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(74, 62, 47, 0.05);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  overflow: hidden;
+
+  .petal-inner-border {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 140px 140px 15px 15px;
+    pointer-events: none;
+  }
+
+  .petal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    z-index: 5;
+    position: relative;
+  }
+
+  .icon-halo {
+    width: 90px;
+    height: 90px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gold-primary;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: 0.5s;
+
+    svg { font-size: 2.5rem; }
+  }
+
+  .service-name {
+    font-family: 'Playfair Display', serif !important;
+    color: $deep-coffee;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .service-essence {
+    color: #8b7355;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+    margin-bottom: 30px !important;
+  }
+
+  .begin-path-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid $gold-primary;
+    color: $gold-primary;
+    padding: 5px 0;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      letter-spacing: 5px;
+      padding: 5px 10px;
+      color: $deep-coffee;
+    }
+  }
+
+  &:hover {
+    background: white;
+    box-shadow: 0 40px 80px rgba(212, 175, 55, 0.15);
+    
+    .icon-halo {
+      background: $gold-primary;
+      color: white;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* MODAL STYLING */
+.sacred-modal-body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+
+  .modal-close-trigger {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: $gold-primary;
+  }
+
+  .modal-inner-content {
+    text-align: center;
+    max-width: 500px;
+    padding: 20px;
+
+    .modal-title-gold {
+      font-family: 'Playfair Display', serif !important;
+      color: $deep-coffee;
+    }
+
+    .gold-separator {
+      width: 40px;
+      height: 2px;
+      background: $gold-primary;
+      margin: 30px auto;
+    }
+
+    .modal-confirm-btn {
+      background: $gold-primary !important;
+      color: white !important;
+      padding: 12px 40px !important;
+      border-radius: 0 !important;
+      font-weight: 600 !important;
+      letter-spacing: 3px !important;
+      margin-top: 20px !important;
+      
+      &:hover {
+        background: $deep-coffee !important;
+      }
+    }
+  }
+}
